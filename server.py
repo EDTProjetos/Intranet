@@ -54,5 +54,6 @@ def executar_script_api():
 def verificar_status():
     return jsonify({"script_finalizado": script_finalizado})
 
-# Não precisa do if __name__ == "__main__": app.run(), 
-# pois no Railway você rodará com gunicorn: gunicorn app:app
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Render usa a variável PORT
+    app.run(host="0.0.0.0", port=port)
