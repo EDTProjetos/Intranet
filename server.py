@@ -10,8 +10,12 @@ script_finalizado = False
 def executar_script():
     global script_finalizado
     script_finalizado = False
-    # Usando caminho relativo: junta o diretório atual com o caminho do script
-    script_path = os.path.join(os.getcwd(), "Projetos Automatizados", "Gerar perfil automático.py")
+    
+    # Descobre a pasta base onde está este arquivo
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    
+    # Monta o caminho para o script Python
+    script_path = os.path.join(BASE_DIR, "projetos_automatizados", "gerar_perfil_automatico.py")
     
     if os.path.exists(script_path):
         try:
@@ -50,4 +54,5 @@ def executar_script_api():
 def verificar_status():
     return jsonify({"script_finalizado": script_finalizado})
 
-# Removemos o app.run, pois o Railway usará o Gunicorn para iniciar a aplicação.
+# Não precisa do if __name__ == "__main__": app.run(), 
+# pois no Railway você rodará com gunicorn: gunicorn app:app
