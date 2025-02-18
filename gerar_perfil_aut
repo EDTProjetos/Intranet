@@ -1,3 +1,5 @@
+import os
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
@@ -5,11 +7,8 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-import os
-import time
-
-# 🔹 Define o caminho do EdgeDriver no Render
-driver_path = "/usr/bin/msedgedriver"
+# 🔹 Verifica o caminho do EdgeDriver, pode ser configurado como variável de ambiente no Render
+driver_path = os.getenv("EDGE_DRIVER_PATH", "/usr/bin/msedgedriver")  # Usando variável de ambiente
 
 # 🔹 Inicializa o serviço do EdgeDriver
 service = Service(driver_path)
@@ -24,10 +23,11 @@ edge_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) 
 
 # 🔹 Abre o navegador
 driver = webdriver.Edge(service=service, options=edge_options)
-driver.get("https://cobranca01.redeservice.com.br/cobranca.be.energia/Home/Login?ReturnUrl=%2Fcobranca.be.energia%2F")
 
 try:
     print("Página carregada! Tentando login...")
+
+    driver.get("https://cobranca01.redeservice.com.br/cobranca.be.energia/Home/Login?ReturnUrl=%2Fcobranca.be.energia%2F")
 
     # 🔹 Login
     WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.NAME, "Login"))).send_keys("220309")
