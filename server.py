@@ -14,21 +14,23 @@ def executar_script():
     # Descobre a pasta base onde está este arquivo
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
-    # Monta o caminho para o script Python
-    script_path = os.path.join('/opt/render/project/src', 'server.py')  # Corrigido a indentação
+    # Monta o caminho para o script Python correto
+    script_path = os.path.join(BASE_DIR, "gerar_perfil_aut.py")
     
     if os.path.exists(script_path):
         try:
             print(f"Executando script em: {script_path}")
             result = subprocess.run(
-                ["python", script_path],
-                check=True,
-                capture_output=True,
+                ["python3", script_path],  # "python3" para garantir compatibilidade no servidor
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
                 text=True
             )
-            print(f"Resultado do script: {result.stdout}")
-        except subprocess.CalledProcessError as e:
-            print(f"Erro ao executar script: {e.output}")
+            print(f"Saída do script: {result.stdout}")
+            print(f"Erros do script: {result.stderr}")
+
+        except Exception as e:
+            print(f"Erro ao executar script: {str(e)}")
     else:
         print(f"O script não foi encontrado no caminho: {script_path}")
     
