@@ -1,2 +1,87 @@
-flask==2.0.1
-gunicorn==20.1.0
+  a t t r s = = 2 5 . 1 . 0 
+ 
+ b l i n k e r = = 1 . 9 . 0 
+ 
+ c e r t i f i = = 2 0 2 4 . 1 2 . 1 4 
+ 
+ c f f i = = 1 . 1 7 . 1 
+ 
+ c l i c k = = 8 . 1 . 8 
+ 
+ c o l o r a m a = = 0 . 4 . 6 
+ 
+ e t _ x m l f i l e = = 2 . 0 . 0 
+ 
+ F l a s k = = 3 . 1 . 0 
+ 
+ F l a s k - C o r s = = 5 . 0 . 0 
+ 
+ h 1 1 = = 0 . 1 4 . 0 
+ 
+ i d n a = = 3 . 1 0 
+ 
+ i t s d a n g e r o u s = = 2 . 2 . 0 
+ 
+ J i n j a 2 = = 3 . 1 . 5 
+ 
+ M a r k u p S a f e = = 3 . 0 . 2 
+ 
+ M o u s e I n f o = = 0 . 1 . 3 
+ 
+ n u m p y = = 2 . 2 . 2 
+ 
+ o p e n p y x l = = 3 . 1 . 5 
+ 
+ o u t c o m e = = 1 . 3 . 0 . p o s t 0 
+ 
+ p a n d a s = = 2 . 2 . 3 
+ 
+ P y A u t o G U I = = 0 . 9 . 5 4 
+ 
+ p y c p a r s e r = = 2 . 2 2 
+ 
+ p y g a m e = = 2 . 6 . 1 
+ 
+ P y G e t W i n d o w = = 0 . 0 . 9 
+ 
+ P y M s g B o x = = 1 . 0 . 9 
+ 
+ p y p e r c l i p = = 1 . 9 . 0 
+ 
+ P y R e c t = = 0 . 2 . 0 
+ 
+ P y S c r e e z e = = 1 . 0 . 1 
+ 
+ P y S o c k s = = 1 . 7 . 1 
+ 
+ p y t h o n - d a t e u t i l = = 2 . 9 . 0 . p o s t 0 
+ 
+ p y t w e e n i n g = = 1 . 2 . 0 
+ 
+ p y t z = = 2 0 2 5 . 1 
+ 
+ s e l e n i u m = = 4 . 2 8 . 1 
+ 
+ s i x = = 1 . 1 7 . 0 
+ 
+ s n i f f i o = = 1 . 3 . 1 
+ 
+ s o r t e d c o n t a i n e r s = = 2 . 4 . 0 
+ 
+ t r i o = = 0 . 2 8 . 0 
+ 
+ t r i o - w e b s o c k e t = = 0 . 1 1 . 1 
+ 
+ t y p i n g _ e x t e n s i o n s = = 4 . 1 2 . 2 
+ 
+ t z d a t a = = 2 0 2 5 . 1 
+ 
+ u r l l i b 3 = = 2 . 3 . 0 
+ 
+ w e b s o c k e t - c l i e n t = = 1 . 8 . 0 
+ 
+ W e r k z e u g = = 3 . 1 . 3 
+ 
+ w s p r o t o = = 1 . 2 . 0 
+ 
+ 
