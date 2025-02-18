@@ -15,7 +15,7 @@ def executar_script():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
     # Monta o caminho para o script Python
-    script_path = os.path.join(BASE_DIR, "projetos_automatizados", "gerar_perfil_automatico.py")
+    script_path = os.path.join(BASE_DIR, "Projetos Automatizados/Gerar perfil automático")
     
     if os.path.exists(script_path):
         try:
