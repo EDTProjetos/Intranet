@@ -1,0 +1,38 @@
+body {
+    font-family: Arial Black, sans-serif;
+    text-align: center;
+    padding: 50px;
+    background: url('C:/Planejamento- Raphael/Projetos Automatizados/static/logo.png') no-repeat center center fixed;
+    background-size: contain;
+    background-color: transparent;
+    height: 50;
+    margin: 0;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+button {
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #3EA201; /* Cor verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #2E7D00; /* Cor verde mais escura ao passar o mouse */
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #3EA201; /* Faixa inferior verde */
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+}

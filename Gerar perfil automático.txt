@@ -1,0 +1,51 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.edge.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# Caminho do driver do Edge
+driver_path = "C:/edgedriver_win64/msedgedriver.exe"
+
+# Inicializa o serviço do Edge
+service = Service(driver_path)
+edge_options = Options()
+edge_options.add_argument("--start-maximized")
+
+# Abre o navegador
+driver = webdriver.Edge(service=service, options=edge_options)
+driver.get("https://cobranca01.redeservice.com.br/cobranca.be.energia/Home/Login?ReturnUrl=%2Fcobranca.be.energia%2F")
+
+try:
+    # Login
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "Login"))).send_keys("5107")
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "Senha"))).send_keys("1234")
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
+
+    # Aguarda redirecionamento e acessa a seção desejada
+    WebDriverWait(driver, 10).until(EC.url_contains("DashBoard"))
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Processos Diários"))).click()
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Geração de Perfil"))).click()
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Novo"))).click()
+
+    # Seleciona todas as checkboxes dentro da tabela
+    checkboxes = WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.XPATH, "//table//tr//input[@type='checkbox']"))
+    )
+
+    # Marca apenas da 5ª à 10ª checkbox
+    for i in range(4, 10):  # Índice começa do 0, então 4 = 5ª checkbox
+        if not checkboxes[i].is_selected():
+            checkboxes[i].click()
+
+    # Clica no botão 'Iniciar'
+    WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[text()='Iniciar']"))
+    ).click()
+
+except Exception as e:
+    print(f"Ocorreu um erro: {e}")
+
+finally:
+    driver.quit()

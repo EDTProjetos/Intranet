@@ -1,0 +1,24 @@
+Aqui está um resumo de patch notes desde a primeira criação até agora:
+
+---
+
+### **Patch Notes - Geração de Perfil - Versão 1.0.1**
+
+#### **Versão 1.0.0**
+- **Criação Inicial**:
+  - Página com uma sidebar fixa à esquerda contendo botões de navegação.
+  - Implementação do menu de **Geração de Perfil**.
+  - Estilo com fundo de imagem e botões verdes com efeitos hover.
+  - Funcionalidade de **geração de perfil** que envia uma requisição POST para o backend, exibindo a última execução.
+
+#### **Versão 1.0.1**
+- **Novidades**:
+  - **Barra de versão** fixa no canto inferior direito da tela, com a versão `V 1.0.1`.
+  - Ajustes no layout para dar maior clareza à interface.
+  - Aperfeiçoamento no estilo da sidebar e botões.
+  - Correção de interações com o menu de perfil e botões de navegação.
+  - Melhorias na funcionalidade do botão para **geração de perfil**, incluindo a exibição da hora de execução e mensagens de sucesso.
+  
+---
+
+Esse resumo cobre as alterações e melhorias feitas ao longo das versões.
