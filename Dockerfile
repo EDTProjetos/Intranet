@@ -1,44 +1,37 @@
-# Usa a imagem do Python como base
-FROM python:3.9
+FROM python:3.9-slim
 
-# Atualiza pacotes e instala dependências
-RUN apt-get update && apt-get install -y wget unzip
-
-# Baixa e instala o Google Chrome
-RUN wget -q -O google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt-get install -y ./google-chrome.deb \
-    && rm google-chrome.deb
-
-# Instala pacotes essenciais
+# Instalar dependências do Chrome
 RUN apt-get update && apt-get install -y \
-    wget curl unzip xvfb \
-    ca-certificates fonts-liberation libasound2 \
-    libatk-bridge2.0-0 libatk1.0-0 libcups2 \
-    libdbus-1-3 libdrm2 libgbm1 libnspr4 libnss3 \
-    libx11-xcb1 libxcomposite1 libxdamage1 libxfixes3 \
-    libxrandr2 libxrender1 libxss1 libxtst6 \
-    && rm -rf /var/lib/apt/lists/*
+    wget \
+    curl \
+    gnupg2 \
+    ca-certificates \
+    --no-install-recommends
 
-# Instala o Google Chrome
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update && \
-    apt-get install -y google-chrome-stable && \
-    rm -rf /var/lib/apt/lists/*
+# Adicionar o repositório do Google Chrome
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 
-# Instala o ChromeDriver (pode ser gerenciado pelo webdriver-manager em tempo de execução)
-RUN wget -q https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -O chromedriver.zip && \
-    unzip chromedriver.zip && \
-    mv chromedriver /usr/bin/ && \
-    chmod +x /usr/bin/chromedriver && \
-    rm chromedriver.zip
+# Instalar o Google Chrome
+RUN apt-get update && apt-get install -y google-chrome-stable --no-install-recommends
 
-# Define a pasta do projeto, copia arquivos etc...
+# Instalar o ChromeDriver
+RUN CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
+    wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip -O /tmp/chromedriver.zip && \
+    unzip /tmp/chromedriver.zip -d /usr/local/bin/ && \
+    rm /tmp/chromedriver.zip
+
+# Configurações do seu projeto
 WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
+# Defina a variável de ambiente
+ENV CHROME_BIN=/usr/bin/google-chrome
+
+# Expor a porta
 EXPOSE 5000
-ENV CHROME_BIN="/usr/bin/google-chrome"  # Ou ajuste se o caminho for diferente
+
+# Comando para rodar o app
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
