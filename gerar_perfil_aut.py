@@ -13,6 +13,8 @@ service = Service(ChromeDriverManager().install())
 
 # 🔹 Configurações para o Chrome
 chrome_options = Options()
+# Define explicitamente o caminho do binário do Google Chrome
+chrome_options.binary_location = os.getenv("CHROME_BIN", "/usr/bin/google-chrome")
 chrome_options.add_argument("--headless")  # Sem interface gráfica
 chrome_options.add_argument("--disable-gpu")  # Desabilitar GPU (recomendado para headless)
 chrome_options.add_argument("--no-sandbox")  # Necessário em alguns servidores
