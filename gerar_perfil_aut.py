@@ -9,9 +9,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Obtém os caminhos do Chrome e do ChromeDriver
-# Se as variáveis de ambiente não estiverem definidas, usa os caminhos padrão:
-# - Chrome: /usr/bin/google-chrome
-# - ChromeDriver: o resultado do ChromeDriverManager().install()
 chrome_binary = os.getenv("CHROME_BIN", "/usr/bin/google-chrome")
 chromedriver_path = os.getenv("CHROMEDRIVER_PATH", ChromeDriverManager().install())
 
@@ -35,7 +32,9 @@ try:
     driver = webdriver.Chrome(service=service, options=chrome_options)
     print("ChromeDriver iniciado com sucesso!")
 
-    # Abre a página de login
+    # Adicionando o print do caminho do Chrome para depuração
+    print("Caminho do Chrome:", chrome_binary)
+
     print("Abrindo página de login...")
     driver.get("https://cobranca01.redeservice.com.br/cobranca.be.energia/Home/Login?ReturnUrl=%2Fcobranca.be.energia%2F")
 
@@ -47,8 +46,7 @@ try:
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
     print("Login realizado com sucesso!")
 
-    # Aguarda o carregamento da página após login
-    time.sleep(5)
+    time.sleep(5)  # Aguarda carregamento da página
     print("URL atual:", driver.current_url)
 
     # Navega nos menus
@@ -57,10 +55,11 @@ try:
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.LINK_TEXT, "Novo"))).click()
     print("Navegação concluída!")
 
-    # Seleciona checkboxes (do índice 5 ao 14)
+    # Seleciona checkboxes
     checkboxes = WebDriverWait(driver, 15).until(
         EC.presence_of_all_elements_located((By.XPATH, "//table//tr//input[@type='checkbox']"))
     )
+    
     for i, checkbox in enumerate(checkboxes[5:15], start=5):
         if not checkbox.is_selected():
             checkbox.click()
@@ -71,7 +70,6 @@ try:
         EC.element_to_be_clickable((By.XPATH, "//button[text()='Iniciar']"))
     ).click()
     print("Processo iniciado!")
-print("Caminho do Chrome:", chrome_binary)
 
 except Exception as e:
     print(f"Erro ao executar o script: {e}")
