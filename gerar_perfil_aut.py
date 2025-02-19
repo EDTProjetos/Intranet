@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-# 🔹 Obtém o caminho do ChromeDriver usando o WebDriver Manager
+# 🔹 Inicializa o serviço do ChromeDriver
 service = Service(ChromeDriverManager().install())
 
 # 🔹 Configurações para o Chrome
