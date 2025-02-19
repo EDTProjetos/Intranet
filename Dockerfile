@@ -1,6 +1,14 @@
 # Usa a imagem do Python como base
 FROM python:3.9
 
+# Atualiza pacotes e instala dependências
+RUN apt-get update && apt-get install -y wget unzip
+
+# Baixa e instala o Google Chrome
+RUN wget -q -O google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+    && apt-get install -y ./google-chrome.deb \
+    && rm google-chrome.deb
+
 # Instala pacotes essenciais
 RUN apt-get update && apt-get install -y \
     wget curl unzip xvfb \
