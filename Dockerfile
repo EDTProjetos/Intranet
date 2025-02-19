@@ -11,15 +11,18 @@ RUN apt-get update && apt-get install -y \
     libxrandr2 libxrender1 libxss1 libxtst6 \
     && rm -rf /var/lib/apt/lists/*
 
-# 🔹 Instala Microsoft Edge e msedgedriver
-RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add - && \
-    echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" | tee /etc/apt/sources.list.d/microsoft-edge.list && \
-    apt-get update && \
-    apt-get install -y microsoft-edge-stable
+# 🔹 Instala o Google Chrome
+RUN curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb && \
+    dpkg -i google-chrome.deb && \
+    apt-get -y install -f && \
+    rm google-chrome.deb
 
-RUN wget -O /usr/bin/msedgedriver https://msedgedriver.azureedge.net/120.0.2210.91/edgedriver_linux64.zip && \
-    unzip /usr/bin/msedgedriver -d /usr/bin/ && \
-    chmod +x /usr/bin/msedgedriver
+# 🔹 Instala o ChromeDriver
+RUN wget -q https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -O chromedriver.zip && \
+    unzip chromedriver.zip && \
+    mv chromedriver /usr/bin/ && \
+    chmod +x /usr/bin/chromedriver && \
+    rm chromedriver.zip
 
 # Define a pasta do projeto
 WORKDIR /app
@@ -32,8 +35,8 @@ COPY . /app/
 # Expõe a porta do Flask
 EXPOSE 5000
 
-# Variável de ambiente para o caminho do EdgeDriver
-ENV EDGE_DRIVER_PATH="/usr/bin/msedgedriver"
+# Variável de ambiente para o caminho do ChromeDriver
+ENV CHROME_DRIVER_PATH="/usr/bin/chromedriver"
 
 # Comando para iniciar o servidor Flask
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
