@@ -1,19 +1,20 @@
-import os
-import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Obtém os caminhos do Chrome e do ChromeDriver
-chrome_binary = os.getenv("CHROME_BIN", "/usr/bin/google-chrome")
-chromedriver_path = os.getenv("CHROMEDRIVER_PATH", ChromeDriverManager().install())
+# Usando o ChromeDriver e as opções para o Chrome no Selenium
+chrome_options = Options()
+chrome_options.binary_location = '/usr/bin/google-chrome-stable'  # Caminho do Chrome
 
-# Inicializa o serviço do ChromeDriver
-service = Service(chromedriver_path)
+# Criando o serviço do ChromeDriver com a instalação do WebDriver Manager
+service = Service(ChromeDriverManager().install())
+
+# Inicializando o driver
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
 
 # Configurações para o Chrome
 chrome_options = Options()
