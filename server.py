@@ -26,15 +26,24 @@ def executar_script():
                 stderr=subprocess.PIPE,
                 text=True
             )
+            
             print(f"Saída do script: {result.stdout}")
             print(f"Erros do script: {result.stderr}")
+            
+            if result.returncode != 0:
+                print(f"Erro ao executar o script: {result.stderr}")
+                script_finalizado = False
+            else:
+                script_finalizado = True
+                print("Script executado com sucesso!")
 
         except Exception as e:
             print(f"Erro ao executar script: {str(e)}")
+            script_finalizado = False
     else:
         print(f"O script não foi encontrado no caminho: {script_path}")
+        script_finalizado = False
     
-    script_finalizado = True
     print("Script finalizado.")
 
 @app.route("/")
