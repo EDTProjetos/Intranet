@@ -31,11 +31,17 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
     apt-get -f install -y
 
 # Definir o caminho do Chrome
-ENV CHROME_BIN=/usr/bin/google-chrome
+ENV CHROME_BIN=/usr/bin/google-chrome-stable
 
 # Instalar o ChromeDriver
 RUN apt-get install -y chromium-driver
 
-# Instalar outras dependências para o Selenium
+# Instalar dependências para o Python e o Selenium
 RUN apt-get install -y python3-pip && \
     pip3 install selenium webdriver-manager
+
+# Expor a porta em que o seu serviço estará rodando (se necessário)
+EXPOSE 5000
+
+# Comando padrão para rodar o aplicativo (caso necessário)
+# CMD ["python3", "app.py"]
