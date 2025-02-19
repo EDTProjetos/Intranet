@@ -71,6 +71,7 @@ try:
         EC.element_to_be_clickable((By.XPATH, "//button[text()='Iniciar']"))
     ).click()
     print("Processo iniciado!")
+print("Caminho do Chrome:", chrome_binary)
 
 except Exception as e:
     print(f"Erro ao executar o script: {e}")
