@@ -1,6 +1,3 @@
 Flask
-Werkzeug
-gunicorn
 selenium
-requests
 webdriver-manager
