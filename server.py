@@ -68,3 +68,17 @@ def verificar_status():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Render usa a variável PORT
     app.run(host="0.0.0.0", port=port)
+from selenium import webdriver
+
+def verificar_versao_msedgedriver():
+    driver = webdriver.Edge()
+    version = driver.capabilities['browserVersion']
+    msedgedriver_version = driver.capabilities['msedgedriverVersion']
+
+    print(f"Versão do navegador Edge: {version}")
+    print(f"Versão do msedgedriver: {msedgedriver_version}")
+
+    driver.quit()
+
+verificar_versao_msedgedriver()
+
