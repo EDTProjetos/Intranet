@@ -2,13 +2,8 @@ from flask import Flask, jsonify, render_template
 import threading
 import subprocess
 import os
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 
 app = Flask(__name__)
-
 script_finalizado = False
 
 def executar_script():
@@ -28,16 +23,13 @@ def executar_script():
                 stderr=subprocess.PIPE,
                 text=True
             )
-            
             print(f"Saída do script: {result.stdout}")
             print(f"Erros do script: {result.stderr}")
-
             script_finalizado = result.returncode == 0
             if script_finalizado:
                 print("Script executado com sucesso!")
             else:
                 print(f"Erro ao executar o script: {result.stderr}")
-
         except Exception as e:
             print(f"Erro ao executar script: {str(e)}")
             script_finalizado = False
