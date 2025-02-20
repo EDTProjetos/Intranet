@@ -78,39 +78,44 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
+      align-items: flex-start;
       width: 100%;
       padding-left: 270px;  /* Espaço para a sidebar */
       padding-top: 80px;    /* Espaço para o cabeçalho fixo */
     }
 
-    /* SLIDER - Ajustes de tamanho e posição */
+    /* TÍTULO ACIMA DO SLIDER */
+    .slider-title {
+      margin-left: 5%;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    /* SLIDER - Mantendo tamanho original do banner */
     #slider {
-      /* Largura menor e deslocado um pouco à esquerda */
-      width: 60%;
-      margin-left: 5%; /* Deixa um espaço na esquerda */
+      width: 80%;               /* Mantém um tamanho grande */
+      margin-left: 5%;          /* Deslocado um pouco à esquerda */
       margin-top: 20px;
       margin-bottom: 20px;
-      position: relative; /* Para posicionar as setas e a progress bar */
+      margin-right: auto;       /* Fica mais à esquerda */
+      position: relative;       /* Para posicionar setas e barra */
       border: 2px solid #009688;
       border-radius: 10px;
       overflow: hidden;
-      /* Se quiser um fundo atrás do slide, descomente: */
-      /* background-color: rgba(255, 255, 255, 0.8); */
     }
-
-    /* Cada "slide" agora será um container para a imagem */
     .slide {
       width: 100%;
       display: none;
       text-align: center;
     }
     .slide img {
-      /* Reduz a altura para deixar o banner menor */
-      max-width: 100%;
-      max-height: 300px; 
-      object-fit: cover;
+      /* Mantém o tamanho original da imagem */
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
     .slide.active {
       display: block;
@@ -127,7 +132,7 @@
       font-size: 2rem;
       cursor: pointer;
       padding: 0 10px;
-      opacity: 0;             /* Fica invisível por padrão */
+      opacity: 0;             /* Invisível por padrão */
       transition: opacity 0.3s;
       z-index: 9999;
     }
@@ -157,6 +162,25 @@
       background: #fcb414;
       width: 0;
       transition: width 0.1s linear;
+    }
+
+    /* BOTÃO DE PAUSAR/RETOMAR O SLIDE */
+    .slider-pause {
+      position: absolute;
+      bottom: 40px;    /* Fica um pouco acima da barra */
+      right: 10px;
+      background-color: #009688;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      opacity: 0;       /* some até passar o mouse */
+      transition: opacity 0.3s;
+      z-index: 9999;
+    }
+    #slider:hover .slider-pause {
+      opacity: 1;
     }
 
     /* Menus de Login e Perfil centralizados */
@@ -333,9 +357,12 @@
   </div>
   
   <div class="content">
+    <!-- Título acima do banner -->
+    <div class="slider-title">Informativos Fevereiro</div>
+
     <!-- SLIDER de Imagens -->
     <div id="slider">
-      <!-- Slides (reduzimos a altura via CSS) -->
+      <!-- Slides (mantemos o tamanho original do banner) -->
       <div class="slide active">
         <img src="static/banner1.png" alt="Banner 1">
       </div>
@@ -354,6 +381,9 @@
       <div class="progress-bar">
         <div class="progress-fill" id="progressFill"></div>
       </div>
+
+      <!-- Botão de Pausar/Retomar -->
+      <button class="slider-pause" id="pauseSlideBtn">Pausar</button>
     </div>
     
     <!-- Menu de Login -->
@@ -471,50 +501,39 @@
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
 
-      // ----------- SLIDER -----------
+      // ----------------- SLIDER -----------------
       const slider = document.getElementById("slider");
-      const slides = document.querySelectorAll('#slider .slide');
+      const slides = slider.querySelectorAll(".slide");
       const arrowLeft = document.getElementById("arrowLeft");
       const arrowRight = document.getElementById("arrowRight");
       const progressFill = document.getElementById("progressFill");
+      const pauseSlideBtn = document.getElementById("pauseSlideBtn");
 
       let currentSlideIndex = 0;
       let slideInterval = 6000; // Tempo de cada imagem (6s)
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
+      let isPaused = false; // Controle para pausar/retomar
 
-      // Exibe o slide com base no índice
       function showSlide(index) {
         slides.forEach((slide, i) => {
           slide.classList.toggle('active', i === index);
         });
       }
 
-      // Próximo slide
       function nextSlide() {
         currentSlideIndex = (currentSlideIndex + 1) % slides.length;
         showSlide(currentSlideIndex);
         resetProgress();
       }
 
-      // Slide anterior
       function prevSlide() {
         currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
         showSlide(currentSlideIndex);
         resetProgress();
       }
 
-      // Reinicia a barra de progresso e o timer
-      function resetProgress() {
-        progress = 0;
-        progressFill.style.width = '0%';
-        clearInterval(progressTimer);
-        clearInterval(slideTimer);
-        startSlider();
-      }
-
-      // Inicia o timer do slide e a barra de progresso
       function startSlider() {
         // Timer de troca automática
         slideTimer = setInterval(nextSlide, slideInterval);
@@ -529,7 +548,36 @@
         }, 100);
       }
 
-      // Inicializa o slider
+      function stopSlider() {
+        clearInterval(slideTimer);
+        clearInterval(progressTimer);
+      }
+
+      function resetProgress() {
+        progress = 0;
+        progressFill.style.width = '0%';
+        stopSlider();
+        if (!isPaused) {
+          startSlider();
+        }
+      }
+
+      // Botão de pausar/retomar
+      pauseSlideBtn.addEventListener("click", function() {
+        if (!isPaused) {
+          // Pausar
+          isPaused = true;
+          stopSlider();
+          pauseSlideBtn.innerText = "Retomar";
+        } else {
+          // Retomar
+          isPaused = false;
+          startSlider();
+          pauseSlideBtn.innerText = "Pausar";
+        }
+      });
+
+      // Inicia o slider
       showSlide(currentSlideIndex);
       startSlider();
 
@@ -537,7 +585,7 @@
       arrowLeft.addEventListener("click", prevSlide);
       arrowRight.addEventListener("click", nextSlide);
 
-      // ----------- FIM SLIDER -----------
+      // ----------------- FIM SLIDER -----------------
 
       // Exibe o slider somente na página inicial (Intranet EDT)
       function showSliderDiv() {
@@ -728,6 +776,7 @@
           const btn = reportButtons[currentReportIndex];
           const newSrc = btn.getAttribute("data-src");
           planejamentoFrame.src = newSrc;
+          // Atualiza o título da seção para o texto do botão clicado
           document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
