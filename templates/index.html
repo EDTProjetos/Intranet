@@ -1,4 +1,3 @@
-
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -13,7 +12,7 @@
       background: url('static/Fundo.jpg') no-repeat center center fixed;
       background-size: cover;
     }
-    /* Título no topo */
+    /* Título fixo no topo */
     #headerTitle {
       position: fixed;
       top: 0;
@@ -81,7 +80,24 @@
       align-items: flex-start;
       width: 100%;
       padding-left: 270px;  /* Espaço para a sidebar */
-      padding-top: 60px;    /* Espaço para o título fixo */
+      padding-top: 80px;    /* Espaço para o título fixo */
+    }
+    /* Slider de Imagens */
+    #slider {
+      width: 80%;
+      max-width: 800px;
+      margin: 20px auto 20px auto;
+      overflow: hidden;
+      position: relative;
+      border: 2px solid #009688;
+      border-radius: 10px;
+    }
+    .slide {
+      width: 100%;
+      display: none;
+    }
+    .slide.active {
+      display: block;
     }
     /* Menus de Login e Perfil centralizados */
     #loginMenu,
@@ -179,7 +195,7 @@
     /* Seção de Planejamento BI – centralizada com ajuste de posição */
     #planejamentoSection {
       display: none;
-      margin: 10px 26px 0 10px; /* 10px top, 26px right, 0 bottom, 10px left */
+      margin: 10px 26px 0 10px;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       padding: 20px;
@@ -222,7 +238,7 @@
   </style>
 </head>
 <body>
-  <!-- Título -->
+  <!-- Título fixo -->
   <div id="headerTitle">Intranet EDT</div>
   
   <div class="sidebar">
@@ -251,6 +267,13 @@
   </div>
   
   <div class="content">
+    <!-- Slider de Imagens -->
+    <div id="slider">
+      <img class="slide active" src="static/slide1.jpg" alt="Slide 1">
+      <img class="slide" src="static/slide2.jpg" alt="Slide 2">
+      <img class="slide" src="static/slide3.jpg" alt="Slide 3">
+    </div>
+    
     <!-- Menu de Login -->
     <div id="loginMenu">
       <h3>Login</h3>
@@ -565,6 +588,20 @@
           updateIframeFromIndex();
         }
       });
+  
+      // ------------------- SLIDER DE IMAGENS -------------------
+      const slides = document.querySelectorAll('#slider .slide');
+      let currentSlideIndex = 0;
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+      }
+      function nextSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        showSlide(currentSlideIndex);
+      }
+      setInterval(nextSlide, 3000);
     });
   </script>
 </body>
