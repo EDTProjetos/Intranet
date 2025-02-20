@@ -1,7 +1,7 @@
 # fly.toml file generated for meu-app on Fly.io
 
 app = "meu-app"
-primary_region = "iad"  # Altere para a região desejada
+primary_region = "grunhido"  # Altere para a região desejada
 
 [build]
 
