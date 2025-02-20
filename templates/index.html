@@ -629,7 +629,7 @@
         // Se estivermos na página de Planejamento BI, ao dar scroll o cabeçalho fica com opacidade reduzida
         if (planejamentoSection && planejamentoSection.style.display !== "none") {
           if (window.scrollY > 10) {
-            headerTitle.style.opacity = 100;
+            headerTitle.style.opacity = 0;
           } else {
             headerTitle.style.opacity = 1;
           }
