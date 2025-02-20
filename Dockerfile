@@ -1,7 +1,7 @@
-# Base image: Python 3.9-slim
+# Imagem base
 FROM python:3.9-slim
 
-# Instalar dependências básicas e ferramentas
+# Instalar ferramentas básicas necessárias para adicionar repositórios e baixar pacotes
 RUN apt-get update && apt-get install -y \
     wget \
     curl \
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 
-# Atualizar o apt e instalar o Google Chrome junto com outras dependências necessárias
+# Atualizar e instalar o Google Chrome e outras bibliotecas necessárias
 RUN apt-get update && apt-get install -y \
     google-chrome-stable \
     libappindicator3-1 \
@@ -37,15 +37,18 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     xdg-utils
 
-# Instalar as dependências do Python (Selenium, webdriver-manager, Flask e Gunicorn)
+# (Opcional) Instalar o Chromium caso seja útil para testes
+RUN apt-get install -y chromium
+
+# Instalar as dependências do Python necessárias para o seu projeto
 RUN pip install --no-cache-dir selenium webdriver-manager flask gunicorn
 
-# Definir o diretório de trabalho e copiar o código do projeto
+# Definir o diretório de trabalho e copiar o código da aplicação
 WORKDIR /app
 COPY . /app
 
-# Expor a porta do aplicativo (por exemplo, 5000)
+# Expor a porta que sua aplicação Flask usará
 EXPOSE 5000
 
-# Comando para iniciar o servidor Flask com Gunicorn (supondo que o seu arquivo seja server.py e o app Flask esteja chamado "app")
+# Comando para iniciar o servidor Flask com Gunicorn
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "server:app"]
