@@ -3,6 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Intranet EDT</title>
+
   <style>
     body {
       display: flex;
@@ -83,23 +84,81 @@
       padding-left: 270px;  /* Espaço para a sidebar */
       padding-top: 80px;    /* Espaço para o cabeçalho fixo */
     }
-    /* Slider de Imagens – centralizado */
+
+    /* SLIDER - Ajustes de tamanho e posição */
     #slider {
-      width: 80%;
-      max-width: 800px;
-      margin: 20px auto;
-      overflow: hidden;
-      position: relative;
+      /* Largura menor e deslocado um pouco à esquerda */
+      width: 60%;
+      margin-left: 5%; /* Deixa um espaço na esquerda */
+      margin-top: 20px;
+      margin-bottom: 20px;
+      position: relative; /* Para posicionar as setas e a progress bar */
       border: 2px solid #009688;
       border-radius: 10px;
+      overflow: hidden;
+      /* Se quiser um fundo atrás do slide, descomente: */
+      /* background-color: rgba(255, 255, 255, 0.8); */
     }
+
+    /* Cada "slide" agora será um container para a imagem */
     .slide {
       width: 100%;
       display: none;
+      text-align: center;
+    }
+    .slide img {
+      /* Reduz a altura para deixar o banner menor */
+      max-width: 100%;
+      max-height: 300px; 
+      object-fit: cover;
     }
     .slide.active {
       display: block;
     }
+
+    /* SETAS DE NAVEGAÇÃO */
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0 10px;
+      opacity: 0;             /* Fica invisível por padrão */
+      transition: opacity 0.3s;
+      z-index: 9999;
+    }
+    .arrow-left {
+      left: 10px;
+    }
+    .arrow-right {
+      right: 10px;
+    }
+    /* Ao passar o mouse no #slider, as setas aparecem */
+    #slider:hover .slider-arrow {
+      opacity: 1;
+    }
+
+    /* BARRA DE PROGRESSO (PARTE INFERIOR DO SLIDER) */
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 6px;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #fcb414;
+      width: 0;
+      transition: width 0.1s linear;
+    }
+
     /* Menus de Login e Perfil centralizados */
     #loginMenu,
     #profileMenu {
@@ -128,6 +187,7 @@
       color: red;
       display: none;
     }
+
     /* Número da versão */
     .version {
       position: fixed;
@@ -137,6 +197,7 @@
       font-size: 14px;
       font-weight: bold;
     }
+
     /* Botão de toggle da sidebar */
     #toggleSidebarBtn {
       position: fixed;
@@ -153,11 +214,13 @@
     #toggleSidebarBtn:hover {
       background-color: #00796B;
     }
+
     /* Mensagens de execução */
     #executionTime,
     #successMessage {
       display: none;
     }
+
     /* Imagem Energia de Todos */
     .energy-of-todos {
       position: absolute;
@@ -170,6 +233,7 @@
       width: 290px;
       margin-bottom: 8px;
     }
+
     /* Pastas do Drive */
     #driveSection {
       display: none;
@@ -193,6 +257,7 @@
       vertical-align: middle;
       margin-right: 8px;
     }
+
     /* Seção de Planejamento BI */
     #planejamentoSection {
       display: none;
@@ -243,7 +308,7 @@
   <div id="headerTitle">Intranet EDT</div>
   
   <div class="sidebar">
-    <!-- Logo (ao clicar nela volta para a página inicial e exibe o slider) -->
+    <!-- Logo -->
     <img src="static/logo 2.png" alt="Logo" class="logo">
     
     <!-- Pastas do Drive -->
@@ -268,11 +333,27 @@
   </div>
   
   <div class="content">
-    <!-- Slider de Imagens (exibido somente na página inicial) -->
+    <!-- SLIDER de Imagens -->
     <div id="slider">
-      <img class="slide active" src="static/banner1.png" alt="Banner 1">
-      <img class="slide" src="static/banner2.png" alt="Banner 2">
-      <img class="slide" src="static/banner3.png" alt="Banner 3">
+      <!-- Slides (reduzimos a altura via CSS) -->
+      <div class="slide active">
+        <img src="static/banner1.png" alt="Banner 1">
+      </div>
+      <div class="slide">
+        <img src="static/banner2.png" alt="Banner 2">
+      </div>
+      <div class="slide">
+        <img src="static/banner3.png" alt="Banner 3">
+      </div>
+
+      <!-- Botões de navegação (setas) -->
+      <button class="slider-arrow arrow-left" id="arrowLeft">&#10094;</button>
+      <button class="slider-arrow arrow-right" id="arrowRight">&#10095;</button>
+
+      <!-- Barrinha de progresso -->
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
     </div>
     
     <!-- Menu de Login -->
@@ -364,7 +445,7 @@
     document.addEventListener("DOMContentLoaded", function () {
       let loggedIn = false;
       let requestedSection = null;
-  
+
       const headerTitle = document.getElementById("headerTitle");
       const logo = document.querySelector(".logo");
       const googleDriveLink = document.getElementById("googleDriveLink");
@@ -372,42 +453,109 @@
       const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
       const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
       const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
-  
+
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       const sidebar = document.querySelector(".sidebar");
-  
+
       const loginMenu = document.getElementById("loginMenu");
       const loginBtn = document.getElementById("loginBtn");
       const usernameInput = document.getElementById("username");
       const passwordInput = document.getElementById("password");
       const loginError = document.getElementById("loginError");
-  
+
       const profileMenu = document.getElementById("profileMenu");
       const generateProfileBtn = document.getElementById("generateProfileBtn");
       const executionTime = document.getElementById("executionTime");
       const successMessage = document.getElementById("successMessage");
-  
+
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
+
+      // ----------- SLIDER -----------
       const slider = document.getElementById("slider");
-  
+      const slides = document.querySelectorAll('#slider .slide');
+      const arrowLeft = document.getElementById("arrowLeft");
+      const arrowRight = document.getElementById("arrowRight");
+      const progressFill = document.getElementById("progressFill");
+
+      let currentSlideIndex = 0;
+      let slideInterval = 6000; // Tempo de cada imagem (6s)
+      let slideTimer = null;
+      let progressTimer = null;
+      let progress = 0;
+
+      // Exibe o slide com base no índice
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+      }
+
+      // Próximo slide
+      function nextSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+
+      // Slide anterior
+      function prevSlide() {
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+
+      // Reinicia a barra de progresso e o timer
+      function resetProgress() {
+        progress = 0;
+        progressFill.style.width = '0%';
+        clearInterval(progressTimer);
+        clearInterval(slideTimer);
+        startSlider();
+      }
+
+      // Inicia o timer do slide e a barra de progresso
+      function startSlider() {
+        // Timer de troca automática
+        slideTimer = setInterval(nextSlide, slideInterval);
+
+        // Timer da barra de progresso (atualiza a cada 100ms)
+        progressTimer = setInterval(() => {
+          progress += (100 / (slideInterval / 100));
+          if (progress >= 100) {
+            progress = 100;
+          }
+          progressFill.style.width = progress + '%';
+        }, 100);
+      }
+
+      // Inicializa o slider
+      showSlide(currentSlideIndex);
+      startSlider();
+
+      // Eventos das setas
+      arrowLeft.addEventListener("click", prevSlide);
+      arrowRight.addEventListener("click", nextSlide);
+
+      // ----------- FIM SLIDER -----------
+
       // Exibe o slider somente na página inicial (Intranet EDT)
-      function showSlider() {
+      function showSliderDiv() {
         if (slider) {
           slider.style.display = "block";
         }
       }
-      function hideSlider() {
+      function hideSliderDiv() {
         if (slider) {
           slider.style.display = "none";
         }
       }
-  
+
       // Inicialmente, como estamos na página inicial, mostramos o slider
-      showSlider();
+      showSliderDiv();
       hideAllMenus();
       updateHeaderTitle("Intranet EDT");
-  
+
       // Função para esconder todos os menus (exceto o slider)
       function hideAllMenus() {
         loginMenu.style.display = "none";
@@ -415,35 +563,35 @@
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
       }
-  
+
       // Atualiza o título do cabeçalho
       function updateHeaderTitle(text) {
         headerTitle.innerText = text;
       }
-  
-      // Esconde a sidebar (usado para limpar a visualização da página inicial)
+
+      // Esconde a sidebar
       function hideSidebar() {
         sidebar.style.transform = "translateX(-100%)";
         toggleSidebarBtn.innerText = "Mostrar Sidebar";
       }
-  
-      // Clique na logo: volta para a página inicial, mostra o slider e define o título como "Intranet EDT"
+
+      // Clique na logo: volta para a página inicial
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
-        showSlider();
+        showSliderDiv();
         requestedSection = null;
       });
-  
+
       // Ao clicar em qualquer botão da sidebar (exceto a logo), esconde o slider
       googleDriveLink.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle(this.innerText);
         driveSection.style.display = "block";
-        hideSlider();
+        hideSliderDiv();
         requestedSection = null;
       });
-  
+
       planejamentoBtn.addEventListener("click", function() {
         if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
@@ -451,10 +599,9 @@
         } else {
           planejamentoSubmenu.style.display = "none";
         }
-        // Mesmo ao clicar em Planejamento, esconde o slider
-        hideSlider();
+        hideSliderDiv();
       });
-  
+
       planejamentoBIBtn.addEventListener("click", function() {
         hideAllMenus();
         if (loggedIn) {
@@ -469,9 +616,9 @@
           requestedSection = "planejamentoBI";
           updateHeaderTitle("Login - Planejamento BI");
         }
-        hideSlider();
+        hideSliderDiv();
       });
-  
+
       planejamentoPerfilBtn.addEventListener("click", function() {
         hideAllMenus();
         if (loggedIn) {
@@ -486,14 +633,14 @@
           requestedSection = "planejamentoPerfil";
           updateHeaderTitle("Login - Geração de perfil");
         }
-        hideSlider();
+        hideSliderDiv();
       });
-  
+
       loginBtn.addEventListener("click", function () {
         if (usernameInput.value === "admin" && passwordInput.value === "admin") {
           loggedIn = true;
           loginMenu.style.display = "none";
-  
+
           if (requestedSection === "planejamentoBI") {
             planejamentoSection.style.display = "block";
             updateHeaderTitle("Planejamento BI");
@@ -509,32 +656,30 @@
           loginError.style.display = "block";
         }
       });
-  
+
       generateProfileBtn.addEventListener("click", function () {
         generateProfileBtn.disabled = true;
         generateProfileBtn.style.backgroundColor = "#A9A9A9";
         generateProfileBtn.innerText = "Gerando...";
-  
+
         successMessage.style.display = "none";
         executionTime.style.display = "none";
-  
+
         fetch("/executar-script", { method: "POST" })
           .then(response => response.json())
           .then(data => {
             console.log(data.message);
             const currentTime = new Date().toLocaleString();
             localStorage.setItem("lastExecutionTime", currentTime);
-            
-            // CORREÇÃO AQUI (uso de crases):
             executionTime.innerText = `Última execução: ${currentTime}`;
             executionTime.style.display = "block";
-  
+
             setTimeout(() => {
               successMessage.style.display = "block";
               generateProfileBtn.disabled = false;
               generateProfileBtn.style.backgroundColor = "#009688";
               generateProfileBtn.innerText = "Gerar Perfil";
-  
+
               setTimeout(() => {
                 successMessage.style.display = "none";
               }, 3000);
@@ -548,8 +693,8 @@
             generateProfileBtn.innerText = "Gerar Perfil";
           });
       });
-  
-      // Outros botões da sidebar (exceto os já tratados) também escondem o slider
+
+      // Outros botões da sidebar
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn)"
       );
@@ -558,10 +703,10 @@
           hideAllMenus();
           updateHeaderTitle(this.innerText);
           requestedSection = null;
-          hideSlider();
+          hideSliderDiv();
         });
       });
-  
+
       toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
@@ -571,61 +716,46 @@
           toggleSidebarBtn.innerText = "Mostrar Sidebar";
         }
       });
-  
+
       // ------------------- RELATÓRIOS DE BI (HORIZONTAL) -------------------
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
       let currentReportIndex = 0;
-  
+
       function updateIframeFromIndex() {
         if (reportButtons.length > 0) {
           const btn = reportButtons[currentReportIndex];
           const newSrc = btn.getAttribute("data-src");
           planejamentoFrame.src = newSrc;
-          // Atualiza o título da seção para o texto do botão clicado
           document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
-  
+
       reportButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
           currentReportIndex = index;
           updateIframeFromIndex();
         });
       });
-  
+
       const prevReport = document.getElementById("prevReport");
       const nextReport = document.getElementById("nextReport");
-  
+
       prevReport.addEventListener("click", function() {
         if (currentReportIndex > 0) {
           currentReportIndex--;
           updateIframeFromIndex();
         }
       });
-  
+
       nextReport.addEventListener("click", function() {
         if (currentReportIndex < reportButtons.length - 1) {
           currentReportIndex++;
           updateIframeFromIndex();
         }
       });
-  
-      // ------------------- SLIDER DE IMAGENS -------------------
-      const slides = document.querySelectorAll('#slider .slide');
-      let currentSlideIndex = 0;
-      function showSlide(index) {
-        slides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === index);
-        });
-      }
-      function nextSlide() {
-        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-        showSlide(currentSlideIndex);
-      }
-      setInterval(nextSlide, 3000);
-  
+
       // ------------------- TRANSPARÊNCIA DO CABEÇALHO -------------------
       window.addEventListener("scroll", function() {
         // Se estivermos na página de Planejamento BI, ao dar scroll o cabeçalho fica com opacidade reduzida
