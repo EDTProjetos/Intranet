@@ -100,7 +100,7 @@
        - height: 500px (por exemplo; ajuste conforme necessidade) */
     #slider {
       width: 30%;
-      height: 700px; 
+      height: 500px; 
       position: relative;
       border: 2px solid #009688;
       border-radius: 10px;
@@ -117,7 +117,7 @@
     .slide img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Assegura que a imagem preencha o slider sem distorção */
+      object-fit: contain; /* Exibe a imagem inteira dentro do slider */
       display: block;
     }
     .slide.active {
