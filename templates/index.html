@@ -1,4 +1,4 @@
-html lang="pt-BR">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -96,8 +96,8 @@ html lang="pt-BR">
     }
 
     /* Ajuste do tamanho do Slider
-       - width: 45% (para ocupar menos espaço horizontal)
-       - height: 230px (por exemplo; ajuste conforme necessidade) */
+       - width: 30% (para ocupar menos espaço horizontal)
+       - height: 500px (por exemplo; ajuste conforme necessidade) */
     #slider {
       width: 30%;
       height: 500px; 
@@ -117,7 +117,7 @@ html lang="pt-BR">
     .slide img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Preenche sem distorcer */
+      object-fit: cover; /* Assegura que a imagem preencha o slider sem distorção */
       display: block;
     }
     .slide.active {
@@ -186,7 +186,6 @@ html lang="pt-BR">
     }
 
     /* Painel Informativo ao lado do Slider */
-    /* Ajuste a width conforme desejar para o texto */
     .slider-info {
       width: 55%;
       background: rgba(255, 255, 255, 0.8);
@@ -743,7 +742,7 @@ html lang="pt-BR">
           .then(data => {
             const currentTime = new Date().toLocaleString();
             localStorage.setItem("lastExecutionTime", currentTime);
-            executionTime.innerText = Última execução: ${currentTime};
+            executionTime.innerText = `Última execução: ${currentTime}`;
             executionTime.style.display = "block";
 
             setTimeout(() => {
