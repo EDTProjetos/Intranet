@@ -105,6 +105,11 @@
       border: 2px solid #009688;
       border-radius: 10px;
       overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    /* Sombra ao passar o mouse */
+    #slider:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
     }
 
     /* Cada slide ocupa 100% do #slider */
@@ -119,6 +124,7 @@
       height: 100%;
       object-fit: contain; /* Exibe a imagem inteira dentro do slider */
       display: block;
+      cursor: pointer;
     }
     .slide.active {
       display: block;
@@ -271,6 +277,7 @@
     .energy-of-todos img {
       width: 290px;
       margin-bottom: 8px;
+      cursor: pointer;
     }
 
     /* Pastas do Drive */
@@ -340,6 +347,26 @@
       margin: 0;
       padding: 8px;
     }
+
+    /* Modal para visão cheia do banner */
+    #fullScreenModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+    }
+    #fullScreenModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -365,9 +392,11 @@
     <button class="button">Manuais</button>
     <button class="button">Comunicados</button>
     
-    <!-- Energia de Todos -->
+    <!-- Energia de Todos: logo com link -->
     <div class="energy-of-todos">
-      <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
+      <a href="https://energiadetodos.com.br/" target="_blank">
+        <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
+      </a>
     </div>
   </div>
   
@@ -399,13 +428,14 @@
         <button class="slider-pause" id="pauseSlideBtn">Pausar</button>
       </div>
 
-      <!-- Painel Informativo -->
+      <!-- Painel Informativo: só exibido na página inicial -->
       <div class="slider-info">
         <h2>Informativos Fevereiro</h2>
         <p>
           Aqui você encontra as principais notícias e atualizações do mês. 
-          Mantenha-se informado sobre os comunicados e novidades da empresa, 
-          com o visual alinhado à identidade EDT.
+          Mantenha-se informado sobre os comunicados!!!! 
+          
+          #TodosPorTodosEnergiaDeTodos
         </p>
       </div>
     </div>
@@ -494,6 +524,11 @@
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
   
   <div class="version">Versão 1.0.3</div>
+
+  <!-- Modal para visão cheia do banner -->
+  <div id="fullScreenModal">
+    <img id="fullScreenImage" src="" alt="Visão Cheia">
+  </div>
   
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -525,8 +560,9 @@
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
 
-      // ----------------- SLIDER -----------------
+      // Seleciona o slider e o painel de informativos (slider-info)
       const slider = document.getElementById("slider");
+      const sliderInfo = document.querySelector(".slider-info");
       const slides = slider.querySelectorAll(".slide");
       const arrowLeft = document.getElementById("arrowLeft");
       const arrowRight = document.getElementById("arrowRight");
@@ -589,12 +625,10 @@
       // Botão de pausar/retomar
       pauseSlideBtn.addEventListener("click", function() {
         if (!isPaused) {
-          // Pausar
           isPaused = true;
           stopSlider();
           pauseSlideBtn.innerText = "Retomar";
         } else {
-          // Retomar
           isPaused = false;
           startSlider();
           pauseSlideBtn.innerText = "Pausar";
@@ -609,31 +643,31 @@
       arrowLeft.addEventListener("click", prevSlide);
       arrowRight.addEventListener("click", nextSlide);
 
-      // ----------------- FIM SLIDER -----------------
-
-      // Exibe o slider somente na página inicial (Intranet EDT)
+      // Funções para exibir/ocultar slider e o painel de informativos (apenas na página inicial)
       function showSliderDiv() {
         if (slider) {
           slider.style.display = "block";
+        }
+        if (sliderInfo) {
+          sliderInfo.style.display = "block";
         }
       }
       function hideSliderDiv() {
         if (slider) {
           slider.style.display = "none";
         }
+        if (sliderInfo) {
+          sliderInfo.style.display = "none";
+        }
       }
 
-      // Inicialmente, mostramos o slider e ocultamos tudo
-      showSliderDiv();
-      hideAllMenus();
-      updateHeaderTitle("Intranet EDT");
-
-      // Função para esconder todos os menus
+      // Função para esconder todos os menus e fechar o submenu de planejamento
       function hideAllMenus() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
+        planejamentoSubmenu.style.display = "none";
       }
 
       // Atualiza o título do cabeçalho
@@ -655,7 +689,7 @@
         requestedSection = null;
       });
 
-      // Ao clicar em qualquer botão da sidebar (exceto a logo), esconde o slider
+      // Ao clicar em qualquer botão da sidebar (exceto a logo e o próprio planejamento)
       googleDriveLink.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle(this.innerText);
@@ -665,6 +699,7 @@
       });
 
       planejamentoBtn.addEventListener("click", function() {
+        // Toggling do submenu de Planejamento
         if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
           planejamentoSubmenu.style.flexDirection = "column";
@@ -764,7 +799,7 @@
           });
       });
 
-      // Outros botões da sidebar
+      // Outros botões da sidebar que não sejam planejamento
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn)"
       );
@@ -798,7 +833,6 @@
           const btn = reportButtons[currentReportIndex];
           const newSrc = btn.getAttribute("data-src");
           planejamentoFrame.src = newSrc;
-          // Atualiza o título da seção para o texto do botão clicado
           document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
@@ -829,16 +863,28 @@
 
       // ------------------- TRANSPARÊNCIA DO CABEÇALHO -------------------
       window.addEventListener("scroll", function() {
-        // Se estivermos na página de Planejamento BI, ao dar scroll o cabeçalho fica com opacidade reduzida
         if (planejamentoSection && planejamentoSection.style.display !== "none") {
-          if (window.scrollY > 10) {
-            headerTitle.style.opacity = 0;
-          } else {
-            headerTitle.style.opacity = 1;
-          }
+          headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
         } else {
           headerTitle.style.opacity = 1;
         }
+      });
+
+      // ------------------- MODAL DE VISÃO CHEIA DO BANNER -------------------
+      const fullScreenModal = document.getElementById("fullScreenModal");
+      const fullScreenImage = document.getElementById("fullScreenImage");
+
+      // Ao clicar na imagem do slide, abre em visão cheia
+      slider.addEventListener("click", function(event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+
+      // Ao clicar no modal, fecha a visão cheia
+      fullScreenModal.addEventListener("click", function() {
+        fullScreenModal.style.display = "none";
       });
     });
   </script>
