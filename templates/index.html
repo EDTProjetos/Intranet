@@ -95,10 +95,11 @@
       gap: 20px;
     }
 
-    /* Ajuste do tamanho do Slider */
+    /* ====== Alterações no Slider ====== */
+    /* Removida altura fixa para que o slider se ajuste ao tamanho da imagem */
     #slider {
       width: 30%;
-      height: 500px; 
+      height: auto; 
       position: relative;
       border: 2px solid #009688;
       border-radius: 10px;
@@ -109,17 +110,18 @@
     #slider:hover {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
     }
-
-    /* Cada slide ocupa 100% do #slider */
+    /* Cada slide ocupa 100% do slider; a altura agora é definida automaticamente */
     .slide {
       width: 100%;
-      height: 100%;
+      height: auto;
       display: none;
       text-align: center;
     }
+    /* A imagem preenche a largura do slider e ajusta a altura automaticamente,
+       mantendo a proporção e acompanhando o zoom da página */
     .slide img {
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: contain; /* Exibe a imagem inteira */
       display: block;
       cursor: pointer;
@@ -127,6 +129,7 @@
     .slide.active {
       display: block;
     }
+    /* ====== Fim das Alterações no Slider ====== */
 
     /* Setas de navegação com cor preta */
     .slider-arrow {
@@ -135,7 +138,7 @@
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: #000;  /* Alterado para preto */
+      color: #000;
       font-size: 2rem;
       cursor: pointer;
       padding: 0 10px;
@@ -170,7 +173,7 @@
       transition: width 0.1s linear;
     }
 
-    /* Botão de pause/play (substituindo texto "Pausar/Retomar") */
+    /* Botão de pause/play */
     .slider-pause {
       position: absolute;
       bottom: 40px;
@@ -237,7 +240,7 @@
       display: none;
       width: 1525px;
       height: 855px;
-      margin: 30px auto; /* Centralizado horizontalmente */
+      margin: 30px auto;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       border-radius: 10px;
@@ -250,7 +253,7 @@
       border: none;
     }
 
-    /* Número da versão: alterado para 1.0.7 com fundo verde e letra branca */
+    /* Número da versão */
     .version {
       position: fixed;
       bottom: 10px;
@@ -735,7 +738,7 @@
           .then(data => {
             const currentTime = new Date().toLocaleString();
             localStorage.setItem("lastExecutionTime", currentTime);
-            executionTime.innerText = Última execução: ${currentTime};
+            executionTime.innerText = `Última execução: ${currentTime}`;
             executionTime.style.display = "block";
             setTimeout(() => {
               successMessage.style.display = "block";
