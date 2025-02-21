@@ -128,14 +128,14 @@
       display: block;
     }
 
-    /* Setas de navegação */
+    /* Setas de navegação com cor preta */
     .slider-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: #fff;
+      color: #000;  /* Alterado para preto */
       font-size: 2rem;
       cursor: pointer;
       padding: 0 10px;
@@ -170,7 +170,7 @@
       transition: width 0.1s linear;
     }
 
-    /* Botão de Pausar/Retomar */
+    /* Botão de pause/play (substituindo texto "Pausar/Retomar") */
     .slider-pause {
       position: absolute;
       bottom: 40px;
@@ -184,6 +184,7 @@
       opacity: 0;
       transition: opacity 0.3s;
       z-index: 9999;
+      font-size: 1.5rem;
     }
     #slider:hover .slider-pause {
       opacity: 1;
@@ -249,14 +250,17 @@
       border: none;
     }
 
-    /* Número da versão */
+    /* Número da versão: alterado para 1.0.7 com fundo verde e letra branca */
     .version {
       position: fixed;
       bottom: 10px;
       right: 10px;
-      color: rgba(0, 150, 136, 0.7);
+      background-color: #009688;
+      color: #fff;
       font-size: 14px;
       font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
     }
 
     /* Botão de toggle da sidebar */
@@ -419,8 +423,8 @@
           <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <!-- Botão de Pausar/Retomar -->
-        <button class="slider-pause" id="pauseSlideBtn">Pausar</button>
+        <!-- Botão de pause/play -->
+        <button class="slider-pause" id="pauseSlideBtn">⏸</button>
       </div>
 
       <!-- Painel Informativo: só exibido na página inicial -->
@@ -503,7 +507,7 @@
   
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
   
-  <div class="version">Versão 1.0.3</div>
+  <div class="version">Versão 1.0.7</div>
 
   <!-- Modal para visão cheia do banner -->
   <div id="fullScreenModal">
@@ -599,11 +603,13 @@
         if (!isPaused) {
           isPaused = true;
           stopSlider();
-          pauseSlideBtn.innerText = "Retomar";
+          // Ao pausar, mostra o ícone de play
+          pauseSlideBtn.innerText = "▶";
         } else {
           isPaused = false;
           startSlider();
-          pauseSlideBtn.innerText = "Pausar";
+          // Ao retomar, mostra o ícone de pause
+          pauseSlideBtn.innerText = "⏸";
         }
       });
 
