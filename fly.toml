@@ -6,9 +6,7 @@ primary_region = "gru"  # Altere para a região desejada
 [build]
 
 [env]
-PORT = "5000"
-GOOGLE_CLIENT_ID = "828984568517-6u0g7ptho74vtdjav3fg2a7r3k5rjbve.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = "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"
+PORT = "5000"  # Ajuste conforme necessário
 
 [[services]]
   internal_port = 5000
