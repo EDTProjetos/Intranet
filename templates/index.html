@@ -228,22 +228,29 @@
       color: red;
       display: none;
     }
-    /* Container para Drive */
+    /* Seção Drive customizada */
     #driveSection {
       display: none;
-      width: 1525px;
-      height: 855px;
-      margin: 30px auto;
+      margin: 20px auto;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       border-radius: 10px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
+      padding: 20px;
+      width: calc(100% - 270px - 40px);
     }
-    #driveSection iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    #driveSection h2 {
+      margin-top: 0;
+    }
+    #driveFilesList ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    #driveFilesList li {
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
     }
     /* Seção Planejamento BI */
     #planejamentoSection {
@@ -298,7 +305,6 @@
     /* Ajuste para o tamanho do iframe do BI preencher */
     #biReportContent {
       width: 100%;
-      /* Ajuste a altura conforme a necessidade (300px é um espaço aproximado para topo e botões) */
       height: calc(100vh - 300px);
       box-sizing: border-box;
     }
@@ -480,9 +486,16 @@
       <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
     </div>
     
-    <!-- Pastas do Drive -->
+    <!-- Seção Drive customizada -->
     <div id="driveSection">
-      <iframe src="https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR"></iframe>
+      <h2>Google Drive</h2>
+      <div id="driveFilesList"></div>
+      <hr>
+      <h3>Upload de arquivo</h3>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" id="driveFileInput">
+        <button type="submit" class="button">Enviar Arquivo</button>
+      </form>
     </div>
     
     <!-- Seção Importações -->
@@ -498,30 +511,13 @@
       <div id="biReportsContainer">
         <button class="button arrowBtn" id="prevReport">&#8592;</button>
         <div id="biReportsMenu">
-          <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">
+          <button class="button" data-src="https://app.powerbi.com/view?r=...">
             BI Inicial
           </button>
-          <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">
+          <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=...">
             BI Geral
           </button>
-          <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">
-            Relatório de faturamento
-          </button>
-          <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">
-            Relatório das franquias
-          </button>
-          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">
-            Relatório Sit Bol
-          </button>
-          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">
-            Rel de cancelamentos
-          </button>
-          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">
-            Relatório de Usinas
-          </button>
-          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">
-            Rel de Vendas
-          </button>
+          <!-- Outros botões... -->
         </div>
         <button class="button arrowBtn" id="nextReport">&#8594;</button>
       </div>
@@ -530,7 +526,7 @@
       <div id="biReportContent">
         <iframe 
           id="planejamentoFrame"
-          src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488"
+          src="https://app.powerbi.com/view?r=..."
           allowFullScreen="true">
         </iframe>
       </div>
@@ -570,9 +566,9 @@
     document.addEventListener("DOMContentLoaded", function () {
       let loggedIn = false;
       let requestedSection = null;
-      let profileTimeout;  // Variável para controle do setTimeout da geração de perfil
+      let profileTimeout;  // Controle para a geração de perfil
 
-      // Garante que as mensagens de perfil fiquem ocultas ao iniciar
+      // Oculta mensagens iniciais
       document.getElementById("executionTime").style.display = "none";
       document.getElementById("successMessage").style.display = "none";
 
@@ -619,24 +615,22 @@
       let progress = 0;
       let isPaused = false;
 
-      // === NOVA FUNÇÃO: esconde tudo, menos o submenu Planejamento ===
+      // Funções para esconder e mostrar menus
       function hideAllButSubmenu() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
-        // NÃO escondemos o submenu, para mantê-lo aberto
       }
 
-      // === FECHA TODOS OS MENUS, INCLUINDO O SUBMENU DE PLANEJAMENTO ===
       function hideAllMenus() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
-        planejamentoSubmenu.style.display = "none"; // Agora fechamos o submenu
+        planejamentoSubmenu.style.display = "none";
       }
 
       function updateHeaderTitle(text) {
@@ -691,25 +685,57 @@
         if (sliderInfo) sliderInfo.style.display = "none";
       }
 
-      // === EVENTOS DO SLIDER ===
-      pauseSlideBtn.addEventListener("click", function() {
-        if (!isPaused) {
-          isPaused = true;
-          stopSlider();
-          pauseSlideBtn.innerText = "▶";
-        } else {
-          isPaused = false;
-          startSlider();
-          pauseSlideBtn.innerText = "⏸";
+      // Função para carregar os arquivos do Google Drive
+      function loadDriveFiles() {
+        fetch("/drive/files")
+          .then(response => response.json())
+          .then(data => {
+            let fileListDiv = document.getElementById("driveFilesList");
+            fileListDiv.innerHTML = "";
+            if (data.files && data.files.length > 0) {
+              let ul = document.createElement("ul");
+              data.files.forEach(file => {
+                let li = document.createElement("li");
+                li.textContent = file.name;
+                ul.appendChild(li);
+              });
+              fileListDiv.appendChild(ul);
+            } else {
+              fileListDiv.innerText = "Nenhum arquivo encontrado.";
+            }
+          })
+          .catch(err => {
+            console.error("Erro ao carregar arquivos:", err);
+          });
+      }
+
+      // Evento de upload de arquivo
+      document.getElementById("uploadForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        let fileInput = document.getElementById("driveFileInput");
+        if (fileInput.files.length == 0) {
+          alert("Selecione um arquivo para enviar.");
+          return;
         }
+        let formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        
+        fetch("/drive/upload", {
+          method: "POST",
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert("Arquivo enviado com sucesso!");
+          loadDriveFiles(); // recarrega a lista
+        })
+        .catch(err => {
+          console.error("Erro no upload:", err);
+          alert("Erro ao enviar arquivo.");
+        });
       });
-      arrowLeft.addEventListener("click", prevSlide);
-      arrowRight.addEventListener("click", nextSlide);
 
-      showSlide(currentSlideIndex);
-      startSlider();
-
-      // === EVENTOS DE CLIQUE ===
+      // === EVENTOS ===
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
@@ -719,13 +745,13 @@
 
       googleDriveLink.addEventListener("click", function () {
         hideAllMenus();
-        updateHeaderTitle(this.innerText);
+        updateHeaderTitle("Pastas do Drive");
         driveSection.style.display = "block";
         hideSliderDiv();
+        loadDriveFiles();
         requestedSection = null;
       });
 
-      // === Botão Planejamento: abre e fecha o submenu ao ser clicado ===
       planejamentoBtn.addEventListener("click", function() {
         if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
@@ -736,13 +762,12 @@
         hideSliderDiv();
       });
 
-      // === Planejamento BI (esconde sidebar) ===
       planejamentoBIBtn.addEventListener("click", function() {
-        hideAllButSubmenu(); // esconde todas as seções, mas mantém submenu aberto
+        hideAllButSubmenu();
         if (loggedIn) {
           planejamentoSection.style.display = "block";
           updateHeaderTitle("Planejamento BI");
-          hideSidebar(); // SOMENTE AQUI escondemos a sidebar
+          hideSidebar();
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -754,13 +779,11 @@
         hideSliderDiv();
       });
 
-      // === Geração de Perfil (não esconde sidebar) ===
       planejamentoPerfilBtn.addEventListener("click", function() {
         hideAllButSubmenu(); 
         if (loggedIn) {
           profileMenu.style.display = "block";
           updateHeaderTitle("Geração de perfil");
-          // Não esconde a sidebar aqui
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -772,13 +795,11 @@
         hideSliderDiv();
       });
 
-      // === Importações (não esconde sidebar) ===
       planejamentoImportacoesBtn.addEventListener("click", function() {
         hideAllButSubmenu(); 
         if (loggedIn) {
           importacoesSection.style.display = "block";
           updateHeaderTitle("Importações");
-          // Não esconde a sidebar
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -844,13 +865,11 @@
           });
       });
 
-      // === Botões superiores que não devem fechar submenu Planejamento (exceto quando for outro menu) ===
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn)"
       );
       otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
-          // Aqui sim, fechamos tudo, incluindo o submenu de Planejamento
           hideAllMenus();
           updateHeaderTitle(this.innerText);
           requestedSection = null;
@@ -858,7 +877,6 @@
         });
       });
 
-      // === Toggle do botão de sidebar ===
       toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
@@ -869,7 +887,6 @@
         }
       });
 
-      // === Navegação dos relatórios BI ===
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
@@ -908,7 +925,6 @@
         }
       });
 
-      // === Ajuste do cabeçalho ao scrollar na página de Planejamento ===
       window.addEventListener("scroll", function() {
         if (planejamentoSection && planejamentoSection.style.display !== "none") {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
@@ -917,7 +933,6 @@
         }
       });
 
-      // === Modal de visão cheia do banner ===
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
 
@@ -932,7 +947,6 @@
         fullScreenModal.style.display = "none";
       });
       
-      // === Modal de versão ===
       const versionDiv = document.querySelector(".version");
       const versionModal = document.getElementById("versionModal");
       versionDiv.addEventListener("click", function() {
