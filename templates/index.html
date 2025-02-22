@@ -619,79 +619,24 @@
       let progress = 0;
       let isPaused = false;
 
-      function showSlide(index) {
-        slides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === index);
-        });
+      // === NOVA FUNÇÃO: esconde tudo, menos o submenu Planejamento ===
+      function hideAllButSubmenu() {
+        loginMenu.style.display = "none";
+        profileMenu.style.display = "none";
+        driveSection.style.display = "none";
+        planejamentoSection.style.display = "none";
+        importacoesSection.style.display = "none";
+        // NÃO escondemos o submenu, para mantê-lo aberto
       }
 
-      function nextSlide() {
-        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-        showSlide(currentSlideIndex);
-        resetProgress();
-      }
-
-      function prevSlide() {
-        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-        showSlide(currentSlideIndex);
-        resetProgress();
-      }
-
-      function startSlider() {
-        slideTimer = setInterval(nextSlide, slideInterval);
-        progressTimer = setInterval(() => {
-          progress += (100 / (slideInterval / 100));
-          if (progress >= 100) progress = 100;
-          progressFill.style.width = progress + '%';
-        }, 100);
-      }
-
-      function stopSlider() {
-        clearInterval(slideTimer);
-        clearInterval(progressTimer);
-      }
-
-      function resetProgress() {
-        progress = 0;
-        progressFill.style.width = '0%';
-        stopSlider();
-        if (!isPaused) startSlider();
-      }
-
-      pauseSlideBtn.addEventListener("click", function() {
-        if (!isPaused) {
-          isPaused = true;
-          stopSlider();
-          pauseSlideBtn.innerText = "▶";
-        } else {
-          isPaused = false;
-          startSlider();
-          pauseSlideBtn.innerText = "⏸";
-        }
-      });
-
-      showSlide(currentSlideIndex);
-      startSlider();
-
-      arrowLeft.addEventListener("click", prevSlide);
-      arrowRight.addEventListener("click", nextSlide);
-
-      function showSliderDiv() {
-        if (slider) slider.style.display = "block";
-        if (sliderInfo) sliderInfo.style.display = "block";
-      }
-      function hideSliderDiv() {
-        if (slider) slider.style.display = "none";
-        if (sliderInfo) sliderInfo.style.display = "none";
-      }
-
+      // === MANTÉM A FUNÇÃO ORIGINAL, MAS REMOVEMOS O FECHAMENTO DO SUBMENU ===
       function hideAllMenus() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
-        planejamentoSubmenu.style.display = "none";
+        // planejamentoSubmenu.style.display = "none"; // REMOVIDO para não fechar submenu
       }
 
       function updateHeaderTitle(text) {
@@ -703,6 +648,68 @@
         toggleSidebarBtn.innerText = "Mostrar Sidebar";
       }
 
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+      }
+      function nextSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+      function prevSlide() {
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+      function startSlider() {
+        slideTimer = setInterval(nextSlide, slideInterval);
+        progressTimer = setInterval(() => {
+          progress += (100 / (slideInterval / 100));
+          if (progress >= 100) progress = 100;
+          progressFill.style.width = progress + '%';
+        }, 100);
+      }
+      function stopSlider() {
+        clearInterval(slideTimer);
+        clearInterval(progressTimer);
+      }
+      function resetProgress() {
+        progress = 0;
+        progressFill.style.width = '0%';
+        stopSlider();
+        if (!isPaused) startSlider();
+      }
+
+      function showSliderDiv() {
+        if (slider) slider.style.display = "block";
+        if (sliderInfo) sliderInfo.style.display = "block";
+      }
+      function hideSliderDiv() {
+        if (slider) slider.style.display = "none";
+        if (sliderInfo) sliderInfo.style.display = "none";
+      }
+
+      // === EVENTOS DO SLIDER ===
+      pauseSlideBtn.addEventListener("click", function() {
+        if (!isPaused) {
+          isPaused = true;
+          stopSlider();
+          pauseSlideBtn.innerText = "▶";
+        } else {
+          isPaused = false;
+          startSlider();
+          pauseSlideBtn.innerText = "⏸";
+        }
+      });
+      arrowLeft.addEventListener("click", prevSlide);
+      arrowRight.addEventListener("click", nextSlide);
+
+      showSlide(currentSlideIndex);
+      startSlider();
+
+      // === EVENTOS DE CLIQUE ===
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
@@ -718,22 +725,22 @@
         requestedSection = null;
       });
 
+      // === Planejamento principal: abre somente, não fecha se já estiver aberto ===
       planejamentoBtn.addEventListener("click", function() {
         if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
           planejamentoSubmenu.style.flexDirection = "column";
-        } else {
-          planejamentoSubmenu.style.display = "none";
         }
         hideSliderDiv();
       });
 
+      // === Planejamento BI (esconde sidebar) ===
       planejamentoBIBtn.addEventListener("click", function() {
-        hideAllMenus();
+        hideAllButSubmenu(); // esconde todas as seções, mas mantém submenu aberto
         if (loggedIn) {
           planejamentoSection.style.display = "block";
           updateHeaderTitle("Planejamento BI");
-          hideSidebar();
+          hideSidebar(); // SOMENTE AQUI escondemos a sidebar
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -745,12 +752,13 @@
         hideSliderDiv();
       });
 
+      // === Geração de Perfil (não esconde sidebar) ===
       planejamentoPerfilBtn.addEventListener("click", function() {
-        hideAllMenus();
+        hideAllButSubmenu(); 
         if (loggedIn) {
           profileMenu.style.display = "block";
           updateHeaderTitle("Geração de perfil");
-          hideSidebar();
+          // Não esconde a sidebar aqui
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -762,12 +770,13 @@
         hideSliderDiv();
       });
 
+      // === Importações (não esconde sidebar) ===
       planejamentoImportacoesBtn.addEventListener("click", function() {
-        hideAllMenus();
+        hideAllButSubmenu(); 
         if (loggedIn) {
           importacoesSection.style.display = "block";
           updateHeaderTitle("Importações");
-          hideSidebar();
+          // Não esconde a sidebar
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -790,11 +799,9 @@
           } else if (requestedSection === "planejamentoPerfil") {
             profileMenu.style.display = "block";
             updateHeaderTitle("Geração de perfil");
-            hideSidebar();
           } else if (requestedSection === "importacoes") {
             importacoesSection.style.display = "block";
             updateHeaderTitle("Importações");
-            hideSidebar();
           } else {
             updateHeaderTitle("Intranet EDT");
           }
@@ -804,7 +811,6 @@
       });
 
       generateProfileBtn.addEventListener("click", function () {
-        // Caso exista um timeout anterior, cancela-o
         if(profileTimeout) clearTimeout(profileTimeout);
         generateProfileBtn.disabled = true;
         generateProfileBtn.style.backgroundColor = "#A9A9A9";
@@ -836,11 +842,13 @@
           });
       });
 
+      // === Botões superiores que não devem fechar submenu Planejamento ===
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn)"
       );
       otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
+          // Aqui sim, fechamos tudo
           hideAllMenus();
           updateHeaderTitle(this.innerText);
           requestedSection = null;
@@ -848,6 +856,7 @@
         });
       });
 
+      // === Toggle do botão de sidebar ===
       toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
@@ -858,6 +867,7 @@
         }
       });
 
+      // === Navegação dos relatórios BI ===
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
@@ -896,6 +906,7 @@
         }
       });
 
+      // === Ajuste do cabeçalho ao scrollar na página de Planejamento ===
       window.addEventListener("scroll", function() {
         if (planejamentoSection && planejamentoSection.style.display !== "none") {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
@@ -904,7 +915,7 @@
         }
       });
 
-      // Modal de visão cheia do banner
+      // === Modal de visão cheia do banner ===
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
 
@@ -919,7 +930,7 @@
         fullScreenModal.style.display = "none";
       });
       
-      // Modal de versão
+      // === Modal de versão ===
       const versionDiv = document.querySelector(".version");
       const versionModal = document.getElementById("versionModal");
       versionDiv.addEventListener("click", function() {
