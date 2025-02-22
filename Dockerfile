@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 
-# Atualizar e instalar o Google Chrome e outras bibliotecas necessárias
+# Atualizar e instalar o Google Chrome
 RUN apt-get update && apt-get install -y \
     google-chrome-stable \
     libappindicator3-1 \
@@ -37,11 +37,9 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     xdg-utils
 
-# (Opcional) Instalar o Chromium caso seja útil para testes
-RUN apt-get install -y chromium
-
 # Instalar as dependências do Python necessárias para o seu projeto
-RUN pip install --no-cache-dir selenium webdriver-manager flask gunicorn
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Definir o diretório de trabalho e copiar o código da aplicação
 WORKDIR /app
