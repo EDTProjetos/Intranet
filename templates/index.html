@@ -69,10 +69,10 @@
     .button:hover {
       background-color: #00796B;
     }
-    /* Para os botões do submenu de BI */
-    #biReportsMenu .button {
+    /* Para os botões do submenu de Planejamento */
+    #planejamentoSubmenu .button {
       width: auto;
-      margin: 0 5px;
+      margin: 5px;
     }
     .content {
       flex: 1;
@@ -83,7 +83,6 @@
       padding-left: 270px;  /* Espaço para a sidebar */
       padding-top: 80px;    /* Espaço para o cabeçalho fixo */
     }
-
     /* Container do Slider e Painel Informativo */
     .slider-container {
       display: flex;
@@ -94,9 +93,7 @@
       margin: 20px 5%;
       gap: 20px;
     }
-
     /* ====== Alterações no Slider ====== */
-    /* Removida altura fixa para que o slider se ajuste ao tamanho da imagem */
     #slider {
       width: 30%;
       height: auto; 
@@ -106,23 +103,19 @@
       overflow: hidden;
       transition: box-shadow 0.3s;
     }
-    /* Sombra ao passar o mouse */
     #slider:hover {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
     }
-    /* Cada slide ocupa 100% do slider; a altura agora é definida automaticamente */
     .slide {
       width: 100%;
       height: auto;
       display: none;
       text-align: center;
     }
-    /* A imagem preenche a largura do slider e ajusta a altura automaticamente,
-       mantendo a proporção e acompanhando o zoom da página */
     .slide img {
       width: 100%;
       height: auto;
-      object-fit: contain; /* Exibe a imagem inteira */
+      object-fit: contain;
       display: block;
       cursor: pointer;
     }
@@ -130,8 +123,6 @@
       display: block;
     }
     /* ====== Fim das Alterações no Slider ====== */
-
-    /* Setas de navegação com cor preta */
     .slider-arrow {
       position: absolute;
       top: 50%;
@@ -155,8 +146,6 @@
     #slider:hover .slider-arrow {
       opacity: 1;
     }
-
-    /* Barra de Progresso */
     .progress-bar {
       position: absolute;
       bottom: 0;
@@ -172,8 +161,6 @@
       width: 0;
       transition: width 0.1s linear;
     }
-
-    /* Botão de pause/play */
     .slider-pause {
       position: absolute;
       bottom: 40px;
@@ -192,8 +179,6 @@
     #slider:hover .slider-pause {
       opacity: 1;
     }
-
-    /* Painel Informativo ao lado do Slider */
     .slider-info {
       width: 55%;
       background: rgba(255, 255, 255, 0.8);
@@ -205,7 +190,6 @@
     .slider-info h2 {
       margin-top: 0;
     }
-
     /* Menus de Login e Perfil centralizados */
     #loginMenu,
     #profileMenu {
@@ -234,8 +218,7 @@
       color: red;
       display: none;
     }
-
-    /* Container para Drive: centralizado */
+    /* Container para Drive */
     #driveSection {
       display: none;
       width: 1525px;
@@ -252,21 +235,34 @@
       height: 100%;
       border: none;
     }
-
-    /* Número da versão */
-    .version {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background-color: #009688;
-      color: #fff;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
+    /* Seção Planejamento BI */
+    #planejamentoSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
     }
-
+    #planejamentoSection h2 {
+      margin-top: 0;
+    }
+    /* Seção Importações */
+    #importacoesSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+    #importacoesSection h2 {
+      margin-top: 0;
+    }
     /* Botão de toggle da sidebar */
     #toggleSidebarBtn {
       position: fixed;
@@ -283,71 +279,19 @@
     #toggleSidebarBtn:hover {
       background-color: #00796B;
     }
-
-    /* Mensagens de execução */
-    #executionTime,
-    #successMessage {
-      display: none;
-    }
-
-    /* Imagem Energia de Todos */
-    .energy-of-todos {
-      position: absolute;
-      bottom: 30px;
-      left: 10px;
-      text-align: left;
+    /* Número da versão */
+    .version {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background-color: #009688;
       color: #fff;
-    }
-    .energy-of-todos img {
-      width: 290px;
-      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
       cursor: pointer;
     }
-
-    /* Seção de Planejamento BI */
-    #planejamentoSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-    #planejamentoSection h2 {
-      margin-top: 0;
-    }
-    /* Iframe para relatório */
-    #planejamentoFrame {
-      width: 100%;
-      height: 800px;
-      border: none;
-    }
-    /* Container dos botões de BI e setas (horizontal) */
-    #biReportsContainer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: nowrap;
-    }
-    /* Submenu de BI – botões lado a lado */
-    #biReportsMenu {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 10px;
-    }
-    /* Setas de navegação */
-    .arrowBtn {
-      width: 40px;
-      text-align: center;
-      margin: 0;
-      padding: 8px;
-    }
-
     /* Modal para visão cheia do banner */
     #fullScreenModal {
       display: none;
@@ -367,7 +311,6 @@
       box-shadow: 0 0 15px rgba(255,255,255,0.8);
       cursor: pointer;
     }
-    
     /* Modal de versão */
     #versionModal {
       display: none;
@@ -414,11 +357,12 @@
     <!-- Pastas do Drive -->
     <button class="button" id="googleDriveLink" style="margin-top: 230px;">Pastas do Drive</button>
     
-    <!-- Planejamento e submenu -->
+    <!-- Menu Planejamento com submenu -->
     <button class="button" id="planejamentoBtn">Planejamento</button>
     <div id="planejamentoSubmenu" style="display: none;">
       <button class="button" id="planejamentoBIBtn">Planejamento BI</button>
       <button class="button" id="planejamentoPerfilBtn">Geração de perfil</button>
+      <button class="button" id="planejamentoImportacoesBtn">Importações</button>
     </div>
     
     <!-- Outras opções -->
@@ -493,9 +437,15 @@
       <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
     </div>
     
-    <!-- Pastas do Drive: Container com o iframe do Google Drive Login -->
+    <!-- Pastas do Drive -->
     <div id="driveSection">
       <iframe src="https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR"></iframe>
+    </div>
+    
+    <!-- Seção Importações -->
+    <div id="importacoesSection">
+      <h2>Importações</h2>
+      <p>Aqui você encontra o conteúdo referente às importações.</p>
     </div>
     
     <!-- Planejamento BI -->
@@ -584,6 +534,7 @@
       const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
       const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
       const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
+      const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
 
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       const sidebar = document.querySelector(".sidebar");
@@ -601,8 +552,9 @@
 
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
+      const importacoesSection = document.getElementById("importacoesSection");
 
-      // Seleciona o slider e o painel de informativos (slider-info)
+      // Slider e painel informativo
       const slider = document.getElementById("slider");
       const sliderInfo = document.querySelector(".slider-info");
       const slides = slider.querySelectorAll(".slide");
@@ -612,11 +564,11 @@
       const pauseSlideBtn = document.getElementById("pauseSlideBtn");
 
       let currentSlideIndex = 0;
-      let slideInterval = 6000; // Tempo de cada slide (6s)
+      let slideInterval = 6000; // 6s por slide
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
-      let isPaused = false; // Controle para pausar/retomar
+      let isPaused = false;
 
       function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -661,12 +613,10 @@
         if (!isPaused) {
           isPaused = true;
           stopSlider();
-          // Ao pausar, mostra o ícone de play
           pauseSlideBtn.innerText = "▶";
         } else {
           isPaused = false;
           startSlider();
-          // Ao retomar, mostra o ícone de pause
           pauseSlideBtn.innerText = "⏸";
         }
       });
@@ -691,6 +641,7 @@
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
+        importacoesSection.style.display = "none";
         planejamentoSubmenu.style.display = "none";
       }
 
@@ -762,6 +713,23 @@
         hideSliderDiv();
       });
 
+      planejamentoImportacoesBtn.addEventListener("click", function() {
+        hideAllMenus();
+        if (loggedIn) {
+          importacoesSection.style.display = "block";
+          updateHeaderTitle("Importações");
+          hideSidebar();
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "importacoes";
+          updateHeaderTitle("Login - Importações");
+        }
+        hideSliderDiv();
+      });
+
       loginBtn.addEventListener("click", function () {
         if (usernameInput.value === "admin" && passwordInput.value === "admin") {
           loggedIn = true;
@@ -773,6 +741,10 @@
           } else if (requestedSection === "planejamentoPerfil") {
             profileMenu.style.display = "block";
             updateHeaderTitle("Geração de perfil");
+            hideSidebar();
+          } else if (requestedSection === "importacoes") {
+            importacoesSection.style.display = "block";
+            updateHeaderTitle("Importações");
             hideSidebar();
           } else {
             updateHeaderTitle("Intranet EDT");
@@ -814,7 +786,7 @@
       });
 
       const otherButtons = document.querySelectorAll(
-        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn)"
+        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn)"
       );
       otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
@@ -896,7 +868,7 @@
         fullScreenModal.style.display = "none";
       });
       
-      // Modal de versão: exibe informações ao clicar no número da versão
+      // Modal de versão
       const versionDiv = document.querySelector(".version");
       const versionModal = document.getElementById("versionModal");
       versionDiv.addEventListener("click", function() {
