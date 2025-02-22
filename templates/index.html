@@ -295,6 +295,18 @@
       padding: 8px;
       font-size: 1.5rem;
     }
+    /* Ajuste para o tamanho do iframe do BI preencher */
+    #biReportContent {
+      width: 100%;
+      /* Ajuste a altura conforme a necessidade (300px é um espaço aproximado para topo e botões) */
+      height: calc(100vh - 300px);
+      box-sizing: border-box;
+    }
+    #planejamentoFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
     /* Botão de toggle da sidebar */
     #toggleSidebarBtn {
       position: fixed;
@@ -513,7 +525,8 @@
         </div>
         <button class="button arrowBtn" id="nextReport">&#8594;</button>
       </div>
-      <!-- Iframe para exibir o relatório -->
+
+      <!-- Ajuste de tamanho do iframe para preencher o espaço -->
       <div id="biReportContent">
         <iframe 
           id="planejamentoFrame"
