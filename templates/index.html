@@ -69,10 +69,18 @@
     .button:hover {
       background-color: #00796B;
     }
-    /* Para os botões do submenu de Planejamento */
+    /* Submenu de Planejamento: botões menores */
     #planejamentoSubmenu .button {
       width: auto;
       margin: 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    /* Botão Pastas do Drive: ajuste de tamanho */
+    #googleDriveLink {
+      width: auto;
+      max-width: 200px;
+      padding: 8px 16px;
     }
     .content {
       flex: 1;
@@ -125,8 +133,6 @@
     /* ====== Fim das Alterações no Slider ====== */
     .slider-arrow {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       background: none;
       border: none;
       color: #000;
@@ -137,30 +143,26 @@
       transition: opacity 0.3s;
       z-index: 9999;
     }
-    .arrow-left {
-      left: 10px;
-    }
-    .arrow-right {
-      right: 10px;
-    }
-    #slider:hover .slider-arrow {
-      opacity: 1;
-    }
-    .progress-bar {
-      position: absolute;
-      bottom: 0;
+    /* Modal para visão cheia do banner */
+    #fullScreenModal {
+      display: none;
+      position: fixed;
+      top: 0;
       left: 0;
-      height: 6px;
       width: 100%;
-      background: rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-    .progress-fill {
       height: 100%;
-      background: #fcb414;
-      width: 0;
-      transition: width 0.1s linear;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
     }
+    #fullScreenModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
+    }
+    /* Botão de pause/play */
     .slider-pause {
       position: absolute;
       bottom: 40px;
@@ -179,6 +181,7 @@
     #slider:hover .slider-pause {
       opacity: 1;
     }
+    /* Painel Informativo */
     .slider-info {
       width: 55%;
       background: rgba(255, 255, 255, 0.8);
@@ -263,6 +266,27 @@
     #importacoesSection h2 {
       margin-top: 0;
     }
+    /* Container do BI: agora vertical */
+    #biReportsContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    #biReportsMenu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .arrowBtn {
+      width: 40px;
+      text-align: center;
+      margin: 0;
+      padding: 8px;
+      font-size: 1.5rem;
+    }
     /* Botão de toggle da sidebar */
     #toggleSidebarBtn {
       position: fixed;
@@ -290,25 +314,6 @@
       font-weight: bold;
       padding: 5px 10px;
       border-radius: 5px;
-      cursor: pointer;
-    }
-    /* Modal para visão cheia do banner */
-    #fullScreenModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      align-items: center;
-      justify-content: center;
-      z-index: 100000;
-    }
-    #fullScreenModal img {
-      max-width: 90%;
-      max-height: 90%;
-      box-shadow: 0 0 15px rgba(255,255,255,0.8);
       cursor: pointer;
     }
     /* Modal de versão */
@@ -343,6 +348,24 @@
     }
     #versionModal button:hover {
       background-color: #00796B;
+    }
+    /* Garante que as mensagens de execução fiquem ocultas ao iniciar */
+    #executionTime,
+    #successMessage {
+      display: none;
+    }
+    /* Energia de Todos */
+    .energy-of-todos {
+      position: absolute;
+      bottom: 30px;
+      left: 10px;
+      text-align: left;
+      color: #fff;
+    }
+    .energy-of-todos img {
+      width: 290px;
+      margin-bottom: 8px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -397,6 +420,7 @@
         </div>
 
         <!-- Botões de navegação (setas) -->
+        <!-- Agora para o BI os botões serão usados para rolagem vertical, mas estes permanecem para o slider -->
         <button class="slider-arrow arrow-left" id="arrowLeft">&#10094;</button>
         <button class="slider-arrow arrow-right" id="arrowRight">&#10095;</button>
 
@@ -451,9 +475,9 @@
     <!-- Planejamento BI -->
     <div id="planejamentoSection">
       <h2>Planejamento BI</h2>
-      <!-- Container horizontal para botões de BI e setas -->
+      <!-- Container vertical para botões de BI e setas -->
       <div id="biReportsContainer">
-        <button class="button arrowBtn" id="prevReport">&#8592;</button>
+        <button class="button arrowBtn" id="prevReport">&#8593;</button>
         <div id="biReportsMenu">
           <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">
             BI Inicial
@@ -480,7 +504,7 @@
             Rel de Vendas
           </button>
         </div>
-        <button class="button arrowBtn" id="nextReport">&#8594;</button>
+        <button class="button arrowBtn" id="nextReport">&#8595;</button>
       </div>
       <!-- Iframe para exibir o relatório -->
       <div id="biReportContent">
@@ -526,6 +550,11 @@
     document.addEventListener("DOMContentLoaded", function () {
       let loggedIn = false;
       let requestedSection = null;
+      let profileTimeout;  // Variável para controle do setTimeout da geração de perfil
+
+      // Garante que as mensagens de perfil fiquem ocultas ao iniciar
+      document.getElementById("executionTime").style.display = "none";
+      document.getElementById("successMessage").style.display = "none";
 
       const headerTitle = document.getElementById("headerTitle");
       const logo = document.querySelector(".logo");
@@ -755,6 +784,8 @@
       });
 
       generateProfileBtn.addEventListener("click", function () {
+        // Caso exista um timeout anterior, cancela-o
+        if(profileTimeout) clearTimeout(profileTimeout);
         generateProfileBtn.disabled = true;
         generateProfileBtn.style.backgroundColor = "#A9A9A9";
         generateProfileBtn.innerText = "Gerando...";
@@ -767,7 +798,7 @@
             localStorage.setItem("lastExecutionTime", currentTime);
             executionTime.innerText = `Última execução: ${currentTime}`;
             executionTime.style.display = "block";
-            setTimeout(() => {
+            profileTimeout = setTimeout(() => {
               successMessage.style.display = "block";
               generateProfileBtn.disabled = false;
               generateProfileBtn.style.backgroundColor = "#009688";
