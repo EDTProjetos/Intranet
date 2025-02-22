@@ -629,14 +629,14 @@
         // NÃO escondemos o submenu, para mantê-lo aberto
       }
 
-      // === MANTÉM A FUNÇÃO ORIGINAL, MAS REMOVEMOS O FECHAMENTO DO SUBMENU ===
+      // === FECHA TODOS OS MENUS, INCLUINDO O SUBMENU DE PLANEJAMENTO ===
       function hideAllMenus() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
-        // planejamentoSubmenu.style.display = "none"; // REMOVIDO para não fechar submenu
+        planejamentoSubmenu.style.display = "none"; // Agora fechamos o submenu
       }
 
       function updateHeaderTitle(text) {
@@ -725,11 +725,13 @@
         requestedSection = null;
       });
 
-      // === Planejamento principal: abre somente, não fecha se já estiver aberto ===
+      // === Botão Planejamento: abre e fecha o submenu ao ser clicado ===
       planejamentoBtn.addEventListener("click", function() {
         if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
           planejamentoSubmenu.style.flexDirection = "column";
+        } else {
+          planejamentoSubmenu.style.display = "none";
         }
         hideSliderDiv();
       });
@@ -842,13 +844,13 @@
           });
       });
 
-      // === Botões superiores que não devem fechar submenu Planejamento ===
+      // === Botões superiores que não devem fechar submenu Planejamento (exceto quando for outro menu) ===
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn)"
       );
       otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
-          // Aqui sim, fechamos tudo
+          // Aqui sim, fechamos tudo, incluindo o submenu de Planejamento
           hideAllMenus();
           updateHeaderTitle(this.innerText);
           requestedSection = null;
