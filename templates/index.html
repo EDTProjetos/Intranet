@@ -76,12 +76,6 @@
       padding: 8px 12px;
       font-size: 14px;
     }
-    /* Botão Pastas do Drive: ajuste de tamanho */
-    #googleDriveLink {
-      width: auto;
-      max-width: 200px;
-      padding: 8px 16px;
-    }
     .content {
       flex: 1;
       display: flex;
@@ -142,6 +136,19 @@
       opacity: 0;
       transition: opacity 0.3s;
       z-index: 9999;
+    }
+    .arrow-left {
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .arrow-right {
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    #slider:hover .slider-arrow {
+      opacity: 1;
     }
     /* Modal para visão cheia do banner */
     #fullScreenModal {
@@ -266,19 +273,20 @@
     #importacoesSection h2 {
       margin-top: 0;
     }
-    /* Container do BI: agora vertical */
+    /* Botões do BI lado a lado (horizontal) */
     #biReportsContainer {
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       margin-bottom: 20px;
+      flex-wrap: nowrap;
     }
     #biReportsMenu {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: nowrap;
       gap: 10px;
-      width: 100%;
     }
     .arrowBtn {
       width: 40px;
@@ -420,7 +428,6 @@
         </div>
 
         <!-- Botões de navegação (setas) -->
-        <!-- Agora para o BI os botões serão usados para rolagem vertical, mas estes permanecem para o slider -->
         <button class="slider-arrow arrow-left" id="arrowLeft">&#10094;</button>
         <button class="slider-arrow arrow-right" id="arrowRight">&#10095;</button>
 
@@ -475,9 +482,9 @@
     <!-- Planejamento BI -->
     <div id="planejamentoSection">
       <h2>Planejamento BI</h2>
-      <!-- Container vertical para botões de BI e setas -->
+      <!-- Container horizontal para botões de BI e setas -->
       <div id="biReportsContainer">
-        <button class="button arrowBtn" id="prevReport">&#8593;</button>
+        <button class="button arrowBtn" id="prevReport">&#8592;</button>
         <div id="biReportsMenu">
           <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">
             BI Inicial
@@ -504,7 +511,7 @@
             Rel de Vendas
           </button>
         </div>
-        <button class="button arrowBtn" id="nextReport">&#8595;</button>
+        <button class="button arrowBtn" id="nextReport">&#8594;</button>
       </div>
       <!-- Iframe para exibir o relatório -->
       <div id="biReportContent">
