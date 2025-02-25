@@ -1,11 +1,10 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Intranet EDT</title>
+
   <style>
-    /* Estilos Globais */
     body {
       display: flex;
       font-family: Arial, sans-serif;
@@ -30,10 +29,10 @@
       z-index: 10000;
       transition: opacity 0.3s ease;
     }
-    /* Sidebar */
     .sidebar {
       width: 250px;
       background-color: rgba(0, 150, 136, 0.8);
+      padding: 20px;
       border: 1px solid #fcb414;
       position: fixed;
       left: 0;
@@ -60,7 +59,7 @@
       padding: 10px;
       margin: 10px 0;
       background-color: #009688;
-      color: #fff;
+      color: white;
       border: none;
       cursor: pointer;
       text-align: center;
@@ -77,7 +76,6 @@
       padding: 8px 12px;
       font-size: 14px;
     }
-    /* Área de conteúdo (considera o espaço da sidebar e do cabeçalho) */
     .content {
       flex: 1;
       display: flex;
@@ -87,7 +85,7 @@
       padding-left: 270px;  /* Espaço para a sidebar */
       padding-top: 80px;    /* Espaço para o cabeçalho fixo */
     }
-    /* Container para Slider e Painel Informativo */
+    /* Container do Slider e Painel Informativo */
     .slider-container {
       display: flex;
       flex-direction: row;
@@ -97,9 +95,10 @@
       margin: 20px 5%;
       gap: 20px;
     }
-    /* Slider */
+    /* ====== Alterações no Slider ====== */
     #slider {
       width: 30%;
+      height: auto; 
       position: relative;
       border: 2px solid #009688;
       border-radius: 10px;
@@ -111,6 +110,7 @@
     }
     .slide {
       width: 100%;
+      height: auto;
       display: none;
       text-align: center;
     }
@@ -124,6 +124,7 @@
     .slide.active {
       display: block;
     }
+    /* ====== Fim das Alterações no Slider ====== */
     .slider-arrow {
       position: absolute;
       background: none;
@@ -149,20 +150,24 @@
     #slider:hover .slider-arrow {
       opacity: 1;
     }
-    /* Barrinha de progresso (estilize conforme necessário) */
-    .progress-bar {
-      position: absolute;
-      bottom: 0;
+    /* Modal para visão cheia do banner */
+    #fullScreenModal {
+      display: none;
+      position: fixed;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 5px;
-      background: rgba(0, 0, 0, 0.1);
-    }
-    .progress-fill {
       height: 100%;
-      width: 0%;
-      background: #fcb414;
-      transition: width 0.1s linear;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+    }
+    #fullScreenModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
     }
     /* Botão de pause/play */
     .slider-pause {
@@ -223,9 +228,22 @@
       color: red;
       display: none;
     }
-    /* A seção de drive foi removida, pois o Google não permite embutir sua página de login em um iframe */
+    /* Container para Drive */
     #driveSection {
       display: none;
+      width: 1525px;
+      height: 855px;
+      margin: 30px auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    #driveSection iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
     /* Seção Planejamento BI */
     #planejamentoSection {
@@ -277,9 +295,10 @@
       padding: 8px;
       font-size: 1.5rem;
     }
-    /* Ajuste do iframe do BI */
+    /* Ajuste para o tamanho do iframe do BI preencher */
     #biReportContent {
       width: 100%;
+      /* Ajuste a altura conforme a necessidade (300px é um espaço aproximado para topo e botões) */
       height: calc(100vh - 300px);
       box-sizing: border-box;
     }
@@ -294,7 +313,7 @@
       left: 10px;
       bottom: 10px;
       background-color: #009688;
-      color: #fff;
+      color: white;
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
@@ -325,7 +344,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0,0,0,0.8);
       align-items: center;
       justify-content: center;
       z-index: 100000;
@@ -350,7 +369,7 @@
     #versionModal button:hover {
       background-color: #00796B;
     }
-    /* Mensagens de execução */
+    /* Garante que as mensagens de execução fiquem ocultas ao iniciar */
     #executionTime,
     #successMessage {
       display: none;
@@ -373,17 +392,14 @@
 <body>
   <!-- Cabeçalho fixo -->
   <div id="headerTitle">Intranet EDT</div>
-
-  <!-- Sidebar -->
+  
   <div class="sidebar">
     <!-- Logo -->
-    <img src="static/logo 2.png" alt="Logo" class="logo" />
-
+    <img src="static/logo 2.png" alt="Logo" class="logo">
+    
     <!-- Pastas do Drive -->
-    <button class="button" id="googleDriveLink" style="margin-top: 230px;">
-      Pastas do Drive
-    </button>
-
+    <button class="button" id="googleDriveLink" style="margin-top: 230px;">Pastas do Drive</button>
+    
     <!-- Menu Planejamento com submenu -->
     <button class="button" id="planejamentoBtn">Planejamento</button>
     <div id="planejamentoSubmenu" style="display: none;">
@@ -391,54 +407,57 @@
       <button class="button" id="planejamentoPerfilBtn">Geração de perfil</button>
       <button class="button" id="planejamentoImportacoesBtn">Importações</button>
     </div>
-
+    
     <!-- Outras opções -->
     <button class="button">Conteúdo informativo</button>
     <button class="button">Manuais</button>
     <button class="button">Comunicados</button>
-
-    <!-- Energia de Todos -->
+    
+    <!-- Energia de Todos: logo com link -->
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
-        <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;" />
+        <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
       </a>
     </div>
   </div>
-
-  <!-- Área de Conteúdo -->
+  
   <div class="content">
-    <!-- Slider e Painel Informativo -->
+    <!-- Container para Slider e Painel Informativo -->
     <div class="slider-container">
-      <!-- Slider -->
+      <!-- SLIDER de Imagens -->
       <div id="slider">
         <div class="slide active">
-          <img src="static/banner1.png" alt="Banner 1" />
+          <img src="static/banner1.png" alt="Banner 1">
         </div>
         <div class="slide">
-          <img src="static/banner2.png" alt="Banner 2" />
+          <img src="static/banner2.png" alt="Banner 2">
         </div>
         <div class="slide">
-          <img src="static/banner3.png" alt="Banner 3" />
+          <img src="static/banner3.png" alt="Banner 3">
         </div>
         <div class="slide">
-          <img src="static/banner4.png" alt="Banner 4" />
+          <img src="static/banner4.png" alt="Banner 4">
         </div>
-        <!-- Botões de navegação -->
+
+        <!-- Botões de navegação (setas) -->
         <button class="slider-arrow arrow-left" id="arrowLeft">&#10094;</button>
         <button class="slider-arrow arrow-right" id="arrowRight">&#10095;</button>
+
         <!-- Barrinha de progresso -->
         <div class="progress-bar">
           <div class="progress-fill" id="progressFill"></div>
         </div>
+
         <!-- Botão de pause/play -->
         <button class="slider-pause" id="pauseSlideBtn">⏸</button>
       </div>
-      <!-- Painel Informativo -->
+
+      <!-- Painel Informativo: só exibido na página inicial -->
       <div class="slider-info">
         <h2>Informativos Fevereiro</h2>
         <p>
-          Aqui você encontra as principais notícias e atualizações do mês.
-          Mantenha-se informado sobre os comunicados e novidades da empresa,
+          Aqui você encontra as principais notícias e atualizações do mês. 
+          Mantenha-se informado sobre os comunicados e novidades da empresa, 
           com o visual alinhado à identidade EDT.
         </p>
       </div>
@@ -447,12 +466,12 @@
     <!-- Menu de Login -->
     <div id="loginMenu">
       <h3>Login</h3>
-      <input type="text" id="username" placeholder="Usuário" />
-      <input type="password" id="password" placeholder="Senha" />
+      <input type="text" id="username" placeholder="Usuário">
+      <input type="password" id="password" placeholder="Senha">
       <button class="button" id="loginBtn">Entrar</button>
       <p id="loginError">Usuário ou senha incorretos!</p>
     </div>
-
+    
     <!-- Menu de Perfil -->
     <div id="profileMenu">
       <h3>Geração Automática de Perfil</h3>
@@ -460,22 +479,22 @@
       <p id="executionTime">Última execução: --</p>
       <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
     </div>
-
-    <!-- Seção de Drive (não exibida) -->
+    
+    <!-- Pastas do Drive -->
     <div id="driveSection">
-      <!-- Conteúdo removido; acesso via OAuth -->
+      <iframe src="https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR"></iframe>
     </div>
-
+    
     <!-- Seção Importações -->
     <div id="importacoesSection">
       <h2>Importações</h2>
       <p>Aqui você encontra o conteúdo referente às importações.</p>
     </div>
-
+    
     <!-- Planejamento BI -->
     <div id="planejamentoSection">
       <h2>Planejamento BI</h2>
-      <!-- Container dos botões BI -->
+      <!-- Container horizontal para botões de BI e setas -->
       <div id="biReportsContainer">
         <button class="button arrowBtn" id="prevReport">&#8592;</button>
         <div id="biReportsMenu">
@@ -506,7 +525,8 @@
         </div>
         <button class="button arrowBtn" id="nextReport">&#8594;</button>
       </div>
-      <!-- Iframe para exibir o BI -->
+
+      <!-- Ajuste de tamanho do iframe para preencher o espaço -->
       <div id="biReportContent">
         <iframe 
           id="planejamentoFrame"
@@ -516,45 +536,43 @@
       </div>
     </div>
   </div>
-
-  <!-- Botão de toggle da sidebar -->
+  
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
-
-  <!-- Número da versão -->
+  
   <div class="version">Versão 1.0.7</div>
 
   <!-- Modal para visão cheia do banner -->
   <div id="fullScreenModal">
-    <img id="fullScreenImage" src="" alt="Visão Cheia" />
+    <img id="fullScreenImage" src="" alt="Visão Cheia">
   </div>
-
+  
   <!-- Modal de versão -->
   <div id="versionModal">
     <div class="modal-content">
       <h2>Desenvolvimento</h2>
       <p>
-        Desenvolvimento por <br />
+        Desenvolvimento por <br>
         Raphael Barbosa
       </p>
       <p>
-        Desenvolvimento Front e Back-end <br />
+        Desenvolvimento Front e Back-end <br>
         Raphael Barbosa
       </p>
       <p>
-        Contato <br />
+        Contato <br>
         31 9 9243-4398
       </p>
       <button id="closeVersionModal">Fechar</button>
     </div>
   </div>
-
+  
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       let loggedIn = false;
       let requestedSection = null;
-      let profileTimeout;
+      let profileTimeout;  // Variável para controle do setTimeout da geração de perfil
 
-      // Inicializa mensagens ocultas
+      // Garante que as mensagens de perfil fiquem ocultas ao iniciar
       document.getElementById("executionTime").style.display = "none";
       document.getElementById("successMessage").style.display = "none";
 
@@ -595,38 +613,44 @@
       const pauseSlideBtn = document.getElementById("pauseSlideBtn");
 
       let currentSlideIndex = 0;
-      let slideInterval = 6000; // 6 segundos por slide
+      let slideInterval = 6000; // 6s por slide
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
       let isPaused = false;
 
-      // Funções para esconder menus
+      // === NOVA FUNÇÃO: esconde tudo, menos o submenu Planejamento ===
       function hideAllButSubmenu() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
+        // NÃO escondemos o submenu, para mantê-lo aberto
       }
+
+      // === FECHA TODOS OS MENUS, INCLUINDO O SUBMENU DE PLANEJAMENTO ===
       function hideAllMenus() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
-        planejamentoSubmenu.style.display = "none";
+        planejamentoSubmenu.style.display = "none"; // Agora fechamos o submenu
       }
+
       function updateHeaderTitle(text) {
         headerTitle.innerText = text;
       }
+
       function hideSidebar() {
         sidebar.style.transform = "translateX(-100%)";
         toggleSidebarBtn.innerText = "Mostrar Sidebar";
       }
+
       function showSlide(index) {
         slides.forEach((slide, i) => {
-          slide.classList.toggle("active", i === index);
+          slide.classList.toggle('active', i === index);
         });
       }
       function nextSlide() {
@@ -644,7 +668,7 @@
         progressTimer = setInterval(() => {
           progress += (100 / (slideInterval / 100));
           if (progress >= 100) progress = 100;
-          progressFill.style.width = progress + "%";
+          progressFill.style.width = progress + '%';
         }, 100);
       }
       function stopSlider() {
@@ -653,10 +677,11 @@
       }
       function resetProgress() {
         progress = 0;
-        progressFill.style.width = "0%";
+        progressFill.style.width = '0%';
         stopSlider();
         if (!isPaused) startSlider();
       }
+
       function showSliderDiv() {
         if (slider) slider.style.display = "block";
         if (sliderInfo) sliderInfo.style.display = "block";
@@ -666,8 +691,8 @@
         if (sliderInfo) sliderInfo.style.display = "none";
       }
 
-      // Eventos do slider
-      pauseSlideBtn.addEventListener("click", function () {
+      // === EVENTOS DO SLIDER ===
+      pauseSlideBtn.addEventListener("click", function() {
         if (!isPaused) {
           isPaused = true;
           stopSlider();
@@ -684,21 +709,25 @@
       showSlide(currentSlideIndex);
       startSlider();
 
-      // Eventos de clique
+      // === EVENTOS DE CLIQUE ===
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
         showSliderDiv();
         requestedSection = null;
       });
+
       googleDriveLink.addEventListener("click", function () {
-        window.location.href = "/login";
+        hideAllMenus();
+        updateHeaderTitle(this.innerText);
+        driveSection.style.display = "block";
+        hideSliderDiv();
+        requestedSection = null;
       });
-      planejamentoBtn.addEventListener("click", function () {
-        if (
-          planejamentoSubmenu.style.display === "none" ||
-          planejamentoSubmenu.style.display === ""
-        ) {
+
+      // === Botão Planejamento: abre e fecha o submenu ao ser clicado ===
+      planejamentoBtn.addEventListener("click", function() {
+        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
           planejamentoSubmenu.style.flexDirection = "column";
         } else {
@@ -706,12 +735,14 @@
         }
         hideSliderDiv();
       });
-      planejamentoBIBtn.addEventListener("click", function () {
-        hideAllButSubmenu();
+
+      // === Planejamento BI (esconde sidebar) ===
+      planejamentoBIBtn.addEventListener("click", function() {
+        hideAllButSubmenu(); // esconde todas as seções, mas mantém submenu aberto
         if (loggedIn) {
           planejamentoSection.style.display = "block";
           updateHeaderTitle("Planejamento BI");
-          hideSidebar();
+          hideSidebar(); // SOMENTE AQUI escondemos a sidebar
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -722,11 +753,14 @@
         }
         hideSliderDiv();
       });
-      planejamentoPerfilBtn.addEventListener("click", function () {
-        hideAllButSubmenu();
+
+      // === Geração de Perfil (não esconde sidebar) ===
+      planejamentoPerfilBtn.addEventListener("click", function() {
+        hideAllButSubmenu(); 
         if (loggedIn) {
           profileMenu.style.display = "block";
           updateHeaderTitle("Geração de perfil");
+          // Não esconde a sidebar aqui
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -737,11 +771,14 @@
         }
         hideSliderDiv();
       });
-      planejamentoImportacoesBtn.addEventListener("click", function () {
-        hideAllButSubmenu();
+
+      // === Importações (não esconde sidebar) ===
+      planejamentoImportacoesBtn.addEventListener("click", function() {
+        hideAllButSubmenu(); 
         if (loggedIn) {
           importacoesSection.style.display = "block";
           updateHeaderTitle("Importações");
+          // Não esconde a sidebar
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -752,11 +789,9 @@
         }
         hideSliderDiv();
       });
+
       loginBtn.addEventListener("click", function () {
-        if (
-          usernameInput.value === "admin" &&
-          passwordInput.value === "admin"
-        ) {
+        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
           loggedIn = true;
           loginMenu.style.display = "none";
           if (requestedSection === "planejamentoBI") {
@@ -776,16 +811,17 @@
           loginError.style.display = "block";
         }
       });
+
       generateProfileBtn.addEventListener("click", function () {
-        if (profileTimeout) clearTimeout(profileTimeout);
+        if(profileTimeout) clearTimeout(profileTimeout);
         generateProfileBtn.disabled = true;
         generateProfileBtn.style.backgroundColor = "#A9A9A9";
         generateProfileBtn.innerText = "Gerando...";
         successMessage.style.display = "none";
         executionTime.style.display = "none";
         fetch("/executar-script", { method: "POST" })
-          .then((response) => response.json())
-          .then((data) => {
+          .then(response => response.json())
+          .then(data => {
             const currentTime = new Date().toLocaleString();
             localStorage.setItem("lastExecutionTime", currentTime);
             executionTime.innerText = `Última execução: ${currentTime}`;
@@ -800,26 +836,29 @@
               }, 3000);
             }, 10000);
           })
-          .catch((error) => {
+          .catch(error => {
             alert("Ocorreu um erro ao gerar o perfil.");
             generateProfileBtn.disabled = false;
             generateProfileBtn.style.backgroundColor = "#009688";
             generateProfileBtn.innerText = "Gerar Perfil";
           });
       });
-      // Fechar menus (exceto submenu Planejamento) para outros botões da sidebar
+
+      // === Botões superiores que não devem fechar submenu Planejamento (exceto quando for outro menu) ===
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn)"
       );
-      otherButtons.forEach((btn) => {
+      otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
+          // Aqui sim, fechamos tudo, incluindo o submenu de Planejamento
           hideAllMenus();
           updateHeaderTitle(this.innerText);
           requestedSection = null;
           hideSliderDiv();
         });
       });
-      // Toggle da sidebar
+
+      // === Toggle do botão de sidebar ===
       toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
@@ -829,11 +868,13 @@
           toggleSidebarBtn.innerText = "Mostrar Sidebar";
         }
       });
-      // Navegação dos relatórios BI
+
+      // === Navegação dos relatórios BI ===
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
       let currentReportIndex = 0;
+
       function updateIframeFromIndex() {
         if (reportButtons.length > 0) {
           const btn = reportButtons[currentReportIndex];
@@ -842,60 +883,63 @@
           document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
+
       reportButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
           currentReportIndex = index;
           updateIframeFromIndex();
         });
       });
+
       const prevReport = document.getElementById("prevReport");
       const nextReport = document.getElementById("nextReport");
-      prevReport.addEventListener("click", function () {
+
+      prevReport.addEventListener("click", function() {
         if (currentReportIndex > 0) {
           currentReportIndex--;
           updateIframeFromIndex();
         }
       });
-      nextReport.addEventListener("click", function () {
+
+      nextReport.addEventListener("click", function() {
         if (currentReportIndex < reportButtons.length - 1) {
           currentReportIndex++;
           updateIframeFromIndex();
         }
       });
-      // Ajuste do cabeçalho ao scrollar na página de Planejamento
-      window.addEventListener("scroll", function () {
-        if (
-          planejamentoSection &&
-          planejamentoSection.style.display !== "none"
-        ) {
+
+      // === Ajuste do cabeçalho ao scrollar na página de Planejamento ===
+      window.addEventListener("scroll", function() {
+        if (planejamentoSection && planejamentoSection.style.display !== "none") {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
         } else {
           headerTitle.style.opacity = 1;
         }
       });
-      // Modal para visão cheia do banner
+
+      // === Modal de visão cheia do banner ===
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
-      slider.addEventListener("click", function (event) {
+
+      slider.addEventListener("click", function(event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-      fullScreenModal.addEventListener("click", function () {
+
+      fullScreenModal.addEventListener("click", function() {
         fullScreenModal.style.display = "none";
       });
-      // Modal de versão
+      
+      // === Modal de versão ===
       const versionDiv = document.querySelector(".version");
       const versionModal = document.getElementById("versionModal");
-      versionDiv.addEventListener("click", function () {
+      versionDiv.addEventListener("click", function() {
         versionModal.style.display = "flex";
       });
-      versionModal.addEventListener("click", function (e) {
-        if (
-          e.target.id === "versionModal" ||
-          e.target.id === "closeVersionModal"
-        ) {
+      versionModal.addEventListener("click", function(e) {
+        if(e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
           versionModal.style.display = "none";
         }
       });
