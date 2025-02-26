@@ -201,6 +201,26 @@
     .slider-info h2 {
       margin-top: 0;
     }
+    /* Modal para visão cheia do banner */
+    #fullScreenModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;  /* garante centralização */
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+    }
+    #fullScreenModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
+    }
     /* Menus de Login e Perfil centralizados */
     #loginMenu,
     #profileMenu {
@@ -645,9 +665,7 @@
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
       
-      /* ======================
-         Funções para exibir/ocultar os sliders (apenas na home)
-         ====================== */
+      /* Funções para exibir/ocultar os sliders da home */
       function showHomeSliders() {
         const homeSliders = document.getElementById("homeSliders");
         if(homeSliders) homeSliders.style.display = "block";
@@ -796,9 +814,9 @@
         requestedSection = null;
       });
       
-      // Ao clicar no botão "Google Drive", redireciona para a página de login do Google Drive
+      // Ao clicar no botão "Google Drive", abre uma nova guia
       googleDriveLink.addEventListener("click", function () {
-        window.location.href = "https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR";
+        window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
       });
       
       planejamentoBtn.addEventListener("click", function () {
@@ -985,6 +1003,7 @@
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
       
+      // Ao clicar na imagem do slider, abre o modal centralizado
       slider.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
@@ -992,6 +1011,7 @@
         }
       });
       
+      // Se clicar no modal, ele é fechado
       fullScreenModal.addEventListener("click", function () {
         fullScreenModal.style.display = "none";
       });
@@ -1006,16 +1026,16 @@
           versionModal.style.display = "none";
         }
       });
+      
+      /* Funções auxiliares fora do DOMContentLoaded */
     });
     
-    /* Função auxiliar para esconder outros menus sem afetar os sliders */
     function hideAllButSubmenu() {
       document.getElementById("loginMenu").style.display = "none";
       document.getElementById("profileMenu").style.display = "none";
       document.getElementById("driveSection").style.display = "none";
       document.getElementById("planejamentoSection").style.display = "none";
       document.getElementById("importacoesSection").style.display = "none";
-      // O submenu não é afetado
     }
     function hideAllMenus() {
       document.getElementById("loginMenu").style.display = "none";
