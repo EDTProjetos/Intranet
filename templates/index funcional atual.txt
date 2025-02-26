@@ -85,18 +85,22 @@
       padding-left: 270px;  /* Espaço para a sidebar */
       padding-top: 80px;    /* Espaço para o cabeçalho fixo */
     }
+    /* Container que agrupa os sliders da página inicial */
+    #homeSliders {
+      width: 90%;
+      margin: 20px 5%;
+    }
     /* Container do Slider e Painel Informativo */
     .slider-container {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-items: flex-start;
-      width: 90%;
-      margin: 20px 5%;
       gap: 20px;
+      margin-bottom: 20px;
     }
-    /* ====== Alterações no Slider ====== */
-    #slider {
+    /* ====== Estilização dos Sliders ====== */
+    #slider, #slider2 {
       width: 30%;
       height: auto; 
       position: relative;
@@ -105,7 +109,7 @@
       overflow: hidden;
       transition: box-shadow 0.3s;
     }
-    #slider:hover {
+    #slider:hover, #slider2:hover {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
     }
     .slide {
@@ -124,7 +128,6 @@
     .slide.active {
       display: block;
     }
-    /* ====== Fim das Alterações no Slider ====== */
     .slider-arrow {
       position: absolute;
       background: none;
@@ -147,27 +150,24 @@
       top: 50%;
       transform: translateY(-50%);
     }
-    #slider:hover .slider-arrow {
+    #slider:hover .slider-arrow,
+    #slider2:hover .slider-arrow {
       opacity: 1;
     }
-    /* Modal para visão cheia do banner */
-    #fullScreenModal {
-      display: none;
-      position: fixed;
-      top: 0;
+    /* Barrinha de progresso */
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      align-items: center;
-      justify-content: center;
-      z-index: 100000;
+      height: 5px;
+      background-color: rgba(0, 0, 0, 0.1);
     }
-    #fullScreenModal img {
-      max-width: 90%;
-      max-height: 90%;
-      box-shadow: 0 0 15px rgba(255,255,255,0.8);
-      cursor: pointer;
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background-color: #009688;
+      transition: width 0.1s;
     }
     /* Botão de pause/play */
     .slider-pause {
@@ -185,7 +185,8 @@
       z-index: 9999;
       font-size: 1.5rem;
     }
-    #slider:hover .slider-pause {
+    #slider:hover .slider-pause,
+    #slider2:hover .slider-pause {
       opacity: 1;
     }
     /* Painel Informativo */
@@ -199,6 +200,26 @@
     }
     .slider-info h2 {
       margin-top: 0;
+    }
+    /* Modal para visão cheia do banner */
+    #fullScreenModal {
+      display: none; /* Oculto por padrão */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      /* As propriedades abaixo garantem que, quando exibido via JS, o modal ficará centralizado */
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+    }
+    #fullScreenModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
     }
     /* Menus de Login e Perfil centralizados */
     #loginMenu,
@@ -396,8 +417,8 @@
     <!-- Logo -->
     <img src="static/logo 2.png" alt="Logo" class="logo">
     
-    <!-- Pastas do Drive -->
-    <button class="button" id="googleDriveLink" style="margin-top: 230px;">Pastas do Drive</button>
+    <!-- Botão atualizado para Google Drive -->
+    <button class="button" id="googleDriveLink" style="margin-top: 230px;">Google Drive</button>
     
     <!-- Menu Planejamento com submenu -->
     <button class="button" id="planejamentoBtn">Planejamento</button>
@@ -421,47 +442,89 @@
   </div>
   
   <div class="content">
-    <!-- Container para Slider e Painel Informativo -->
-    <div class="slider-container">
-      <!-- SLIDER de Imagens -->
-      <div id="slider">
-        <div class="slide active">
-          <img src="static/banner1.png" alt="Banner 1">
+    <!-- Container que engloba os sliders da página inicial -->
+    <div id="homeSliders">
+      <!-- Primeiro slider (Informativos Fevereiro) -->
+      <div class="slider-container">
+        <!-- SLIDER de Imagens -->
+        <div id="slider">
+          <div class="slide active">
+            <img src="static/banner1.png" alt="Banner 1">
+          </div>
+          <div class="slide">
+            <img src="static/banner2.png" alt="Banner 2">
+          </div>
+          <div class="slide">
+            <img src="static/banner3.png" alt="Banner 3">
+          </div>
+          <div class="slide">
+            <img src="static/banner4.png" alt="Banner 4">
+          </div>
+          <div class="slide">
+            <img src="static/banner5.png" alt="Banner 5">
+          </div>
+          <!-- Botões de navegação (setas) -->
+          <button class="slider-arrow arrow-left" id="arrowLeft">&#10094;</button>
+          <button class="slider-arrow arrow-right" id="arrowRight">&#10095;</button>
+          <!-- Barrinha de progresso -->
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <!-- Botão de pause/play -->
+          <button class="slider-pause" id="pauseSlideBtn">⏸</button>
         </div>
-        <div class="slide">
-          <img src="static/banner2.png" alt="Banner 2">
+  
+        <!-- Painel Informativo -->
+        <div class="slider-info">
+          <h2>Informativos Fevereiro</h2>
+          <p>
+            Aqui você encontra as principais notícias e atualizações do mês. 
+            Mantenha-se informado sobre os comunicados e novidades da empresa, 
+            com o visual alinhado à identidade EDT.
+          </p>
         </div>
-        <div class="slide">
-          <img src="static/banner3.png" alt="Banner 3">
-        </div>
-        <div class="slide">
-          <img src="static/banner4.png" alt="Banner 4">
-        </div>
-
-        <!-- Botões de navegação (setas) -->
-        <button class="slider-arrow arrow-left" id="arrowLeft">&#10094;</button>
-        <button class="slider-arrow arrow-right" id="arrowRight">&#10095;</button>
-
-        <!-- Barrinha de progresso -->
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <!-- Botão de pause/play -->
-        <button class="slider-pause" id="pauseSlideBtn">⏸</button>
       </div>
-
-      <!-- Painel Informativo -->
-      <div class="slider-info">
-        <h2>Informativos Fevereiro</h2>
-        <p>
-          Aqui você encontra as principais notícias e atualizações do mês. 
-          Mantenha-se informado sobre os comunicados e novidades da empresa, 
-          com o visual alinhado à identidade EDT.
-        </p>
+  
+      <!-- Segundo slider (Informativos Março) -->
+      <div class="slider-container">
+        <!-- Painel Informativo (lado esquerdo) -->
+        <div class="slider-info">
+          <h2>Informativos Março</h2>
+          <p>
+            Aqui você encontra as principais notícias e atualizações do mês de março. 
+            Confira as novidades e mantenha-se sempre atualizado.
+          </p>
+        </div>
+        <!-- SLIDER de Imagens (lado direito) -->
+        <div id="slider2">
+          <div class="slide active">
+            <img src="static/banner1.png" alt="Banner 1">
+          </div>
+          <div class="slide">
+            <img src="static/banner2.png" alt="Banner 2">
+          </div>
+          <div class="slide">
+            <img src="static/banner3.png" alt="Banner 3">
+          </div>
+          <div class="slide">
+            <img src="static/banner4.png" alt="Banner 4">
+          </div>
+          <div class="slide">
+            <img src="static/banner5.png" alt="Banner 5">
+          </div>
+          <!-- Botões de navegação (setas) -->
+          <button class="slider-arrow arrow-left" id="arrowLeft2">&#10094;</button>
+          <button class="slider-arrow arrow-right" id="arrowRight2">&#10095;</button>
+          <!-- Barrinha de progresso -->
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill2"></div>
+          </div>
+          <!-- Botão de pause/play -->
+          <button class="slider-pause" id="pauseSlideBtn2">⏸</button>
+        </div>
       </div>
     </div>
-
+  
     <!-- Menu de Login -->
     <div id="loginMenu">
       <h3>Login</h3>
@@ -524,7 +587,7 @@
         </div>
         <button class="button arrowBtn" id="nextReport">&#8594;</button>
       </div>
-
+  
       <!-- Container para exibir o BI -->
       <div id="biReportContent">
         <iframe 
@@ -539,7 +602,7 @@
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
   
   <div class="version">Versão 1.0.7</div>
-
+  
   <!-- Modal para visão cheia do banner -->
   <div id="fullScreenModal">
     <img id="fullScreenImage" src="" alt="Visão Cheia">
@@ -569,12 +632,12 @@
     document.addEventListener("DOMContentLoaded", function () {
       let loggedIn = false;
       let requestedSection = null;
-      let profileTimeout;  // Variável para controle do setTimeout da geração de perfil
-
-      // Garante que as mensagens de perfil fiquem ocultas ao iniciar
+      let profileTimeout;
+      
+      // Oculta mensagens de perfil inicialmente
       document.getElementById("executionTime").style.display = "none";
       document.getElementById("successMessage").style.display = "none";
-
+      
       const headerTitle = document.getElementById("headerTitle");
       const logo = document.querySelector(".logo");
       const googleDriveLink = document.getElementById("googleDriveLink");
@@ -583,65 +646,52 @@
       const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
       const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
       const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
-
+      
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       const sidebar = document.querySelector(".sidebar");
-
+      
       const loginMenu = document.getElementById("loginMenu");
       const loginBtn = document.getElementById("loginBtn");
       const usernameInput = document.getElementById("username");
       const passwordInput = document.getElementById("password");
       const loginError = document.getElementById("loginError");
-
+      
       const profileMenu = document.getElementById("profileMenu");
       const generateProfileBtn = document.getElementById("generateProfileBtn");
       const executionTime = document.getElementById("executionTime");
       const successMessage = document.getElementById("successMessage");
-
+      
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
-
-      // Slider e painel informativo
+      
+      /* Funções para exibir/ocultar os sliders da home */
+      function showHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "block";
+      }
+      function hideHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "none";
+      }
+      
+      /* ======================
+         Slider 1 – Informativos Fevereiro
+         ====================== */
       const slider = document.getElementById("slider");
-      const sliderInfo = document.querySelector(".slider-info");
       const slides = slider.querySelectorAll(".slide");
       const arrowLeft = document.getElementById("arrowLeft");
       const arrowRight = document.getElementById("arrowRight");
       const progressFill = document.getElementById("progressFill");
       const pauseSlideBtn = document.getElementById("pauseSlideBtn");
-
+      
       let currentSlideIndex = 0;
-      let slideInterval = 6000; // 6s por slide
+      let slideInterval = 6000; // 6 segundos por slide
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
       let isPaused = false;
-
-      // Funções para esconder menus
-      function hideAllButSubmenu() {
-        loginMenu.style.display = "none";
-        profileMenu.style.display = "none";
-        driveSection.style.display = "none";
-        planejamentoSection.style.display = "none";
-        importacoesSection.style.display = "none";
-        // NÃO escondemos o submenu, para mantê-lo aberto
-      }
-      function hideAllMenus() {
-        loginMenu.style.display = "none";
-        profileMenu.style.display = "none";
-        driveSection.style.display = "none";
-        planejamentoSection.style.display = "none";
-        importacoesSection.style.display = "none";
-        planejamentoSubmenu.style.display = "none";
-      }
-      function updateHeaderTitle(text) {
-        headerTitle.innerText = text;
-      }
-      function hideSidebar() {
-        sidebar.style.transform = "translateX(-100%)";
-        toggleSidebarBtn.innerText = "Mostrar Sidebar";
-      }
+      
       function showSlide(index) {
         slides.forEach((slide, i) => {
           slide.classList.toggle("active", i === index);
@@ -675,16 +725,6 @@
         stopSlider();
         if (!isPaused) startSlider();
       }
-      function showSliderDiv() {
-        if (slider) slider.style.display = "block";
-        if (sliderInfo) sliderInfo.style.display = "block";
-      }
-      function hideSliderDiv() {
-        if (slider) slider.style.display = "none";
-        if (sliderInfo) sliderInfo.style.display = "none";
-      }
-
-      // Eventos do slider
       pauseSlideBtn.addEventListener("click", function () {
         if (!isPaused) {
           isPaused = true;
@@ -698,34 +738,95 @@
       });
       arrowLeft.addEventListener("click", prevSlide);
       arrowRight.addEventListener("click", nextSlide);
-
+      
       showSlide(currentSlideIndex);
       startSlider();
-
-      // Eventos de clique
+      
+      /* ======================
+         Slider 2 – Informativos Março
+         ====================== */
+      let currentSlideIndex2 = 0;
+      let slideInterval2 = 6000;
+      let slideTimer2 = null;
+      let progressTimer2 = null;
+      let progress2 = 0;
+      let isPaused2 = false;
+      
+      function showSlide2(index) {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        slides2.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
+      function nextSlide2() {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        currentSlideIndex2 = (currentSlideIndex2 + 1) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
+      function prevSlide2() {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        currentSlideIndex2 = (currentSlideIndex2 - 1 + slides2.length) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
+      function startSlider2() {
+        slideTimer2 = setInterval(nextSlide2, slideInterval2);
+        progressTimer2 = setInterval(() => {
+          progress2 += (100 / (slideInterval2 / 100));
+          if (progress2 >= 100) progress2 = 100;
+          document.getElementById("progressFill2").style.width = progress2 + "%";
+        }, 100);
+      }
+      function stopSlider2() {
+        clearInterval(slideTimer2);
+        clearInterval(progressTimer2);
+      }
+      function resetProgress2() {
+        progress2 = 0;
+        document.getElementById("progressFill2").style.width = "0%";
+        stopSlider2();
+        if (!isPaused2) startSlider2();
+      }
+      document.getElementById("arrowLeft2").addEventListener("click", prevSlide2);
+      document.getElementById("arrowRight2").addEventListener("click", nextSlide2);
+      document.getElementById("pauseSlideBtn2").addEventListener("click", function () {
+        if (!isPaused2) {
+          isPaused2 = true;
+          stopSlider2();
+          this.innerText = "▶";
+        } else {
+          isPaused2 = false;
+          startSlider2();
+          this.innerText = "⏸";
+        }
+      });
+      showSlide2(currentSlideIndex2);
+      startSlider2();
+      
+      /* ======================
+         Eventos de clique e navegação
+         ====================== */
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
-        showSliderDiv();
+        showHomeSliders();
         requestedSection = null;
       });
       
-      // Ao clicar no botão "Pastas do Drive", redireciona para o fluxo OAuth
+      // Ao clicar no botão "Google Drive", abre uma nova guia
       googleDriveLink.addEventListener("click", function () {
-        window.location.href = "/login";
+        window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
       });
       
       planejamentoBtn.addEventListener("click", function () {
-        if (
-          planejamentoSubmenu.style.display === "none" ||
-          planejamentoSubmenu.style.display === ""
-        ) {
+        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
           planejamentoSubmenu.style.flexDirection = "column";
         } else {
           planejamentoSubmenu.style.display = "none";
         }
-        hideSliderDiv();
+        hideHomeSliders();
       });
       
       planejamentoBIBtn.addEventListener("click", function () {
@@ -742,7 +843,7 @@
           requestedSection = "planejamentoBI";
           updateHeaderTitle("Login - Planejamento BI");
         }
-        hideSliderDiv();
+        hideHomeSliders();
       });
       
       planejamentoPerfilBtn.addEventListener("click", function () {
@@ -758,7 +859,7 @@
           requestedSection = "planejamentoPerfil";
           updateHeaderTitle("Login - Geração de perfil");
         }
-        hideSliderDiv();
+        hideHomeSliders();
       });
       
       planejamentoImportacoesBtn.addEventListener("click", function () {
@@ -774,14 +875,11 @@
           requestedSection = "importacoes";
           updateHeaderTitle("Login - Importações");
         }
-        hideSliderDiv();
+        hideHomeSliders();
       });
       
       loginBtn.addEventListener("click", function () {
-        if (
-          usernameInput.value === "admin" &&
-          passwordInput.value === "admin"
-        ) {
+        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
           loggedIn = true;
           loginMenu.style.display = "none";
           if (requestedSection === "planejamentoBI") {
@@ -842,7 +940,7 @@
           hideAllMenus();
           updateHeaderTitle(this.innerText);
           requestedSection = null;
-          hideSliderDiv();
+          hideHomeSliders();
         });
       });
       
@@ -895,10 +993,7 @@
       });
       
       window.addEventListener("scroll", function () {
-        if (
-          planejamentoSection &&
-          planejamentoSection.style.display !== "none"
-        ) {
+        if (planejamentoSection && planejamentoSection.style.display !== "none") {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
         } else {
           headerTitle.style.opacity = 1;
@@ -908,6 +1003,7 @@
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
       
+      // Ao clicar na imagem do slider, abre o modal centralizado
       slider.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
@@ -915,6 +1011,7 @@
         }
       });
       
+      // Se clicar no modal, ele é fechado
       fullScreenModal.addEventListener("click", function () {
         fullScreenModal.style.display = "none";
       });
@@ -925,14 +1022,37 @@
         versionModal.style.display = "flex";
       });
       versionModal.addEventListener("click", function (e) {
-        if (
-          e.target.id === "versionModal" ||
-          e.target.id === "closeVersionModal"
-        ) {
+        if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
           versionModal.style.display = "none";
         }
       });
+      
     });
+    
+    function hideAllButSubmenu() {
+      document.getElementById("loginMenu").style.display = "none";
+      document.getElementById("profileMenu").style.display = "none";
+      document.getElementById("driveSection").style.display = "none";
+      document.getElementById("planejamentoSection").style.display = "none";
+      document.getElementById("importacoesSection").style.display = "none";
+    }
+    function hideAllMenus() {
+      document.getElementById("loginMenu").style.display = "none";
+      document.getElementById("profileMenu").style.display = "none";
+      document.getElementById("driveSection").style.display = "none";
+      document.getElementById("planejamentoSection").style.display = "none";
+      document.getElementById("importacoesSection").style.display = "none";
+      document.getElementById("planejamentoSubmenu").style.display = "none";
+    }
+    function updateHeaderTitle(text) {
+      document.getElementById("headerTitle").innerText = text;
+    }
+    function hideSidebar() {
+      const sidebar = document.querySelector(".sidebar");
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
+      sidebar.style.transform = "translateX(-100%)";
+      toggleSidebarBtn.innerText = "Mostrar Sidebar";
+    }
   </script>
 </body>
 </html>
