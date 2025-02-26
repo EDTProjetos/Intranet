@@ -43,7 +43,6 @@
       align-items: center;
       padding-top: 50px;
       transition: transform 0.3s ease;
-      z-index: 5000;
     }
     .logo {
       position: absolute;
@@ -229,52 +228,22 @@
       color: red;
       display: none;
     }
-    /* Seção de Drive – painel de listagem de arquivos do Google Drive */
+    /* Seção de Drive – exibida via proxy reverso */
     #driveSection {
       display: none;
-      position: fixed;
-      top: 50px;
-      left: 270px;
-      width: 250px;
-      height: calc(100vh - 50px);
+      width: 1525px;
+      height: 855px;
+      margin: 30px auto;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
-      border-radius: 0 10px 10px 0;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      overflow-y: auto;
-      padding: 20px;
-      z-index: 5000;
-    }
-    #driveSection h2 {
-      margin-top: 0;
-      font-size: 18px;
-    }
-    /* Listagem dos arquivos */
-    #driveFilesList {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
-    #driveFilesList li {
-      padding: 5px 0;
-    }
-    #driveFilesList li a {
-      color: #009688;
-      text-decoration: none;
-    }
-    /* Seção Importações */
-    #importacoesSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
       border-radius: 10px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
+      overflow: hidden;
     }
-    #importacoesSection h2 {
-      margin-top: 0;
+    #driveSection object {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
     /* Seção Planejamento BI */
     #planejamentoSection {
@@ -288,6 +257,20 @@
       width: calc(100% - 270px - 36px);
     }
     #planejamentoSection h2 {
+      margin-top: 0;
+    }
+    /* Seção Importações */
+    #importacoesSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+    #importacoesSection h2 {
       margin-top: 0;
     }
     /* Botões do BI lado a lado (horizontal) */
@@ -496,13 +479,18 @@
       <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
     </div>
     
-    <!-- Seção de Importações -->
+    <!-- Seção de Drive – exibida via proxy reverso -->
+    <div id="driveSection">
+      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
+    </div>
+    
+    <!-- Seção Importações -->
     <div id="importacoesSection">
       <h2>Importações</h2>
       <p>Aqui você encontra o conteúdo referente às importações.</p>
     </div>
     
-    <!-- Seção de Planejamento BI -->
+    <!-- Planejamento BI -->
     <div id="planejamentoSection">
       <h2>Planejamento BI</h2>
       <!-- Container horizontal para botões de BI e setas -->
@@ -610,7 +598,6 @@
       const executionTime = document.getElementById("executionTime");
       const successMessage = document.getElementById("successMessage");
 
-      // Seções de conteúdo
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
@@ -723,19 +710,9 @@
         requestedSection = null;
       });
       
-      // Ao clicar no botão "Pastas do Drive"
+      // Ao clicar no botão "Pastas do Drive", redireciona para o fluxo OAuth
       googleDriveLink.addEventListener("click", function () {
-        if (!loggedIn) {
-          // Se não estiver logado, redireciona para o login (ou pode ser implementado o fluxo OAuth)
-          window.location.href = "/login";
-        } else {
-          // Alterna a exibição do painel de pastas do Drive
-          driveSection.style.display = (driveSection.style.display === "none" || driveSection.style.display === "") 
-                                        ? "block" 
-                                        : "none";
-          updateHeaderTitle("Pastas do Google Drive");
-        }
-        hideSliderDiv();
+        window.location.href = "/login";
       });
       
       planejamentoBtn.addEventListener("click", function () {
@@ -807,7 +784,6 @@
         ) {
           loggedIn = true;
           loginMenu.style.display = "none";
-          // Após o login, se havia uma seção solicitada, exibe-a
           if (requestedSection === "planejamentoBI") {
             planejamentoSection.style.display = "block";
             updateHeaderTitle("Planejamento BI");
@@ -955,41 +931,6 @@
         ) {
           versionModal.style.display = "none";
         }
-      });
-      
-      // Nova função para listar os arquivos do Google Drive
-      // Quando o usuário estiver autenticado e clicar em "Listar Arquivos" (dentro do painel)
-      const listarArquivosBtn = document.createElement("button");
-      listarArquivosBtn.className = "button";
-      listarArquivosBtn.id = "listarArquivosBtn";
-      listarArquivosBtn.innerText = "Listar Arquivos";
-      driveSection.appendChild(listarArquivosBtn);
-      
-      // Cria a lista onde os arquivos serão exibidos
-      const driveFilesList = document.createElement("ul");
-      driveFilesList.id = "driveFilesList";
-      driveSection.appendChild(driveFilesList);
-      
-      listarArquivosBtn.addEventListener("click", function(){
-        fetch("/listar_arquivos")
-          .then(response => response.json())
-          .then(data => {
-            driveFilesList.innerHTML = "";
-            if(data.arquivos && data.arquivos.length > 0){
-              data.arquivos.forEach(arquivo => {
-                let li = document.createElement("li");
-                let link = document.createElement("a");
-                link.href = `https://drive.google.com/file/d/${arquivo.id}/view`;
-                link.textContent = arquivo.name;
-                link.target = "_blank";
-                li.appendChild(link);
-                driveFilesList.appendChild(li);
-              });
-            } else {
-              driveFilesList.innerHTML = "<li>Nenhum arquivo encontrado.</li>";
-            }
-          })
-          .catch(err => console.error("Erro ao listar arquivos:", err));
       });
     });
   </script>
