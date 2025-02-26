@@ -228,7 +228,7 @@
       color: red;
       display: none;
     }
-    /* Seção de Drive – agora usando <object> para carregar via proxy */
+    /* Seção de Drive – exibida via proxy reverso */
     #driveSection {
       display: none;
       width: 1525px;
@@ -710,13 +710,9 @@
         requestedSection = null;
       });
       
-      // Ao clicar no botão "Pastas do Drive", exibe a seção de Drive (via proxy reverso)
+      // Ao clicar no botão "Pastas do Drive", redireciona para o fluxo OAuth
       googleDriveLink.addEventListener("click", function () {
-        hideAllMenus();
-        updateHeaderTitle(this.innerText);
-        driveSection.style.display = "block";
-        hideSliderDiv();
-        requestedSection = null;
+        window.location.href = "/login";
       });
       
       planejamentoBtn.addEventListener("click", function () {
