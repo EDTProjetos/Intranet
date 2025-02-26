@@ -228,36 +228,19 @@
       color: red;
       display: none;
     }
-    /* Seção de Drive – exibida via proxy reverso */
+    /* Seção de Drive – interface para listar arquivos do Google Drive */
+    <!-- Substituímos o <object> por uma interface de listagem -->
     #driveSection {
       display: none;
       width: 1525px;
-      height: 855px;
+      min-height: 855px;
       margin: 30px auto;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       border-radius: 10px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-    #driveSection object {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    /* Seção Planejamento BI */
-    #planejamentoSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
+      overflow: auto;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-    #planejamentoSection h2 {
-      margin-top: 0;
     }
     /* Seção Importações */
     #importacoesSection {
@@ -271,6 +254,20 @@
       width: calc(100% - 270px - 36px);
     }
     #importacoesSection h2 {
+      margin-top: 0;
+    }
+    /* Seção Planejamento BI */
+    #planejamentoSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+    #planejamentoSection h2 {
       margin-top: 0;
     }
     /* Botões do BI lado a lado (horizontal) */
@@ -386,6 +383,19 @@
       margin-bottom: 8px;
       cursor: pointer;
     }
+    /* Estilos para a listagem de arquivos do Drive */
+    #driveFilesList {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    #driveFilesList li {
+      padding: 5px 0;
+    }
+    #driveFilesList li a {
+      color: #009688;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -479,9 +489,11 @@
       <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
     </div>
     
-    <!-- Seção de Drive – exibida via proxy reverso -->
+    <!-- Seção de Drive – interface para listar arquivos do Google Drive -->
     <div id="driveSection">
-      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
+      <h2>Pastas do Google Drive</h2>
+      <button class="button" id="listarArquivosBtn">Listar Arquivos</button>
+      <ul id="driveFilesList"></ul>
     </div>
     
     <!-- Seção Importações -->
@@ -932,6 +944,33 @@
           versionModal.style.display = "none";
         }
       });
+      
+      // Nova função para listar os arquivos do Google Drive
+      const listarArquivosBtn = document.getElementById("listarArquivosBtn");
+      if(listarArquivosBtn) {
+        listarArquivosBtn.addEventListener("click", function(){
+          fetch("/listar_arquivos")
+            .then(response => response.json())
+            .then(data => {
+              const lista = document.getElementById("driveFilesList");
+              lista.innerHTML = "";
+              if(data.arquivos && data.arquivos.length > 0){
+                data.arquivos.forEach(arquivo => {
+                  let li = document.createElement("li");
+                  let link = document.createElement("a");
+                  link.href = `https://drive.google.com/file/d/${arquivo.id}/view`;
+                  link.textContent = arquivo.name;
+                  link.target = "_blank";
+                  li.appendChild(link);
+                  lista.appendChild(li);
+                });
+              } else {
+                lista.innerHTML = "<li>Nenhum arquivo encontrado.</li>";
+              }
+            })
+            .catch(err => console.error("Erro ao listar arquivos:", err));
+        });
+      }
     });
   </script>
 </body>
