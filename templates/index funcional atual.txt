@@ -1,9 +1,9 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Intranet EDT</title>
-
   <style>
     body {
       display: flex;
@@ -228,7 +228,7 @@
       color: red;
       display: none;
     }
-    /* Container para Drive */
+    /* Seção de Drive – agora usando <object> para carregar via proxy */
     #driveSection {
       display: none;
       width: 1525px;
@@ -240,7 +240,7 @@
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
-    #driveSection iframe {
+    #driveSection object {
       width: 100%;
       height: 100%;
       border: none;
@@ -298,7 +298,6 @@
     /* Ajuste para o tamanho do iframe do BI preencher */
     #biReportContent {
       width: 100%;
-      /* Ajuste a altura conforme a necessidade (300px é um espaço aproximado para topo e botões) */
       height: calc(100vh - 300px);
       box-sizing: border-box;
     }
@@ -369,7 +368,7 @@
     #versionModal button:hover {
       background-color: #00796B;
     }
-    /* Garante que as mensagens de execução fiquem ocultas ao iniciar */
+    /* Mensagens de execução */
     #executionTime,
     #successMessage {
       display: none;
@@ -413,7 +412,7 @@
     <button class="button">Manuais</button>
     <button class="button">Comunicados</button>
     
-    <!-- Energia de Todos: logo com link -->
+    <!-- Energia de Todos -->
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
         <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
@@ -452,7 +451,7 @@
         <button class="slider-pause" id="pauseSlideBtn">⏸</button>
       </div>
 
-      <!-- Painel Informativo: só exibido na página inicial -->
+      <!-- Painel Informativo -->
       <div class="slider-info">
         <h2>Informativos Fevereiro</h2>
         <p>
@@ -480,9 +479,9 @@
       <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
     </div>
     
-    <!-- Pastas do Drive -->
+    <!-- Seção de Drive – exibida via proxy reverso -->
     <div id="driveSection">
-      <iframe src="https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR"></iframe>
+      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
     </div>
     
     <!-- Seção Importações -->
@@ -526,7 +525,7 @@
         <button class="button arrowBtn" id="nextReport">&#8594;</button>
       </div>
 
-      <!-- Ajuste de tamanho do iframe para preencher o espaço -->
+      <!-- Container para exibir o BI -->
       <div id="biReportContent">
         <iframe 
           id="planejamentoFrame"
@@ -619,7 +618,7 @@
       let progress = 0;
       let isPaused = false;
 
-      // === NOVA FUNÇÃO: esconde tudo, menos o submenu Planejamento ===
+      // Funções para esconder menus
       function hideAllButSubmenu() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
@@ -628,29 +627,24 @@
         importacoesSection.style.display = "none";
         // NÃO escondemos o submenu, para mantê-lo aberto
       }
-
-      // === FECHA TODOS OS MENUS, INCLUINDO O SUBMENU DE PLANEJAMENTO ===
       function hideAllMenus() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
-        planejamentoSubmenu.style.display = "none"; // Agora fechamos o submenu
+        planejamentoSubmenu.style.display = "none";
       }
-
       function updateHeaderTitle(text) {
         headerTitle.innerText = text;
       }
-
       function hideSidebar() {
         sidebar.style.transform = "translateX(-100%)";
         toggleSidebarBtn.innerText = "Mostrar Sidebar";
       }
-
       function showSlide(index) {
         slides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === index);
+          slide.classList.toggle("active", i === index);
         });
       }
       function nextSlide() {
@@ -668,7 +662,7 @@
         progressTimer = setInterval(() => {
           progress += (100 / (slideInterval / 100));
           if (progress >= 100) progress = 100;
-          progressFill.style.width = progress + '%';
+          progressFill.style.width = progress + "%";
         }, 100);
       }
       function stopSlider() {
@@ -677,11 +671,10 @@
       }
       function resetProgress() {
         progress = 0;
-        progressFill.style.width = '0%';
+        progressFill.style.width = "0%";
         stopSlider();
         if (!isPaused) startSlider();
       }
-
       function showSliderDiv() {
         if (slider) slider.style.display = "block";
         if (sliderInfo) sliderInfo.style.display = "block";
@@ -691,8 +684,8 @@
         if (sliderInfo) sliderInfo.style.display = "none";
       }
 
-      // === EVENTOS DO SLIDER ===
-      pauseSlideBtn.addEventListener("click", function() {
+      // Eventos do slider
+      pauseSlideBtn.addEventListener("click", function () {
         if (!isPaused) {
           isPaused = true;
           stopSlider();
@@ -709,14 +702,15 @@
       showSlide(currentSlideIndex);
       startSlider();
 
-      // === EVENTOS DE CLIQUE ===
+      // Eventos de clique
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
         showSliderDiv();
         requestedSection = null;
       });
-
+      
+      // Ao clicar no botão "Pastas do Drive", exibe a seção de Drive (via proxy reverso)
       googleDriveLink.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle(this.innerText);
@@ -724,10 +718,12 @@
         hideSliderDiv();
         requestedSection = null;
       });
-
-      // === Botão Planejamento: abre e fecha o submenu ao ser clicado ===
-      planejamentoBtn.addEventListener("click", function() {
-        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
+      
+      planejamentoBtn.addEventListener("click", function () {
+        if (
+          planejamentoSubmenu.style.display === "none" ||
+          planejamentoSubmenu.style.display === ""
+        ) {
           planejamentoSubmenu.style.display = "flex";
           planejamentoSubmenu.style.flexDirection = "column";
         } else {
@@ -735,14 +731,13 @@
         }
         hideSliderDiv();
       });
-
-      // === Planejamento BI (esconde sidebar) ===
-      planejamentoBIBtn.addEventListener("click", function() {
-        hideAllButSubmenu(); // esconde todas as seções, mas mantém submenu aberto
+      
+      planejamentoBIBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
         if (loggedIn) {
           planejamentoSection.style.display = "block";
           updateHeaderTitle("Planejamento BI");
-          hideSidebar(); // SOMENTE AQUI escondemos a sidebar
+          hideSidebar();
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -753,14 +748,12 @@
         }
         hideSliderDiv();
       });
-
-      // === Geração de Perfil (não esconde sidebar) ===
-      planejamentoPerfilBtn.addEventListener("click", function() {
-        hideAllButSubmenu(); 
+      
+      planejamentoPerfilBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
         if (loggedIn) {
           profileMenu.style.display = "block";
           updateHeaderTitle("Geração de perfil");
-          // Não esconde a sidebar aqui
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -771,14 +764,12 @@
         }
         hideSliderDiv();
       });
-
-      // === Importações (não esconde sidebar) ===
-      planejamentoImportacoesBtn.addEventListener("click", function() {
-        hideAllButSubmenu(); 
+      
+      planejamentoImportacoesBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
         if (loggedIn) {
           importacoesSection.style.display = "block";
           updateHeaderTitle("Importações");
-          // Não esconde a sidebar
         } else {
           loginError.style.display = "none";
           usernameInput.value = "";
@@ -789,9 +780,12 @@
         }
         hideSliderDiv();
       });
-
+      
       loginBtn.addEventListener("click", function () {
-        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
+        if (
+          usernameInput.value === "admin" &&
+          passwordInput.value === "admin"
+        ) {
           loggedIn = true;
           loginMenu.style.display = "none";
           if (requestedSection === "planejamentoBI") {
@@ -811,9 +805,9 @@
           loginError.style.display = "block";
         }
       });
-
+      
       generateProfileBtn.addEventListener("click", function () {
-        if(profileTimeout) clearTimeout(profileTimeout);
+        if (profileTimeout) clearTimeout(profileTimeout);
         generateProfileBtn.disabled = true;
         generateProfileBtn.style.backgroundColor = "#A9A9A9";
         generateProfileBtn.innerText = "Gerando...";
@@ -843,22 +837,19 @@
             generateProfileBtn.innerText = "Gerar Perfil";
           });
       });
-
-      // === Botões superiores que não devem fechar submenu Planejamento (exceto quando for outro menu) ===
+      
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn)"
       );
       otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
-          // Aqui sim, fechamos tudo, incluindo o submenu de Planejamento
           hideAllMenus();
           updateHeaderTitle(this.innerText);
           requestedSection = null;
           hideSliderDiv();
         });
       });
-
-      // === Toggle do botão de sidebar ===
+      
       toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
@@ -868,13 +859,12 @@
           toggleSidebarBtn.innerText = "Mostrar Sidebar";
         }
       });
-
-      // === Navegação dos relatórios BI ===
+      
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
       let currentReportIndex = 0;
-
+      
       function updateIframeFromIndex() {
         if (reportButtons.length > 0) {
           const btn = reportButtons[currentReportIndex];
@@ -883,63 +873,66 @@
           document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
-
+      
       reportButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
           currentReportIndex = index;
           updateIframeFromIndex();
         });
       });
-
+      
       const prevReport = document.getElementById("prevReport");
       const nextReport = document.getElementById("nextReport");
-
-      prevReport.addEventListener("click", function() {
+      
+      prevReport.addEventListener("click", function () {
         if (currentReportIndex > 0) {
           currentReportIndex--;
           updateIframeFromIndex();
         }
       });
-
-      nextReport.addEventListener("click", function() {
+      
+      nextReport.addEventListener("click", function () {
         if (currentReportIndex < reportButtons.length - 1) {
           currentReportIndex++;
           updateIframeFromIndex();
         }
       });
-
-      // === Ajuste do cabeçalho ao scrollar na página de Planejamento ===
-      window.addEventListener("scroll", function() {
-        if (planejamentoSection && planejamentoSection.style.display !== "none") {
+      
+      window.addEventListener("scroll", function () {
+        if (
+          planejamentoSection &&
+          planejamentoSection.style.display !== "none"
+        ) {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
         } else {
           headerTitle.style.opacity = 1;
         }
       });
-
-      // === Modal de visão cheia do banner ===
+      
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
-
-      slider.addEventListener("click", function(event) {
+      
+      slider.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-
-      fullScreenModal.addEventListener("click", function() {
+      
+      fullScreenModal.addEventListener("click", function () {
         fullScreenModal.style.display = "none";
       });
       
-      // === Modal de versão ===
       const versionDiv = document.querySelector(".version");
       const versionModal = document.getElementById("versionModal");
-      versionDiv.addEventListener("click", function() {
+      versionDiv.addEventListener("click", function () {
         versionModal.style.display = "flex";
       });
-      versionModal.addEventListener("click", function(e) {
-        if(e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
+      versionModal.addEventListener("click", function (e) {
+        if (
+          e.target.id === "versionModal" ||
+          e.target.id === "closeVersionModal"
+        ) {
           versionModal.style.display = "none";
         }
       });
