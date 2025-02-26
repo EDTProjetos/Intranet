@@ -43,6 +43,7 @@
       align-items: center;
       padding-top: 50px;
       transition: transform 0.3s ease;
+      z-index: 5000;
     }
     .logo {
       position: absolute;
@@ -228,36 +229,38 @@
       color: red;
       display: none;
     }
-    /* Seção de Drive – exibida via proxy reverso */
+    /* Seção de Drive – painel de listagem de arquivos do Google Drive */
     #driveSection {
       display: none;
-      width: 1525px;
-      height: 855px;
-      margin: 30px auto;
+      position: fixed;
+      top: 50px;
+      left: 270px;
+      width: 250px;
+      height: calc(100vh - 50px);
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
-      border-radius: 10px;
+      border-radius: 0 10px 10px 0;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-    #driveSection object {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    /* Seção Planejamento BI */
-    #planejamentoSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
+      overflow-y: auto;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
+      z-index: 5000;
     }
-    #planejamentoSection h2 {
+    #driveSection h2 {
       margin-top: 0;
+      font-size: 18px;
+    }
+    /* Listagem dos arquivos */
+    #driveFilesList {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    #driveFilesList li {
+      padding: 5px 0;
+    }
+    #driveFilesList li a {
+      color: #009688;
+      text-decoration: none;
     }
     /* Seção Importações */
     #importacoesSection {
@@ -271,6 +274,20 @@
       width: calc(100% - 270px - 36px);
     }
     #importacoesSection h2 {
+      margin-top: 0;
+    }
+    /* Seção Planejamento BI */
+    #planejamentoSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+    #planejamentoSection h2 {
       margin-top: 0;
     }
     /* Botões do BI lado a lado (horizontal) */
@@ -479,18 +496,13 @@
       <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
     </div>
     
-    <!-- Seção de Drive – exibida via proxy reverso -->
-    <div id="driveSection">
-      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
-    </div>
-    
-    <!-- Seção Importações -->
+    <!-- Seção de Importações -->
     <div id="importacoesSection">
       <h2>Importações</h2>
       <p>Aqui você encontra o conteúdo referente às importações.</p>
     </div>
     
-    <!-- Planejamento BI -->
+    <!-- Seção de Planejamento BI -->
     <div id="planejamentoSection">
       <h2>Planejamento BI</h2>
       <!-- Container horizontal para botões de BI e setas -->
@@ -569,9 +581,8 @@
     document.addEventListener("DOMContentLoaded", function () {
       let loggedIn = false;
       let requestedSection = null;
-      let profileTimeout;  // Variável para controle do setTimeout da geração de perfil
+      let profileTimeout;
 
-      // Garante que as mensagens de perfil fiquem ocultas ao iniciar
       document.getElementById("executionTime").style.display = "none";
       document.getElementById("successMessage").style.display = "none";
 
@@ -598,6 +609,7 @@
       const executionTime = document.getElementById("executionTime");
       const successMessage = document.getElementById("successMessage");
 
+      // Seções de conteúdo
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
@@ -612,20 +624,18 @@
       const pauseSlideBtn = document.getElementById("pauseSlideBtn");
 
       let currentSlideIndex = 0;
-      let slideInterval = 6000; // 6s por slide
+      let slideInterval = 6000;
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
       let isPaused = false;
 
-      // Funções para esconder menus
       function hideAllButSubmenu() {
         loginMenu.style.display = "none";
         profileMenu.style.display = "none";
         driveSection.style.display = "none";
         planejamentoSection.style.display = "none";
         importacoesSection.style.display = "none";
-        // NÃO escondemos o submenu, para mantê-lo aberto
       }
       function hideAllMenus() {
         loginMenu.style.display = "none";
@@ -684,7 +694,6 @@
         if (sliderInfo) sliderInfo.style.display = "none";
       }
 
-      // Eventos do slider
       pauseSlideBtn.addEventListener("click", function () {
         if (!isPaused) {
           isPaused = true;
@@ -702,7 +711,6 @@
       showSlide(currentSlideIndex);
       startSlider();
 
-      // Eventos de clique
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
@@ -710,16 +718,21 @@
         requestedSection = null;
       });
       
-      // Ao clicar no botão "Pastas do Drive", redireciona para o fluxo OAuth
+      // Ao clicar em "Pastas do Drive", se autenticado, exibe o painel e já carrega os arquivos
       googleDriveLink.addEventListener("click", function () {
-        window.location.href = "/login";
+        if (!loggedIn) {
+          window.location.href = "/login";
+        } else {
+          driveSection.style.display = "block";
+          updateHeaderTitle("Pastas do Google Drive");
+          hideSliderDiv();
+          // Chama a função para listar os arquivos automaticamente
+          listarArquivos();
+        }
       });
       
       planejamentoBtn.addEventListener("click", function () {
-        if (
-          planejamentoSubmenu.style.display === "none" ||
-          planejamentoSubmenu.style.display === ""
-        ) {
+        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
           planejamentoSubmenu.style.flexDirection = "column";
         } else {
@@ -778,10 +791,7 @@
       });
       
       loginBtn.addEventListener("click", function () {
-        if (
-          usernameInput.value === "admin" &&
-          passwordInput.value === "admin"
-        ) {
+        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
           loggedIn = true;
           loginMenu.style.display = "none";
           if (requestedSection === "planejamentoBI") {
@@ -895,10 +905,7 @@
       });
       
       window.addEventListener("scroll", function () {
-        if (
-          planejamentoSection &&
-          planejamentoSection.style.display !== "none"
-        ) {
+        if (planejamentoSection && planejamentoSection.style.display !== "none") {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
         } else {
           headerTitle.style.opacity = 1;
@@ -925,13 +932,40 @@
         versionModal.style.display = "flex";
       });
       versionModal.addEventListener("click", function (e) {
-        if (
-          e.target.id === "versionModal" ||
-          e.target.id === "closeVersionModal"
-        ) {
+        if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
           versionModal.style.display = "none";
         }
       });
+      
+      // Função que faz o fetch para listar os arquivos do Google Drive
+      function listarArquivos() {
+        fetch("/listar_arquivos")
+          .then(response => response.json())
+          .then(data => {
+            const driveFilesList = document.getElementById("driveFilesList");
+            if (!driveFilesList) {
+              // Cria a lista se ainda não existir
+              const ul = document.createElement("ul");
+              ul.id = "driveFilesList";
+              driveSection.appendChild(ul);
+            }
+            document.getElementById("driveFilesList").innerHTML = "";
+            if (data.arquivos && data.arquivos.length > 0) {
+              data.arquivos.forEach(arquivo => {
+                let li = document.createElement("li");
+                let link = document.createElement("a");
+                link.href = `https://drive.google.com/file/d/${arquivo.id}/view`;
+                link.textContent = arquivo.name;
+                link.target = "_blank";
+                li.appendChild(link);
+                document.getElementById("driveFilesList").appendChild(li);
+              });
+            } else {
+              document.getElementById("driveFilesList").innerHTML = "<li>Nenhum arquivo encontrado.</li>";
+            }
+          })
+          .catch(err => console.error("Erro ao listar arquivos:", err));
+      }
     });
   </script>
 </body>
