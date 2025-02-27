@@ -111,7 +111,7 @@
       transition: box-shadow 0.3s;
     }
     #slider:hover, #slider2:hover {
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 15px rgba(0, 150, 136, 0.7);
     }
     .slide {
       width: 100%;
@@ -194,13 +194,10 @@
     .slider-info {
       width: 55%;
       background: rgba(255, 255, 255, 0.8);
-
       /* Borda geral em verde */
       border: 2px solid #009688;
-
       /* Faixa amarela na esquerda (sobrepõe o lado esquerdo da borda verde) */
       border-left: 5px solid #fcb414;
-
       border-radius: 10px;
       padding: 20px;
       color: #009688;
@@ -240,7 +237,7 @@
       border: 2px solid #009688;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 4px 10px rgba(0, 150, 136, 0.2);
       text-align: center;
       width: 350px;
     }
@@ -265,7 +262,7 @@
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 4px 10px rgba(0, 150, 136, 0.2);
       overflow: hidden;
     }
     #driveSection object {
@@ -281,7 +278,7 @@
       border: 2px solid #009688;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 4px 10px rgba(0, 150, 136, 0.2);
       width: calc(100% - 270px - 36px);
     }
     #planejamentoSection h2 {
@@ -295,7 +292,7 @@
       border: 2px solid #009688;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 4px 10px rgba(0, 150, 136, 0.2);
       width: calc(100% - 270px - 36px);
     }
     #importacoesSection h2 {
@@ -309,7 +306,7 @@
       border: 2px solid #009688;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 4px 10px rgba(0, 150, 136, 0.2);
       width: calc(100% - 270px - 36px);
     }
     #monitoriaManuaisSection h2 {
@@ -1050,12 +1047,9 @@
         }
       });
       
+      // Exibe/esconde a barra de título conforme o scroll da página
       window.addEventListener("scroll", function () {
-        if (planejamentoSection && planejamentoSection.style.display !== "none") {
-          headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
-        } else {
-          headerTitle.style.opacity = 1;
-        }
+          headerTitle.style.opacity = window.scrollY > 0 ? 0 : 1;
       });
       
       const fullScreenModal = document.getElementById("fullScreenModal");
