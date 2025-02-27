@@ -312,38 +312,33 @@
     #monitoriaManuaisSection h2 {
       margin-top: 0;
     }
-    /* Botões do BI lado a lado (horizontal) */
-    #biReportsContainer {
+    /* Seção Upload BI */
+    #uploadBISection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 150, 136, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+    /* Estilos para as abas (tabs) do Upload BI */
+    .upload-tabs {
       display: flex;
-      align-items: center;
-      justify-content: center;
       gap: 10px;
       margin-bottom: 20px;
-      flex-wrap: nowrap;
     }
-    #biReportsMenu {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 10px;
-    }
-    .arrowBtn {
-      width: 40px;
-      text-align: center;
-      margin: 0;
-      padding: 8px;
-      font-size: 1.5rem;
-    }
-    /* Ajuste para o tamanho do iframe do BI preencher */
-    #biReportContent {
-      width: 100%;
-      height: calc(100vh - 300px);
-      box-sizing: border-box;
-    }
-    #planejamentoFrame {
-      width: 100%;
-      height: 100%;
+    .tab-button {
+      padding: 10px 20px;
+      background-color: #009688;
+      color: white;
       border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .tab-button.active {
+      background-color: #00796B;
     }
     /* Botão de toggle da sidebar */
     #toggleSidebarBtn {
@@ -444,6 +439,8 @@
       <button class="button" id="planejamentoBIBtn">Planejamento BI</button>
       <button class="button" id="planejamentoPerfilBtn">Geração de perfil</button>
       <button class="button" id="planejamentoImportacoesBtn">Importações</button>
+      <!-- Novo botão para Upload BI -->
+      <button class="button" id="uploadBIBtn">Upload BI</button>
     </div>
     
     <!-- Outras opções -->
@@ -581,7 +578,7 @@
       <p>Aqui você encontra os manuais de monitoria.</p>
     </div>
     
-    <!-- Planejamento BI -->
+    <!-- Seção Planejamento BI -->
     <div id="planejamentoSection">
       <h2>Planejamento BI</h2>
       <!-- Container horizontal para botões de BI e setas -->
@@ -625,6 +622,26 @@
         </iframe>
       </div>
     </div>
+    
+    <!-- Nova Seção: Upload BI -->
+    <div id="uploadBISection">
+      <h2>Upload BI</h2>
+      <div class="upload-tabs">
+        <button class="tab-button active" id="tabUpload">Fazer upload de imagem</button>
+        <button class="tab-button" id="tabPreview">Visualizar imagem</button>
+      </div>
+      <div id="uploadFormContainer">
+        <button class="button" id="btnUploadImage">Fazer upload de imagem</button>
+        <input type="file" id="inputUploadImage" accept="image/*" style="display:none;">
+        <div id="imageContainer" style="margin-top: 20px;"></div>
+      </div>
+      <div id="uploadPreviewContainer" style="display:none;">
+        <div id="previewImageContainer" style="margin-top: 20px;">
+          <p>Nenhuma imagem carregada.</p>
+        </div>
+      </div>
+    </div>
+  
   </div>
   
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
@@ -674,6 +691,7 @@
       const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
       const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
       const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
+      const uploadBIBtn = document.getElementById("uploadBIBtn");
       
       const monitoriaBtn = document.getElementById("monitoriaBtn");
       const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
@@ -697,6 +715,7 @@
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
       const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
+      const uploadBISection = document.getElementById("uploadBISection");
       
       /* Funções para exibir/ocultar os sliders da home */
       function showHomeSliders() {
@@ -916,7 +935,15 @@
         }
         hideHomeSliders();
       });
-
+      
+      // Novo evento para o botão Upload BI
+      uploadBIBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        uploadBISection.style.display = "block";
+        updateHeaderTitle("Upload BI");
+        hideHomeSliders();
+      });
+      
       // Monitoria (submenu)
       monitoriaBtn.addEventListener("click", function () {
         if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
@@ -988,7 +1015,7 @@
       });
       
       const otherButtons = document.querySelectorAll(
-        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
+        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#uploadBIBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
       );
       otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
@@ -1087,6 +1114,58 @@
         }
       });
       
+      /* Nova funcionalidade: Upload BI - Aba e upload de imagem */
+      const tabUpload = document.getElementById("tabUpload");
+      const tabPreview = document.getElementById("tabPreview");
+      const uploadFormContainer = document.getElementById("uploadFormContainer");
+      const uploadPreviewContainer = document.getElementById("uploadPreviewContainer");
+      const btnUploadImage = document.getElementById("btnUploadImage");
+      const inputUploadImage = document.getElementById("inputUploadImage");
+      const imageContainer = document.getElementById("imageContainer");
+      const previewImageContainer = document.getElementById("previewImageContainer");
+      
+      tabUpload.addEventListener("click", function() {
+          tabUpload.classList.add("active");
+          tabPreview.classList.remove("active");
+          uploadFormContainer.style.display = "block";
+          uploadPreviewContainer.style.display = "none";
+      });
+      tabPreview.addEventListener("click", function() {
+          tabPreview.classList.add("active");
+          tabUpload.classList.remove("active");
+          uploadFormContainer.style.display = "none";
+          uploadPreviewContainer.style.display = "block";
+      });
+      
+      btnUploadImage.addEventListener("click", function() {
+          inputUploadImage.click();
+      });
+      
+      inputUploadImage.addEventListener("change", function() {
+          const file = this.files[0];
+          if (file && file.type.startsWith("image/")) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  // Exibe a imagem na área de upload
+                  imageContainer.innerHTML = "";
+                  previewImageContainer.innerHTML = "";
+                  const img = document.createElement("img");
+                  img.src = e.target.result;
+                  img.style.maxWidth = "100%";
+                  img.style.height = "auto";
+                  imageContainer.appendChild(img);
+                  
+                  // Atualiza também a área de preview
+                  const previewImg = document.createElement("img");
+                  previewImg.src = e.target.result;
+                  previewImg.style.maxWidth = "100%";
+                  previewImg.style.height = "auto";
+                  previewImageContainer.appendChild(previewImg);
+              };
+              reader.readAsDataURL(file);
+          }
+      });
+      
     });
     
     function hideAllButSubmenu() {
@@ -1096,6 +1175,7 @@
       document.getElementById("planejamentoSection").style.display = "none";
       document.getElementById("importacoesSection").style.display = "none";
       document.getElementById("monitoriaManuaisSection").style.display = "none";
+      document.getElementById("uploadBISection").style.display = "none";
     }
     function hideAllMenus() {
       document.getElementById("loginMenu").style.display = "none";
@@ -1106,6 +1186,7 @@
       document.getElementById("monitoriaManuaisSection").style.display = "none";
       document.getElementById("planejamentoSubmenu").style.display = "none";
       document.getElementById("monitoriaSubmenu").style.display = "none";
+      document.getElementById("uploadBISection").style.display = "none";
     }
     function updateHeaderTitle(text) {
       document.getElementById("headerTitle").innerText = text;
