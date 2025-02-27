@@ -69,8 +69,9 @@
     .button:hover {
       background-color: #00796B;
     }
-    /* Submenu de Planejamento: botões menores */
-    #planejamentoSubmenu .button {
+    /* Submenu de Planejamento e Monitoria: botões menores */
+    #planejamentoSubmenu .button,
+    #monitoriaSubmenu .button {
       width: auto;
       margin: 5px;
       padding: 8px 12px;
@@ -300,6 +301,20 @@
     #importacoesSection h2 {
       margin-top: 0;
     }
+    /* Seção Monitoria: Manuais */
+    #monitoriaManuaisSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+    #monitoriaManuaisSection h2 {
+      margin-top: 0;
+    }
     /* Botões do BI lado a lado (horizontal) */
     #biReportsContainer {
       display: flex;
@@ -423,7 +438,7 @@
     <!-- Logo -->
     <img src="static/logo 2.png" alt="Logo" class="logo">
     
-    <!-- Botão atualizado para Google Drive -->
+    <!-- Botão Google Drive -->
     <button class="button" id="googleDriveLink" style="margin-top: 230px;">Google Drive</button>
     
     <!-- Menu Planejamento com submenu -->
@@ -435,9 +450,13 @@
     </div>
     
     <!-- Outras opções -->
+    <button class="button" id="monitoriaBtn">Monitoria</button>
+    <div id="monitoriaSubmenu" style="display: none;">
+      <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
+    </div>
+    
     <button class="button">Conteúdo informativo</button>
     <button class="button">Manuais</button>
-    <button class="button">Comunicados</button>
     
     <!-- Energia de Todos -->
     <div class="energy-of-todos">
@@ -558,6 +577,12 @@
       <h2>Importações</h2>
       <p>Aqui você encontra o conteúdo referente às importações.</p>
     </div>
+
+    <!-- Seção Monitoria: Manuais -->
+    <div id="monitoriaManuaisSection">
+      <h2>Manuais de Monitoria</h2>
+      <p>Aqui você encontra os manuais de monitoria.</p>
+    </div>
     
     <!-- Planejamento BI -->
     <div id="planejamentoSection">
@@ -653,6 +678,10 @@
       const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
       const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
       
+      const monitoriaBtn = document.getElementById("monitoriaBtn");
+      const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
+      const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
+      
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       const sidebar = document.querySelector(".sidebar");
       
@@ -670,6 +699,7 @@
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
+      const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
       
       /* Funções para exibir/ocultar os sliders da home */
       function showHomeSliders() {
@@ -751,6 +781,11 @@
       /* ======================
          Slider 2 – Informativos Março
          ====================== */
+      const slider2 = document.getElementById("slider2");
+      const arrowLeft2 = document.getElementById("arrowLeft2");
+      const arrowRight2 = document.getElementById("arrowRight2");
+      const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
+      const progressFill2 = document.getElementById("progressFill2");
       let currentSlideIndex2 = 0;
       let slideInterval2 = 6000;
       let slideTimer2 = null;
@@ -781,7 +816,7 @@
         progressTimer2 = setInterval(() => {
           progress2 += (100 / (slideInterval2 / 100));
           if (progress2 >= 100) progress2 = 100;
-          document.getElementById("progressFill2").style.width = progress2 + "%";
+          progressFill2.style.width = progress2 + "%";
         }, 100);
       }
       function stopSlider2() {
@@ -790,13 +825,13 @@
       }
       function resetProgress2() {
         progress2 = 0;
-        document.getElementById("progressFill2").style.width = "0%";
+        progressFill2.style.width = "0%";
         stopSlider2();
         if (!isPaused2) startSlider2();
       }
-      document.getElementById("arrowLeft2").addEventListener("click", prevSlide2);
-      document.getElementById("arrowRight2").addEventListener("click", nextSlide2);
-      document.getElementById("pauseSlideBtn2").addEventListener("click", function () {
+      arrowLeft2.addEventListener("click", prevSlide2);
+      arrowRight2.addEventListener("click", nextSlide2);
+      pauseSlideBtn2.addEventListener("click", function () {
         if (!isPaused2) {
           isPaused2 = true;
           stopSlider2();
@@ -807,6 +842,7 @@
           this.innerText = "⏸";
         }
       });
+      
       showSlide2(currentSlideIndex2);
       startSlider2();
       
@@ -883,6 +919,22 @@
         }
         hideHomeSliders();
       });
+
+      // Monitoria (submenu)
+      monitoriaBtn.addEventListener("click", function () {
+        if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
+          monitoriaSubmenu.style.display = "flex";
+          monitoriaSubmenu.style.flexDirection = "column";
+        } else {
+          monitoriaSubmenu.style.display = "none";
+        }
+        hideHomeSliders();
+      });
+      monitoriaManuaisBtn.addEventListener("click", function() {
+        hideAllMenus();
+        monitoriaManuaisSection.style.display = "block";
+        updateHeaderTitle("Manuais de Monitoria");
+      });
       
       loginBtn.addEventListener("click", function () {
         if (usernameInput.value === "admin" && passwordInput.value === "admin") {
@@ -939,7 +991,7 @@
       });
       
       const otherButtons = document.querySelectorAll(
-        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn)"
+        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
       );
       otherButtons.forEach(btn => {
         btn.addEventListener("click", function () {
@@ -1009,8 +1061,16 @@
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
       
-      // Ao clicar na imagem do slider, abre o modal centralizado
+      // Ao clicar na imagem do primeiro slider, abre o modal centralizado
       slider.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      // Ao clicar na imagem do segundo slider, também abre o modal
+      slider2.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
@@ -1041,6 +1101,7 @@
       document.getElementById("driveSection").style.display = "none";
       document.getElementById("planejamentoSection").style.display = "none";
       document.getElementById("importacoesSection").style.display = "none";
+      document.getElementById("monitoriaManuaisSection").style.display = "none";
     }
     function hideAllMenus() {
       document.getElementById("loginMenu").style.display = "none";
@@ -1048,7 +1109,9 @@
       document.getElementById("driveSection").style.display = "none";
       document.getElementById("planejamentoSection").style.display = "none";
       document.getElementById("importacoesSection").style.display = "none";
+      document.getElementById("monitoriaManuaisSection").style.display = "none";
       document.getElementById("planejamentoSubmenu").style.display = "none";
+      document.getElementById("monitoriaSubmenu").style.display = "none";
     }
     function updateHeaderTitle(text) {
       document.getElementById("headerTitle").innerText = text;
