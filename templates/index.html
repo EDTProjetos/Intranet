@@ -518,15 +518,6 @@
       color: #fff;
       cursor: pointer;
     }
-
-    /* Hora do último upload */
-    .upload-time {
-      font-size: 14px;
-      color: #009688;
-      margin-top: 10px;
-      text-align: center;
-    }
-
   </style>
 </head>
 <body>
@@ -651,6 +642,85 @@
       </div>
     </div>
   
+    <!-- Menu de Login -->
+    <div id="loginMenu">
+      <h3>Login</h3>
+      <input type="text" id="username" placeholder="Usuário">
+      <input type="password" id="password" placeholder="Senha">
+      <button class="button" id="loginBtn">Entrar</button>
+      <p id="loginError">Usuário ou senha incorretos!</p>
+    </div>
+    
+    <!-- Menu de Perfil -->
+    <div id="profileMenu">
+      <h3>Geração Automática de Perfil</h3>
+      <button class="button" id="generateProfileBtn">Gerar Perfil</button>
+      <p id="executionTime">Última execução: --</p>
+      <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
+    </div>
+    
+    <!-- Seção de Drive – exibida via proxy reverso -->
+    <div id="driveSection">
+      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
+    </div>
+    
+    <!-- Seção Importações -->
+    <div id="importacoesSection">
+      <h2>Importações</h2>
+      <p>Aqui você encontra o conteúdo referente às importações.</p>
+    </div>
+
+    <!-- Seção Monitoria: Manuais -->
+    <div id="monitoriaManuaisSection">
+      <h2>Manuais de Monitoria</h2>
+      <p>Aqui você encontra os manuais de monitoria.</p>
+    </div>
+    
+    <!-- Planejamento BI -->
+    <div id="planejamentoSection">
+      <h2>Planejamento BI</h2>
+      <!-- Container horizontal para botões de BI e setas -->
+      <div id="biReportsContainer">
+        <button class="button arrowBtn" id="prevReport">&#8592;</button>
+        <div id="biReportsMenu">
+          <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">
+            BI Inicial
+          </button>
+          <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">
+            BI Geral
+          </button>
+          <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">
+            Relatório de faturamento
+          </button>
+          <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">
+            Relatório das franquias
+          </button>
+          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">
+            Relatório Sit Bol
+          </button>
+          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">
+            Rel de cancelamentos
+          </button>
+          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">
+            Relatório de Usinas
+          </button>
+          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">
+            Rel de Vendas
+          </button>
+        </div>
+        <button class="button arrowBtn" id="nextReport">&#8594;</button>
+      </div>
+  
+      <!-- Container para exibir o BI -->
+      <div id="biReportContent">
+        <iframe 
+          id="planejamentoFrame"
+          src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488"
+          allowFullScreen="true">
+        </iframe>
+      </div>
+    </div>
+    
     <!-- Novo Submenu de Planejamento (HAH Vendas) -->
     <div id="planejamentoNovoSubmenuSection">
       <h2>HAH Vendas</h2>
@@ -661,7 +731,6 @@
           <div class="image-wrapper"></div>
           <button class="upload-button">Fazer Upload</button>
           <input type="file" accept="image/*" />
-          <p class="upload-time" id="uploadTimeMG">Último upload: Não realizado</p>
         </div>
         <!-- Container 2: PB -->
         <div class="upload-container" data-title="PB">
@@ -669,7 +738,6 @@
           <div class="image-wrapper"></div>
           <button class="upload-button">Fazer Upload</button>
           <input type="file" accept="image/*" />
-          <p class="upload-time" id="uploadTimePB">Último upload: Não realizado</p>
         </div>
         <!-- Container 3: MGRJ -->
         <div class="upload-container" data-title="MGRJ">
@@ -677,7 +745,6 @@
           <div class="image-wrapper"></div>
           <button class="upload-button">Fazer Upload</button>
           <input type="file" accept="image/*" />
-          <p class="upload-time" id="uploadTimeMGRJ">Último upload: Não realizado</p>
         </div>
         <!-- Container 4: televendas -->
         <div class="upload-container" data-title="televendas">
@@ -685,21 +752,20 @@
           <div class="image-wrapper"></div>
           <button class="upload-button">Fazer Upload</button>
           <input type="file" accept="image/*" />
-          <p class="upload-time" id="uploadTimeTelevendas">Último upload: Não realizado</p>
         </div>
       </div>
     </div>
   </div>
-
+  
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
-
+  
   <div class="version">Versão 1.0.7</div>
-
+  
   <!-- Modal para visão cheia do banner -->
   <div id="fullScreenModal">
     <img id="fullScreenImage" src="" alt="Visão Cheia">
   </div>
-
+  
   <!-- Modal de versão -->
   <div id="versionModal">
     <div class="modal-content">
@@ -719,65 +785,571 @@
       <button id="closeVersionModal">Fechar</button>
     </div>
   </div>
-
+  
   <!-- Modal para visualização da imagem do novo submenu -->
   <div id="uploadModal" class="upload-modal">
     <span class="close-upload-modal">&times;</span>
     <img id="uploadModalImage" src="" alt="Imagem em Tela Cheia">
   </div>
-
+  
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      let lastUploadTimes = {
-        MG: null,
-        PB: null,
-        MGRJ: null,
-        televendas: null
-      };
-
-      function updateUploadTime(region, time) {
-        const timeElement = document.getElementById(`uploadTime${region}`);
-        timeElement.textContent = `Último upload: ${time}`;
-        lastUploadTimes[region] = time;
+      let loggedIn = false;
+      let requestedSection = null;
+      let profileTimeout;
+      
+      // Oculta mensagens de perfil inicialmente
+      document.getElementById("executionTime").style.display = "none";
+      document.getElementById("successMessage").style.display = "none";
+      
+      const headerTitle = document.getElementById("headerTitle");
+      const logo = document.querySelector(".logo");
+      const googleDriveLink = document.getElementById("googleDriveLink");
+      const planejamentoBtn = document.getElementById("planejamentoBtn");
+      const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
+      const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
+      const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
+      const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
+      const planejamentoNovoSubmenuBtn = document.getElementById("planejamentoNovoSubmenuBtn");
+      
+      const monitoriaBtn = document.getElementById("monitoriaBtn");
+      const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
+      const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
+      
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
+      const sidebar = document.querySelector(".sidebar");
+      
+      const loginMenu = document.getElementById("loginMenu");
+      const loginBtn = document.getElementById("loginBtn");
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+      const loginError = document.getElementById("loginError");
+      
+      const profileMenu = document.getElementById("profileMenu");
+      const generateProfileBtn = document.getElementById("generateProfileBtn");
+      const executionTime = document.getElementById("executionTime");
+      const successMessage = document.getElementById("successMessage");
+      
+      const driveSection = document.getElementById("driveSection");
+      const planejamentoSection = document.getElementById("planejamentoSection");
+      const importacoesSection = document.getElementById("importacoesSection");
+      const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
+      const novoSubmenuSection = document.getElementById("planejamentoNovoSubmenuSection");
+      
+      /* Funções para exibir/ocultar os sliders da home */
+      function showHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "block";
       }
-
-      const uploadButtons = document.querySelectorAll(".upload-button");
-
-      uploadButtons.forEach(button => {
-        button.addEventListener("click", function () {
-          const container = this.closest(".upload-container");
-          const fileInput = container.querySelector('input[type="file"]');
-          fileInput.click();
+      function hideHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "none";
+      }
+      
+      /* ======================
+         Slider 1 – Informativos Fevereiro
+         ====================== */
+      const slider = document.getElementById("slider");
+      const slides = slider.querySelectorAll(".slide");
+      const arrowLeft = document.getElementById("arrowLeft");
+      const arrowRight = document.getElementById("arrowRight");
+      const progressFill = document.getElementById("progressFill");
+      const pauseSlideBtn = document.getElementById("pauseSlideBtn");
+      
+      let currentSlideIndex = 0;
+      let slideInterval = 6000; // 6 segundos por slide
+      let slideTimer = null;
+      let progressTimer = null;
+      let progress = 0;
+      let isPaused = false;
+      
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
         });
+      }
+      function nextSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+      function prevSlide() {
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+      function startSlider() {
+        slideTimer = setInterval(nextSlide, slideInterval);
+        progressTimer = setInterval(() => {
+          progress += (100 / (slideInterval / 100));
+          if (progress >= 100) progress = 100;
+          progressFill.style.width = progress + "%";
+        }, 100);
+      }
+      function stopSlider() {
+        clearInterval(slideTimer);
+        clearInterval(progressTimer);
+      }
+      function resetProgress() {
+        progress = 0;
+        progressFill.style.width = "0%";
+        stopSlider();
+        if (!isPaused) startSlider();
+      }
+      pauseSlideBtn.addEventListener("click", function () {
+        if (!isPaused) {
+          isPaused = true;
+          stopSlider();
+          pauseSlideBtn.innerText = "▶";
+        } else {
+          isPaused = false;
+          startSlider();
+          pauseSlideBtn.innerText = "⏸";
+        }
+      });
+      arrowLeft.addEventListener("click", prevSlide);
+      arrowRight.addEventListener("click", nextSlide);
+      
+      showSlide(currentSlideIndex);
+      startSlider();
+      
+      /* ======================
+         Slider 2 – Informativos Março
+         ====================== */
+      const slider2 = document.getElementById("slider2");
+      const arrowLeft2 = document.getElementById("arrowLeft2");
+      const arrowRight2 = document.getElementById("arrowRight2");
+      const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
+      const progressFill2 = document.getElementById("progressFill2");
+      let currentSlideIndex2 = 0;
+      let slideInterval2 = 6000;
+      let slideTimer2 = null;
+      let progressTimer2 = null;
+      let progress2 = 0;
+      let isPaused2 = false;
+      
+      function showSlide2(index) {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        slides2.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
+      function nextSlide2() {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        currentSlideIndex2 = (currentSlideIndex2 + 1) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
+      function prevSlide2() {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        currentSlideIndex2 = (currentSlideIndex2 - 1 + slides2.length) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
+      function startSlider2() {
+        slideTimer2 = setInterval(nextSlide2, slideInterval2);
+        progressTimer2 = setInterval(() => {
+          progress2 += (100 / (slideInterval2 / 100));
+          if (progress2 >= 100) progress2 = 100;
+          progressFill2.style.width = progress2 + "%";
+        }, 100);
+      }
+      function stopSlider2() {
+        clearInterval(slideTimer2);
+        clearInterval(progressTimer2);
+      }
+      function resetProgress2() {
+        progress2 = 0;
+        progressFill2.style.width = "0%";
+        stopSlider2();
+        if (!isPaused2) startSlider2();
+      }
+      arrowLeft2.addEventListener("click", prevSlide2);
+      arrowRight2.addEventListener("click", nextSlide2);
+      pauseSlideBtn2.addEventListener("click", function () {
+        if (!isPaused2) {
+          isPaused2 = true;
+          stopSlider2();
+          this.innerText = "▶";
+        } else {
+          isPaused2 = false;
+          startSlider2();
+          this.innerText = "⏸";
+        }
+      });
+      
+      showSlide2(currentSlideIndex2);
+      startSlider2();
+      
+      /* ======================
+         Eventos de clique e navegação
+         ====================== */
+      logo.addEventListener("click", function () {
+        hideAllMenus();
+        updateHeaderTitle("Intranet EDT");
+        showHomeSliders();
+        requestedSection = null;
+      });
+      
+      // Ao clicar no botão "Google Drive", abre uma nova guia
+      googleDriveLink.addEventListener("click", function () {
+        window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
+      });
+      
+      planejamentoBtn.addEventListener("click", function () {
+        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
+          planejamentoSubmenu.style.display = "flex";
+          planejamentoSubmenu.style.flexDirection = "column";
+        } else {
+          planejamentoSubmenu.style.display = "none";
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoBIBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
+          planejamentoSection.style.display = "block";
+          updateHeaderTitle("Planejamento BI");
+          hideSidebar();
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "planejamentoBI";
+          updateHeaderTitle("Login - Planejamento BI");
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoPerfilBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
+          profileMenu.style.display = "block";
+          updateHeaderTitle("Geração de perfil");
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "planejamentoPerfil";
+          updateHeaderTitle("Login - Geração de perfil");
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoImportacoesBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
+          importacoesSection.style.display = "block";
+          updateHeaderTitle("Importações");
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "importacoes";
+          updateHeaderTitle("Login - Importações");
+        }
+        hideHomeSliders();
       });
 
-      const fileInputs = document.querySelectorAll("input[type='file']");
-      fileInputs.forEach(input => {
-        input.addEventListener("change", function (e) {
-          const file = e.target.files[0];
-          if (file) {
-            const region = e.target.closest(".upload-container").dataset.title;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-              const img = document.createElement("img");
-              img.src = e.target.result;
-              const imageWrapper = e.target.closest(".upload-container").querySelector(".image-wrapper");
-              imageWrapper.innerHTML = '';  // Clear previous image
-              imageWrapper.appendChild(img);
+      // HAH Vendas – usa a mesma lógica de login
+      planejamentoNovoSubmenuBtn.addEventListener("click", function() {
+        if (loggedIn) {
+          hideAllButSubmenu();
+          novoSubmenuSection.style.display = "block";
+          updateHeaderTitle("HAH Vendas");
+          hideHomeSliders();
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "hahVendas";
+          updateHeaderTitle("Login - HAH Vendas");
+          hideHomeSliders();
+        }
+      });
+      
+      // Monitoria (submenu)
+      monitoriaBtn.addEventListener("click", function () {
+        if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
+          monitoriaSubmenu.style.display = "flex";
+          monitoriaSubmenu.style.flexDirection = "column";
+        } else {
+          monitoriaSubmenu.style.display = "none";
+        }
+        hideHomeSliders();
+      });
+      monitoriaManuaisBtn.addEventListener("click", function() {
+        hideAllMenus();
+        monitoriaManuaisSection.style.display = "block";
+        updateHeaderTitle("Manuais de Monitoria");
+      });
+      
+      loginBtn.addEventListener("click", function () {
+        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
+          loggedIn = true;
+          loginMenu.style.display = "none";
+          switch (requestedSection) {
+            case "planejamentoBI":
+              planejamentoSection.style.display = "block";
+              updateHeaderTitle("Planejamento BI");
+              hideSidebar();
+              break;
+            case "planejamentoPerfil":
+              profileMenu.style.display = "block";
+              updateHeaderTitle("Geração de perfil");
+              break;
+            case "importacoes":
+              importacoesSection.style.display = "block";
+              updateHeaderTitle("Importações");
+              break;
+            case "hahVendas":
+              novoSubmenuSection.style.display = "block";
+              updateHeaderTitle("HAH Vendas");
+              break;
+            default:
+              updateHeaderTitle("Intranet EDT");
+          }
+        } else {
+          loginError.style.display = "block";
+        }
+      });
+      
+      generateProfileBtn.addEventListener("click", function () {
+        if (profileTimeout) clearTimeout(profileTimeout);
+        generateProfileBtn.disabled = true;
+        generateProfileBtn.style.backgroundColor = "#A9A9A9";
+        generateProfileBtn.innerText = "Gerando...";
+        successMessage.style.display = "none";
+        executionTime.style.display = "none";
+        fetch("/executar-script", { method: "POST" })
+          .then(response => response.json())
+          .then(data => {
+            const currentTime = new Date().toLocaleString();
+            localStorage.setItem("lastExecutionTime", currentTime);
+            executionTime.innerText = `Última execução: ${currentTime}`;
+            executionTime.style.display = "block";
+            profileTimeout = setTimeout(() => {
+              successMessage.style.display = "block";
+              generateProfileBtn.disabled = false;
+              generateProfileBtn.style.backgroundColor = "#009688";
+              generateProfileBtn.innerText = "Gerar Perfil";
+              setTimeout(() => {
+                successMessage.style.display = "none";
+              }, 3000);
+            }, 10000);
+          })
+          .catch(error => {
+            alert("Ocorreu um erro ao gerar o perfil.");
+            generateProfileBtn.disabled = false;
+            generateProfileBtn.style.backgroundColor = "#009688";
+            generateProfileBtn.innerText = "Gerar Perfil";
+          });
+      });
+      
+      const otherButtons = document.querySelectorAll(
+        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#planejamentoNovoSubmenuBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
+      );
+      otherButtons.forEach(btn => {
+        btn.addEventListener("click", function () {
+          hideAllMenus();
+          updateHeaderTitle(this.innerText);
+          requestedSection = null;
+          hideHomeSliders();
+        });
+      });
+      
+      toggleSidebarBtn.addEventListener("click", function () {
+        if (sidebar.style.transform === "translateX(-100%)") {
+          sidebar.style.transform = "translateX(0)";
+          toggleSidebarBtn.innerText = "Ocultar Sidebar";
+        } else {
+          sidebar.style.transform = "translateX(-100%)";
+          toggleSidebarBtn.innerText = "Mostrar Sidebar";
+        }
+      });
+      
+      const biReportsMenu = document.getElementById("biReportsMenu");
+      const reportButtons = biReportsMenu.querySelectorAll(".button");
+      const planejamentoFrame = document.getElementById("planejamentoFrame");
+      let currentReportIndex = 0;
+      
+      function updateIframeFromIndex() {
+        if (reportButtons.length > 0) {
+          const btn = reportButtons[currentReportIndex];
+          const newSrc = btn.getAttribute("data-src");
+          planejamentoFrame.src = newSrc;
+          document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
+        }
+      }
+      
+      reportButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          currentReportIndex = index;
+          updateIframeFromIndex();
+        });
+      });
+      
+      const prevReport = document.getElementById("prevReport");
+      const nextReport = document.getElementById("nextReport");
+      
+      prevReport.addEventListener("click", function () {
+        if (currentReportIndex > 0) {
+          currentReportIndex--;
+          updateIframeFromIndex();
+        }
+      });
+      
+      nextReport.addEventListener("click", function () {
+        if (currentReportIndex < reportButtons.length - 1) {
+          currentReportIndex++;
+          updateIframeFromIndex();
+        }
+      });
+      
+      window.addEventListener("scroll", function () {
+        if (planejamentoSection && planejamentoSection.style.display !== "none") {
+          headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
+        } else {
+          headerTitle.style.opacity = 1;
+        }
+      });
+      
+      const fullScreenModal = document.getElementById("fullScreenModal");
+      const fullScreenImage = document.getElementById("fullScreenImage");
+      
+      // Ao clicar na imagem do primeiro slider, abre o modal centralizado
+      slider.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      // Ao clicar na imagem do segundo slider, também abre o modal
+      slider2.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      // Se clicar no modal, ele é fechado
+      fullScreenModal.addEventListener("click", function () {
+        fullScreenModal.style.display = "none";
+      });
+      
+      const versionDiv = document.querySelector(".version");
+      const versionModal = document.getElementById("versionModal");
+      versionDiv.addEventListener("click", function () {
+        versionModal.style.display = "flex";
+      });
+      versionModal.addEventListener("click", function (e) {
+        if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
+          versionModal.style.display = "none";
+        }
+      });
+      
+      /* ======================
+         Configuração para o HAH Vendas (upload de imagens)
+         ====================== */
+      const uploadModal = document.getElementById("uploadModal");
+      const uploadModalImage = document.getElementById("uploadModalImage");
+      const closeUploadModal = document.querySelector(".close-upload-modal");
+      
+      closeUploadModal.addEventListener("click", function() {
+        uploadModal.style.display = "none";
+      });
+      uploadModal.addEventListener("click", function(e) {
+        if (e.target === uploadModal) {
+          uploadModal.style.display = "none";
+        }
+      });
 
-              const currentTime = new Date().toLocaleString();
-              updateUploadTime(region, currentTime);
+      function setupUploadContainer(container) {
+        const fileInput = container.querySelector('input[type="file"]');
+        const uploadBtn = container.querySelector('.upload-button');
+        const imageWrapper = container.querySelector('.image-wrapper');
+        const dataKey = "upload" + container.dataset.title + "Image";
+        
+        // Se já houver imagem armazenada no localStorage, exibe-a
+        const storedImage = localStorage.getItem(dataKey);
+        if (storedImage) {
+          displayImage(storedImage);
+        }
+
+        // Botão de upload abre o diálogo de arquivos
+        uploadBtn.addEventListener("click", function() {
+          fileInput.click();
+        });
+
+        // Quando o usuário seleciona um arquivo
+        fileInput.addEventListener("change", function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              displayImage(e.target.result);
+              // Armazena a imagem no localStorage
+              localStorage.setItem(dataKey, e.target.result);
             };
             reader.readAsDataURL(file);
           }
         });
-      });
 
-      // Set initial upload times as needed
-      updateUploadTime("MG", "Não realizado");
-      updateUploadTime("PB", "Não realizado");
-      updateUploadTime("MGRJ", "Não realizado");
-      updateUploadTime("televendas", "Não realizado");
+        // Clicando na imagem, abre em tela cheia
+        imageWrapper.addEventListener("click", function() {
+          const img = imageWrapper.querySelector("img");
+          if (img && img.src) {
+            uploadModalImage.src = img.src;
+            uploadModal.style.display = "flex";
+          }
+        });
+
+        function displayImage(base64) {
+          let img = imageWrapper.querySelector("img");
+          if (!img) {
+            img = document.createElement("img");
+            imageWrapper.appendChild(img);
+          }
+          img.src = base64;
+        }
+      }
+
+      const uploadContainers = document.querySelectorAll(".upload-container");
+      uploadContainers.forEach(container => setupUploadContainer(container));
+      
+      function hideAllButSubmenu() {
+        loginMenu.style.display = "none";
+        profileMenu.style.display = "none";
+        driveSection.style.display = "none";
+        planejamentoSection.style.display = "none";
+        importacoesSection.style.display = "none";
+        monitoriaManuaisSection.style.display = "none";
+        novoSubmenuSection.style.display = "none";
+      }
+      function hideAllMenus() {
+        loginMenu.style.display = "none";
+        profileMenu.style.display = "none";
+        driveSection.style.display = "none";
+        planejamentoSection.style.display = "none";
+        importacoesSection.style.display = "none";
+        monitoriaManuaisSection.style.display = "none";
+        planejamentoSubmenu.style.display = "none";
+        monitoriaSubmenu.style.display = "none";
+        novoSubmenuSection.style.display = "none";
+      }
+      function updateHeaderTitle(text) {
+        headerTitle.innerText = text;
+      }
+      function hideSidebar() {
+        sidebar.style.transform = "translateX(-100%)";
+        toggleSidebarBtn.innerText = "Mostrar Sidebar";
+      }
     });
   </script>
 </body>
