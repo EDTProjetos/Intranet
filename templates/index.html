@@ -427,7 +427,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
-      margin-top: 20px;
+      margin: 20px auto;
       justify-items: center;
     }
     .upload-container {
@@ -438,6 +438,8 @@
       max-width: 300px;
       text-align: center;
       cursor: pointer;
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 8px;
     }
     .upload-container h3 {
       margin-top: 0;
@@ -501,7 +503,8 @@
       <button class="button" id="planejamentoBIBtn">Planejamento BI</button>
       <button class="button" id="planejamentoPerfilBtn">Geração de perfil</button>
       <button class="button" id="planejamentoImportacoesBtn">Importações</button>
-      <button class="button" id="planejamentoNovoSubmenuBtn">Novo Submenu</button>
+      <!-- Atualizado para Visualização HAH vendas -->
+      <button class="button" id="planejamentoNovoSubmenuBtn">Visualização HAH vendas</button>
     </div>
     
     <!-- Outras opções -->
@@ -684,9 +687,9 @@
       </div>
     </div>
     
-    <!-- Novo Submenu de Planejamento -->
+    <!-- Novo Submenu de Planejamento (Visualização HAH vendas) -->
     <div id="planejamentoNovoSubmenuSection" style="display: none;">
-      <h2>Novo Submenu</h2>
+      <h2>Visualização HAH vendas</h2>
       <div class="upload-grid">
         <div class="upload-container" data-title="MG">
           <h3>MG</h3>
@@ -1010,17 +1013,21 @@
         hideHomeSliders();
       });
 
-      // Novo Submenu de Planejamento (Upload de Imagem)
+      // Novo Submenu: Visualização HAH vendas – utiliza o mesmo sistema de login do BI
       planejamentoNovoSubmenuBtn.addEventListener("click", function() {
-        var usuario = prompt("Digite o usuário:");
-        var senha = prompt("Digite a senha:");
-        if (usuario === "admin" && senha === "admin") {
+        if(loggedIn) {
           hideAllButSubmenu();
           novoSubmenuSection.style.display = "block";
-          updateHeaderTitle("Novo Submenu");
+          updateHeaderTitle("Visualização HAH vendas");
           hideHomeSliders();
         } else {
-          alert("Usuário ou senha incorretos.");
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "visualizacaoHAHvendas";
+          updateHeaderTitle("Login - Visualização HAH vendas");
+          hideHomeSliders();
         }
       });
       
@@ -1054,6 +1061,9 @@
           } else if (requestedSection === "importacoes") {
             importacoesSection.style.display = "block";
             updateHeaderTitle("Importações");
+          } else if (requestedSection === "visualizacaoHAHvendas") {
+            novoSubmenuSection.style.display = "block";
+            updateHeaderTitle("Visualização HAH vendas");
           } else {
             updateHeaderTitle("Intranet EDT");
           }
@@ -1204,6 +1214,12 @@
         var input = container.querySelector("input[type='file']");
         var label = container.querySelector(".upload-label");
         
+        // Ao clicar no label, abre o diálogo de arquivos
+        label.addEventListener("click", function(e) {
+          e.stopPropagation();
+          input.click();
+        });
+        
         input.addEventListener("change", function(event) {
           var file = event.target.files[0];
           if (file) {
@@ -1215,11 +1231,14 @@
                 container.insertBefore(img, label);
               }
               img.src = e.target.result;
+              // Armazena a imagem no localStorage para mantê-la fixa
+              localStorage.setItem("upload" + container.dataset.title + "Image", e.target.result);
             };
             reader.readAsDataURL(file);
           }
         });
         
+        // Ao clicar fora do label e input, se houver imagem, abre o modal
         container.addEventListener("click", function(e) {
           if (e.target.tagName.toLowerCase() === "label" || e.target.tagName.toLowerCase() === "input") return;
           var img = container.querySelector("img");
@@ -1235,6 +1254,16 @@
       var uploadContainers = document.querySelectorAll(".upload-container");
       uploadContainers.forEach(function(container) {
         setupUploadContainer(container);
+        // Se já houver imagem armazenada, exibe-a
+        var storedImage = localStorage.getItem("upload" + container.dataset.title + "Image");
+        if (storedImage) {
+          var img = container.querySelector("img");
+          if (!img) {
+            img = document.createElement("img");
+            container.insertBefore(img, container.querySelector(".upload-label"));
+          }
+          img.src = storedImage;
+        }
       });
       
       document.querySelector(".close-upload-modal").addEventListener("click", function() {
