@@ -194,13 +194,8 @@
     .slider-info {
       width: 55%;
       background: rgba(255, 255, 255, 0.8);
-
-      /* Borda geral em verde */
       border: 2px solid #009688;
-
-      /* Faixa amarela na esquerda (sobrepõe o lado esquerdo da borda verde) */
       border-left: 5px solid #fcb414;
-
       border-radius: 10px;
       padding: 20px;
       color: #009688;
@@ -210,19 +205,38 @@
     }
     /* Modal para visão cheia do banner */
     #fullScreenModal {
-      display: none; /* Oculto por padrão */
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.8);
-      /* As propriedades abaixo garantem que, quando exibido via JS, o modal ficará centralizado */
       align-items: center;
       justify-content: center;
       z-index: 100000;
     }
     #fullScreenModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
+    }
+    /* Modal para zoom das imagens dos containers */
+    #containerImageModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 100001;
+      padding-left: 270px; /* Afasta da sidebar */
+    }
+    #containerImageModal img {
       max-width: 90%;
       max-height: 90%;
       box-shadow: 0 0 15px rgba(255,255,255,0.8);
@@ -428,8 +442,7 @@
       margin-bottom: 8px;
       cursor: pointer;
     }
-
-    /* ======================================================== */
+    
     /* ====== Seção HAH Vendas ====== */
     #hahVendasSection {
       display: none;
@@ -469,10 +482,11 @@
       width: 100%;
       max-height: 200px;
       object-fit: contain;
-      display: none; /* Fica oculto até que haja imagem */
+      display: none; /* Fica oculto até haver imagem */
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -683,14 +697,14 @@
       <h2>HAH Vendas</h2>
       <!-- Container geral com 2 linhas e 2 colunas (4 boxes) -->
       <div class="hahVendas-row">
-        <div class="hahVendas-box">
+        <div class="hahVendas-box" tabindex="0">
           <h3>MG</h3>
           <img id="previewImg1" alt="MG">
           <input type="file" id="uploadFile1" style="display: none;" accept="image/*">
           <button class="button" id="uploadBtn1">Fazer Upload</button>
           <p id="lastImport1">Última importação: --</p>
         </div>
-        <div class="hahVendas-box">
+        <div class="hahVendas-box" tabindex="0">
           <h3>PB</h3>
           <img id="previewImg2" alt="PB">
           <input type="file" id="uploadFile2" style="display: none;" accept="image/*">
@@ -699,14 +713,14 @@
         </div>
       </div>
       <div class="hahVendas-row">
-        <div class="hahVendas-box">
+        <div class="hahVendas-box" tabindex="0">
           <h3>MGRJ</h3>
           <img id="previewImg3" alt="MGRJ">
           <input type="file" id="uploadFile3" style="display: none;" accept="image/*">
           <button class="button" id="uploadBtn3">Fazer Upload</button>
           <p id="lastImport3">Última importação: --</p>
         </div>
-        <div class="hahVendas-box">
+        <div class="hahVendas-box" tabindex="0">
           <h3>TELEVENDAS</h3>
           <img id="previewImg4" alt="TELEVENDAS">
           <input type="file" id="uploadFile4" style="display: none;" accept="image/*">
@@ -747,11 +761,17 @@
     </div>
   </div>
   
+  <!-- Modal para zoom das imagens dos containers -->
+  <div id="containerImageModal">
+    <img id="containerModalImage" src="" alt="Zoom">
+  </div>
+  
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       let loggedIn = false;
       let requestedSection = null;
       let profileTimeout;
+      let activeContainer = null; // Para identificar qual container está ativo para colagem via Ctrl+V
       
       // Oculta mensagens de perfil inicialmente
       document.getElementById("executionTime").style.display = "none";
@@ -1186,8 +1206,7 @@
       });
 
       /* ============================
-         LÓGICA DE UPLOAD E EXIBIÇÃO
-         PARA HAH VENDAS
+         LÓGICA DE UPLOAD E EXIBIÇÃO PARA HAH VENDAS
       ============================ */
 
       // Botão do submenu "HAH Vendas"
@@ -1247,7 +1266,7 @@
             const reader = new FileReader();
             reader.onload = function(e) {
               const dataUrl = e.target.result;
-              // Salva em localStorage (exemplo) - para persistir localmente
+              // Salva em localStorage (exemplo)
               localStorage.setItem(storageKeyImg, dataUrl);
               // Mostra a imagem
               previewImg.src = dataUrl;
@@ -1267,6 +1286,57 @@
       setupUpload("uploadBtn2", "uploadFile2", "previewImg2", "lastImport2", "hahVendasImg2", "hahVendasTime2");
       setupUpload("uploadBtn3", "uploadFile3", "previewImg3", "lastImport3", "hahVendasImg3", "hahVendasTime3");
       setupUpload("uploadBtn4", "uploadFile4", "previewImg4", "lastImport4", "hahVendasImg4", "hahVendasTime4");
+
+      // Adicionar event listeners para abrir o modal de zoom ao clicar na imagem do container
+      ["previewImg1", "previewImg2", "previewImg3", "previewImg4"].forEach(function(imgId) {
+        const imgElement = document.getElementById(imgId);
+        imgElement.addEventListener("click", function () {
+          if (imgElement.src) {
+            document.getElementById("containerModalImage").src = imgElement.src;
+            document.getElementById("containerImageModal").style.display = "flex";
+          }
+        });
+      });
+      // Fechar o modal de zoom dos containers ao clicar nele
+      document.getElementById("containerImageModal").addEventListener("click", function () {
+        this.style.display = "none";
+      });
+
+      // Tornar cada container (div.hahVendas-box) focusable e definir o container ativo para paste
+      document.querySelectorAll('.hahVendas-box').forEach((box, index) => {
+        box.addEventListener("click", function () {
+          activeContainer = index + 1; // 1 a 4
+        });
+      });
+
+      // Permitir colar imagem (Ctrl+V) para o container ativo
+      window.addEventListener("paste", function(e) {
+        if (activeContainer !== null) {
+          const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf("image") !== -1) {
+              const blob = items[i].getAsFile();
+              const reader = new FileReader();
+              reader.onload = function(event) {
+                const previewImgId = "previewImg" + activeContainer;
+                const lastImportId = "lastImport" + activeContainer;
+                const storageKeyImg = "hahVendasImg" + activeContainer;
+                const storageKeyTime = "hahVendasTime" + activeContainer;
+                const previewImg = document.getElementById(previewImgId);
+                const lastImport = document.getElementById(lastImportId);
+                previewImg.src = event.target.result;
+                previewImg.style.display = "block";
+                const currentTime = new Date().toLocaleString();
+                lastImport.textContent = "Última importação: " + currentTime;
+                localStorage.setItem(storageKeyImg, event.target.result);
+                localStorage.setItem(storageKeyTime, currentTime);
+              };
+              reader.readAsDataURL(blob);
+              break; // Processa somente a primeira imagem
+            }
+          }
+        }
+      });
       
     });
     
