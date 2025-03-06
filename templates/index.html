@@ -310,173 +310,6 @@
       border: none;
     }
 
-    #planejamentoSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    #planejamentoSection h2 {
-      margin-top: 0;
-    }
-
-    #importacoesSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    #importacoesSection h2 {
-      margin-top: 0;
-    }
-
-    #monitoriaManuaisSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    #monitoriaManuaisSection h2 {
-      margin-top: 0;
-    }
-
-    #biReportsContainer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: nowrap;
-    }
-
-    #biReportsMenu {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 10px;
-    }
-
-    .arrowBtn {
-      width: 40px;
-      text-align: center;
-      margin: 0;
-      padding: 8px;
-      font-size: 1.5rem;
-    }
-
-    #biReportContent {
-      width: 100%;
-      height: calc(100vh - 300px);
-      box-sizing: border-box;
-    }
-
-    #planejamentoFrame {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    #toggleSidebarBtn {
-      position: fixed;
-      left: 10px;
-      bottom: 10px;
-      background-color: #009688;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 9999;
-    }
-
-    #toggleSidebarBtn:hover {
-      background-color: #00796B;
-    }
-
-    .version {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background-color: #009688;
-      color: #fff;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #versionModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      align-items: center;
-      justify-content: center;
-      z-index: 100000;
-    }
-
-    #versionModal .modal-content {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-    }
-
-    #versionModal button {
-      margin-top: 15px;
-      padding: 8px 16px;
-      background-color: #009688;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #versionModal button:hover {
-      background-color: #00796B;
-    }
-
-    #executionTime,
-    #successMessage {
-      display: none;
-    }
-
-    .energy-of-todos {
-      position: absolute;
-      bottom: 30px;
-      left: 10px;
-      text-align: left;
-      color: #fff;
-    }
-
-    .energy-of-todos img {
-      width: 290px;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-
-    /* === MODIFICAÇÕES PARA CLOUDINARY === */
     #hahVendasSection {
       display: none;
       margin: 10px 26px 0 10px;
@@ -641,10 +474,7 @@
           <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">BI Geral</button>
           <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Relatório de faturamento</button>
           <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
-          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
-          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Rel de cancelamentos</button>
-          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">Relatório de Usinas</button>
-          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
+          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Rel Sit Bol</button>
         </div>
         <button class="button arrowBtn" id="nextReport">&#8594;</button>
       </div>
@@ -712,7 +542,6 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // ============== INTEGRAÇÃO CLOUDINARY ==============
-
       const cloudName = 'SEU_CLOUD_NAME'; // Substituir pelo seu
       const uploadPreset = 'SEU_UPLOAD_PRESET'; // Substituir pelo seu
       let activeContainerKey = null;
@@ -726,8 +555,8 @@
         multiple: false
       }, (error, result) => {
         if (!error && result && result.event === "success") {
-          updateImageDisplay(result.info.secure_url); // Exibe a URL da imagem carregada
-          saveImageData(activeContainerKey, result.info.secure_url); // Salva a URL
+          updateImageDisplay(result.info.secure_url);
+          saveImageData(activeContainerKey, result.info.secure_url);
         }
       });
 
@@ -740,7 +569,7 @@
         });
       });
 
-      // Função para atualizar a exibição da imagem
+      // Funções auxiliares
       function updateImageDisplay(url) {
         const container = document.querySelector(`[data-key="${activeContainerKey}"]`);
         if (container) {
@@ -790,7 +619,8 @@
       }
 
       loadSavedImages();
-
+    });
+    
       // ============== CÓDIGO ORIGINAL COMPLETO ============== 
       let loggedIn = false;
       let requestedSection = null;
