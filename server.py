@@ -1,12 +1,12 @@
+from werkzeug.utils import secure_filename
+import cloudinary
+import cloudinary.uploader
 from flask import Flask, jsonify, render_template, redirect, url_for, session, request
 import threading
 import subprocess
 import os
 import json
 import requests
-import cloudinary
-import cloudinary.uploader
-from cloudinary.utils import cloudinary_url
 from flask_session import Session
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
@@ -187,14 +187,39 @@ def listar_arquivos():
 # Função para upload de imagem para o Cloudinary
 @app.route("/upload_imagem", methods=["POST"])
 def upload_imagem():
-    image_url = request.form.get("image_url")
-    
-    try:
-        upload_result = cloudinary.uploader.upload(image_url)
-        return jsonify({"message": "Imagem carregada com sucesso!", "url": upload_result["secure_url"]})
-    except Exception as e:
-        return jsonify({"error": f"Erro ao fazer upload: {str(e)}"})
+    # Verifica se o arquivo foi enviado
+    if 'file' not in request.files:
+        return jsonify({"error": "Nenhum arquivo foi enviado."}), 400
 
+    file = request.files['file']
+    
+    # Verifica se o nome do arquivo está vazio
+    if file.filename == '':
+        return jsonify({"error": "Nenhum arquivo selecionado."}), 400
+
+    # Verifica a extensão do arquivo
+    if not allowed_file(file.filename):
+        return jsonify({"error": "Formato de arquivo não permitido. Apenas imagens são aceitas."}), 400
+
+    try:
+        # Garantir que o nome do arquivo é seguro
+        filename = secure_filename(file.filename)
+        
+        # Fazendo upload para o Cloudinary
+        upload_result = cloudinary.uploader.upload(file)
+        
+        # Retorna a URL segura da imagem carregada
+        return jsonify({"message": "Imagem carregada com sucesso!", "url": upload_result["secure_url"]})
+    
+    except Exception as e:
+        return jsonify({"error": f"Erro ao fazer upload: {str(e)}"}), 500
+
+# Função para verificar se o arquivo é uma imagem permitida
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Inicia o Flask app
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
