@@ -712,6 +712,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // ============== INTEGRAÇÃO CLOUDINARY ==============
+
       const cloudName = 'SEU_CLOUD_NAME'; // Substituir pelo seu
       const uploadPreset = 'SEU_UPLOAD_PRESET'; // Substituir pelo seu
       let activeContainerKey = null;
@@ -725,8 +726,8 @@
         multiple: false
       }, (error, result) => {
         if (!error && result && result.event === "success") {
-          updateImageDisplay(result.info.secure_url);
-          saveImageData(activeContainerKey, result.info.secure_url);
+          updateImageDisplay(result.info.secure_url); // Exibe a URL da imagem carregada
+          saveImageData(activeContainerKey, result.info.secure_url); // Salva a URL
         }
       });
 
@@ -739,32 +740,7 @@
         });
       });
 
-      // Configurar Ctrl+V
-      document.addEventListener('paste', async (e) => {
-        const items = e.clipboardData.items;
-        for (const item of items) {
-          if (item.type.indexOf('image') !== -1) {
-            const blob = item.getAsFile();
-            const formData = new FormData();
-            formData.append('file', blob);
-            formData.append('upload_preset', uploadPreset);
-
-            try {
-              const response = await fetch(
-                `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-                { method: 'POST', body: formData }
-              );
-              const data = await response.json();
-              updateImageDisplay(data.secure_url);
-              saveImageData(activeContainerKey, data.secure_url);
-            } catch (error) {
-              console.error('Erro no upload:', error);
-            }
-          }
-        }
-      });
-
-      // Funções auxiliares
+      // Função para atualizar a exibição da imagem
       function updateImageDisplay(url) {
         const container = document.querySelector(`[data-key="${activeContainerKey}"]`);
         if (container) {
@@ -792,8 +768,8 @@
         }
       }
 
-      // Carregar imagens iniciais
-      async function loadInitialImages() {
+      // Ao carregar a página, tenta exibir imagens já salvas
+      async function loadSavedImages() {
         try {
           const response = await fetch('/get-images');
           const images = await response.json();
@@ -813,20 +789,16 @@
         }
       }
 
-      // Inicialização
-      document.querySelectorAll('.hahVendas-box').forEach(box => {
-        box.addEventListener('click', () => {
-          activeContainerKey = box.dataset.key;
-        });
-      });
+      loadSavedImages();
 
-      loadInitialImages();
-
-      // ============== CÓDIGO ORIGINAL COMPLETO ==============
+      // ============== CÓDIGO ORIGINAL COMPLETO ============== 
       let loggedIn = false;
       let requestedSection = null;
       let activeContainer = null; // Para identificar qual container está ativo para colagem via Ctrl+V
       
+      // Lógica do código restante continua aqui
+    });
+
       // Oculta mensagens de perfil inicialmente
       document.getElementById("executionTime").style.display = "none";
       document.getElementById("successMessage").style.display = "none";
