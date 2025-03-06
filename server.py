@@ -4,6 +4,9 @@ import subprocess
 import os
 import json
 import requests
+import cloudinary
+import cloudinary.uploader
+from cloudinary.utils import cloudinary_url
 from flask_session import Session
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
@@ -28,6 +31,14 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.email",
     "openid"
 ]
+
+# Configuração do Cloudinary usando variáveis de ambiente
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 def executar_script():
     """Executa o script Selenium"""
@@ -172,6 +183,17 @@ def listar_arquivos():
     
     files = results.get("files", [])
     return jsonify({"arquivos": files})
+
+# Função para upload de imagem para o Cloudinary
+@app.route("/upload_imagem", methods=["POST"])
+def upload_imagem():
+    image_url = request.form.get("image_url")
+    
+    try:
+        upload_result = cloudinary.uploader.upload(image_url)
+        return jsonify({"message": "Imagem carregada com sucesso!", "url": upload_result["secure_url"]})
+    except Exception as e:
+        return jsonify({"error": f"Erro ao fazer upload: {str(e)}"})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
