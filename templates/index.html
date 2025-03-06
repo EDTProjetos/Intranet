@@ -53,6 +53,7 @@
       z-index: 10;
       cursor: pointer;
     }
+    /* Botões principais */
     .button {
       width: 100%;
       padding: 10px;
@@ -68,220 +69,224 @@
     .button:hover {
       background-color: #00796B;
     }
-    /* Seção HAH Vendas */
-    #hahVendasSection {
+    /* Submenu de Planejamento e Monitoria: botões menores */
+    #planejamentoSubmenu .button,
+    #monitoriaSubmenu .button {
+      width: auto;
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      padding-left: 270px;  /* Espaço para a sidebar */
+      padding-top: 80px;    /* Espaço para o cabeçalho fixo */
+    }
+    /* Container que agrupa os sliders da página inicial */
+    #homeSliders {
+      width: 90%;
+      margin: 20px 5%;
+    }
+    /* Container do Slider e Painel Informativo */
+    .slider-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    /* ====== Estilização dos Sliders ====== */
+    #slider, #slider2 {
+      width: 30%;
+      height: auto; 
+      position: relative;
+      border: 2px solid #009688;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    #slider:hover, #slider2:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    }
+    .slide {
+      width: 100%;
+      height: auto;
       display: none;
-      margin: 10px 26px 0 10px;
+      text-align: center;
+    }
+    .slide img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      cursor: pointer;
+    }
+    .slide.active {
+      display: block;
+    }
+    .slider-arrow {
+      position: absolute;
+      background: none;
+      border: none;
+      color: #000;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 9999;
+    }
+    .arrow-left {
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .arrow-right {
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    #slider:hover .slider-arrow,
+    #slider2:hover .slider-arrow {
+      opacity: 1;
+    }
+    /* Barrinha de progresso */
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background-color: #009688;
+      transition: width 0.1s;
+    }
+    /* Botão de pause/play */
+    .slider-pause {
+      position: absolute;
+      bottom: 40px;
+      right: 10px;
+      background-color: #009688;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 9999;
+      font-size: 1.5rem;
+    }
+    #slider:hover .slider-pause,
+    #slider2:hover .slider-pause {
+      opacity: 1;
+    }
+    /* Painel Informativo */
+    .slider-info {
+      width: 55%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid #009688;
+      border-left: 5px solid #fcb414;
+      border-radius: 10px;
+      padding: 20px;
+      color: #009688;
+    }
+    .slider-info h2 {
+      margin-top: 0;
+    }
+    /* Modal para visão cheia do banner */
+    #fullScreenModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+    }
+    #fullScreenModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
+    }
+    /* Modal para zoom das imagens dos containers */
+    #containerImageModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 100001;
+      padding-left: 270px; /* Afasta da sidebar */
+    }
+    #containerImageModal img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.8);
+      cursor: pointer;
+    }
+    /* Menus de Login e Perfil centralizados */
+    #loginMenu,
+    #profileMenu {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
+      text-align: center;
+      width: 350px;
     }
-    .hahVendas-row {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    .hahVendas-box {
-      flex: 1;
-      min-height: 250px;
-      border: 2px solid #009688;
-      border-radius: 10px;
-      background-color: #fff;
-      padding: 15px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-    .hahVendas-box h3 {
-      margin-top: 0;
-      color: #009688;
-    }
-    .hahVendas-box img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: contain;
-      display: none;
-      margin-bottom: 10px;
+    #loginMenu input {
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 8px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      cursor: pointer;
     }
-    #containerImageModal {
+    #loginError {
+      color: red;
       display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    }
+    /* Seção de Drive – exibida via proxy reverso */
+    #driveSection {
+      display: none;
+      width: 1525px;
+      height: 855px;
+      margin: 30px auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    #driveSection object {
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      align-items: center;
-      justify-content: center;
-      z-index: 100001;
-      padding: 20px;
+      border: none;
     }
-    #containerImageModal img {
-      max-width: 100%;
-      max-height: 100%;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <!-- Cabeçalho fixo -->
-  <div id="headerTitle">Intranet EDT</div>
-  
-  <div class="sidebar">
-    <img src="static/logo 2.png" alt="Logo" class="logo">
-    <button class="button" id="googleDriveLink" style="margin-top: 230px;">Google Drive</button>
-    <button class="button" id="planejamentoBtn">Planejamento</button>
-    <div id="planejamentoSubmenu" style="display: none;">
-      <button class="button" id="planejamentoBIBtn">Planejamento BI</button>
-      <button class="button" id="planejamentoPerfilBtn">Geração de perfil</button>
-      <button class="button" id="planejamentoImportacoesBtn">Importações</button>
-      <button class="button" id="hahVendasBtn">HAH Vendas</button>
-    </div>
-    <button class="button">Conteúdo informativo</button>
-    <button class="button">Manuais</button>
-    <button class="button" id="monitoriaBtn">Monitoria</button>
-    <div id="monitoriaSubmenu" style="display: none;">
-      <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
-    </div>
-  </div>
-
-  <div class="content">
-    <div id="homeSliders">
-      <!-- Conteúdo do slider... -->
-    </div>
-
-    <!-- Seção HAH Vendas -->
-    <div id="hahVendasSection" style="display: none;">
-      <h2>HAH Vendas</h2>
-      <div class="hahVendas-row">
-        <div class="hahVendas-box" id="box1" tabindex="0">
-          <h3>MG</h3>
-          <img id="previewImg1" alt="MG">
-          <button class="button" id="uploadBtn1">Fazer Upload</button>
-          <p id="lastImport1">Última importação: --</p>
-        </div>
-        <div class="hahVendas-box" id="box2" tabindex="0">
-          <h3>PB</h3>
-          <img id="previewImg2" alt="PB">
-          <button class="button" id="uploadBtn2">Fazer Upload</button>
-          <p id="lastImport2">Última importação: --</p>
-        </div>
-      </div>
-      <div class="hahVendas-row">
-        <div class="hahVendas-box" id="box3" tabindex="0">
-          <h3>MGRJ</h3>
-          <img id="previewImg3" alt="MGRJ">
-          <button class="button" id="uploadBtn3">Fazer Upload</button>
-          <p id="lastImport3">Última importação: --</p>
-        </div>
-        <div class="hahVendas-box" id="box4" tabindex="0">
-          <h3>TELEVENDAS</h3>
-          <img id="previewImg4" alt="TELEVENDAS">
-          <button class="button" id="uploadBtn4">Fazer Upload</button>
-          <p id="lastImport4">Última importação: --</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para Zoom -->
-    <div id="containerImageModal">
-      <img id="containerModalImage" src="" alt="Zoom">
-    </div>
-  </div>
-
-  <button id="toggleSidebarBtn">Ocultar Sidebar</button>
-
-  <div class="version">Versão 1.0.7</div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Função para lidar com o evento de colagem (Ctrl+V)
-      function handlePasteEvent(e, boxId) {
-          if (e.clipboardData && e.clipboardData.items) {
-              const items = e.clipboardData.items;
-              for (let i = 0; i < items.length; i++) {
-                  if (items[i].type.indexOf("image") !== -1) {
-                      const blob = items[i].getAsFile();
-                      const reader = new FileReader();
-                      reader.onload = function(event) {
-                          const imgElement = document.getElementById(`previewImg${boxId}`);
-                          const lastImportElement = document.getElementById(`lastImport${boxId}`);
-                          imgElement.src = event.target.result;
-                          imgElement.style.display = "block"; // Exibe a imagem no quadro
-                          uploadToCloudinary(event.target.result, boxId, lastImportElement);
-                      };
-                      reader.readAsDataURL(blob);
-                      break;
-                  }
-              }
-          }
-      }
-
-      // Função para fazer o upload da imagem para o Cloudinary
-      function uploadToCloudinary(imageData, boxId, lastImportElement) {
-          const formData = new FormData();
-          formData.append("image_url", imageData);
-
-          fetch("/upload_imagem", {
-              method: "POST",
-              body: formData
-          })
-          .then(response => response.json())
-          .then(data => {
-              if (data.url) {
-                  lastImportElement.textContent = `Última importação: ${new Date().toLocaleString()}`;
-                  console.log("Imagem carregada no Cloudinary: " + data.url);
-              } else {
-                  alert("Erro ao carregar a imagem.");
-              }
-          })
-          .catch(error => {
-              alert("Erro ao fazer o upload da imagem.");
-              console.error(error);
-          });
-      }
-
-      // Adicionando o evento para cada quadro de "HAH Vendas" (Ctrl+V ou Clique)
-      ["box1", "box2", "box3", "box4"].forEach((boxId, index) => {
-          const boxElement = document.getElementById(boxId);
-
-          // Escutando para o evento de Ctrl+V (colagem)
-          boxElement.addEventListener("paste", function (e) {
-              handlePasteEvent(e, index + 1);
-          });
-
-          // Adicionar evento de clique para fazer upload também via botão
-          document.getElementById(`uploadBtn${index + 1}`).addEventListener("click", function () {
-              const inputFile = document.createElement("input");
-              inputFile.type = "file";
-              inputFile.accept = "image/*";
-              inputFile.click();
-
-              inputFile.addEventListener("change", function () {
-                  const file = inputFile.files[0];
-                  const reader = new FileReader();
-                  reader.onload = function(event) {
-                      const imgElement = document.getElementById(`previewImg${index + 1}`);
-                      const lastImportElement = document.getElementById(`lastImport${index + 1}`);
-                      imgElement.src = event.target.result;
-                      imgElement.style.display = "block";
-                      uploadToCloudinary(event.target.result, index + 1, lastImportElement);
-                  };
-                  reader.readAsDataURL(file);
-              });
-
     /* Seção Planejamento BI */
     #planejamentoSection {
       display: none;
@@ -688,40 +693,42 @@
     </div>
 
     <!-- Seção HAH Vendas -->
- <!-- Seção HAH Vendas -->
-<div id="hahVendasSection" style="display: none;">
-  <h2>HAH Vendas</h2>
-  
-  <div class="hahVendas-row">
-    <!-- Quadro para upload de imagem -->
-    <div class="hahVendas-box" id="box1" tabindex="0">
-      <h3>MG</h3>
-      <img id="previewImg1" alt="MG">
-      <button class="button" id="uploadBtn1">Fazer Upload</button>
-      <p id="lastImport1">Última importação: --</p>
+    <div id="hahVendasSection" style="display: none;">
+      <h2>HAH Vendas</h2>
+      <!-- Container geral com 2 linhas e 2 colunas (4 boxes) -->
+      <div class="hahVendas-row">
+        <div class="hahVendas-box" tabindex="0">
+          <h3>MG</h3>
+          <img id="previewImg1" alt="MG">
+          <input type="file" id="uploadFile1" style="display: none;" accept="image/*">
+          <button class="button" id="uploadBtn1">Fazer Upload</button>
+          <p id="lastImport1">Última importação: --</p>
+        </div>
+        <div class="hahVendas-box" tabindex="0">
+          <h3>PB</h3>
+          <img id="previewImg2" alt="PB">
+          <input type="file" id="uploadFile2" style="display: none;" accept="image/*">
+          <button class="button" id="uploadBtn2">Fazer Upload</button>
+          <p id="lastImport2">Última importação: --</p>
+        </div>
+      </div>
+      <div class="hahVendas-row">
+        <div class="hahVendas-box" tabindex="0">
+          <h3>MGRJ</h3>
+          <img id="previewImg3" alt="MGRJ">
+          <input type="file" id="uploadFile3" style="display: none;" accept="image/*">
+          <button class="button" id="uploadBtn3">Fazer Upload</button>
+          <p id="lastImport3">Última importação: --</p>
+        </div>
+        <div class="hahVendas-box" tabindex="0">
+          <h3>TELEVENDAS</h3>
+          <img id="previewImg4" alt="TELEVENDAS">
+          <input type="file" id="uploadFile4" style="display: none;" accept="image/*">
+          <button class="button" id="uploadBtn4">Fazer Upload</button>
+          <p id="lastImport4">Última importação: --</p>
+        </div>
+      </div>
     </div>
-    <div class="hahVendas-box" id="box2" tabindex="0">
-      <h3>PB</h3>
-      <img id="previewImg2" alt="PB">
-      <button class="button" id="uploadBtn2">Fazer Upload</button>
-      <p id="lastImport2">Última importação: --</p>
-    </div>
-  </div>
-  <div class="hahVendas-row">
-    <div class="hahVendas-box" id="box3" tabindex="0">
-      <h3>MGRJ</h3>
-      <img id="previewImg3" alt="MGRJ">
-      <button class="button" id="uploadBtn3">Fazer Upload</button>
-      <p id="lastImport3">Última importação: --</p>
-    </div>
-    <div class="hahVendas-box" id="box4" tabindex="0">
-      <h3>TELEVENDAS</h3>
-      <img id="previewImg4" alt="TELEVENDAS">
-      <button class="button" id="uploadBtn4">Fazer Upload</button>
-      <p id="lastImport4">Última importação: --</p>
-    </div>
-  </div>
-</div>
 
   </div>
   
@@ -1220,87 +1227,58 @@
         hideHomeSliders();
       });
 
-   // Função para lidar com o evento de colagem (Ctrl+V)
-function handlePasteEvent(e, boxId) {
-    if (e.clipboardData && e.clipboardData.items) {
-        const items = e.clipboardData.items;
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf("image") !== -1) {
-                const blob = items[i].getAsFile();
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    // A imagem foi carregada, agora vamos exibir no preview
-                    const imgElement = document.getElementById(`previewImg${boxId}`);
-                    const lastImportElement = document.getElementById(`lastImport${boxId}`);
-                    imgElement.src = event.target.result;
-                    imgElement.style.display = "block"; // Exibe a imagem no quadro
-                    // Chama a API para upload para o Cloudinary
-                    uploadToCloudinary(event.target.result, boxId, lastImportElement);
-                };
-                reader.readAsDataURL(blob);
-                break; // Processa apenas a primeira imagem colada
-            }
+      // Função para carregar imagem do localStorage, se existir
+      function loadSavedImage(previewImgId, lastImportId, storageKeyImg, storageKeyTime) {
+        const savedImg = localStorage.getItem(storageKeyImg);
+        const savedTime = localStorage.getItem(storageKeyTime);
+        const previewImg = document.getElementById(previewImgId);
+        const lastImport = document.getElementById(lastImportId);
+        
+        if (savedImg) {
+          previewImg.src = savedImg;
+          previewImg.style.display = "block";
         }
-    }
-}
-
-// Função para fazer o upload da imagem para o Cloudinary
-function uploadToCloudinary(imageData, boxId, lastImportElement) {
-    const formData = new FormData();
-    formData.append("image_url", imageData);
-    
-    fetch("/upload_imagem", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.url) {
-            // Atualiza o link da imagem e a última data de upload
-            lastImportElement.textContent = `Última importação: ${new Date().toLocaleString()}`;
-            console.log("Imagem carregada no Cloudinary: " + data.url);
-        } else {
-            alert("Erro ao carregar a imagem.");
+        if (savedTime) {
+          lastImport.textContent = "Última importação: " + savedTime;
         }
-    })
-    .catch(error => {
-        alert("Erro ao fazer o upload da imagem.");
-        console.error(error);
-    });
-}
+      }
 
-// Adicionar o evento para cada quadro de "HAH Vendas" (ctrl+V ou clique)
-["box1", "box2", "box3", "box4"].forEach((boxId, index) => {
-    const boxElement = document.getElementById(boxId);
-    
-    // Escutando para o evento de Ctrl+V (colagem)
-    boxElement.addEventListener("paste", function (e) {
-        handlePasteEvent(e, index + 1);
-    });
+      // Ao carregar a página, tentamos exibir imagens já salvas
+      loadSavedImage("previewImg1", "lastImport1", "hahVendasImg1", "hahVendasTime1");
+      loadSavedImage("previewImg2", "lastImport2", "hahVendasImg2", "hahVendasTime2");
+      loadSavedImage("previewImg3", "lastImport3", "hahVendasImg3", "hahVendasTime3");
+      loadSavedImage("previewImg4", "lastImport4", "hahVendasImg4", "hahVendasTime4");
 
-    // Adicionar evento de clique para fazer upload também via botão
-    document.getElementById(`uploadBtn${index + 1}`).addEventListener("click", function () {
-        const inputFile = document.createElement("input");
-        inputFile.type = "file";
-        inputFile.accept = "image/*";
-        inputFile.click();
+      // Função genérica de upload
+      function setupUpload(uploadBtnId, uploadFileId, previewImgId, lastImportId, storageKeyImg, storageKeyTime) {
+        const uploadBtn = document.getElementById(uploadBtnId);
+        const uploadFile = document.getElementById(uploadFileId);
+        const previewImg = document.getElementById(previewImgId);
+        const lastImport = document.getElementById(lastImportId);
 
-        inputFile.addEventListener("change", function () {
-            const file = inputFile.files[0];
+        uploadBtn.addEventListener("click", function () {
+          uploadFile.click();
+        });
+
+        uploadFile.addEventListener("change", function () {
+          if (this.files && this.files[0]) {
+            const file = this.files[0];
             const reader = new FileReader();
-            reader.onload = function(event) {
-                const imgElement = document.getElementById(`previewImg${index + 1}`);
-                const lastImportElement = document.getElementById(`lastImport${index + 1}`);
-                imgElement.src = event.target.result;
-                imgElement.style.display = "block"; // Exibe a imagem no quadro
-                // Envia a imagem para o Cloudinary
-                uploadToCloudinary(event.target.result, index + 1, lastImportElement);
+            reader.onload = function(e) {
+              const dataUrl = e.target.result;
+              // Salva em localStorage (exemplo)
+              localStorage.setItem(storageKeyImg, dataUrl);
+              // Mostra a imagem
+              previewImg.src = dataUrl;
+              previewImg.style.display = "block";
+              // Mostra data/hora
+              const currentTime = new Date().toLocaleString();
+              lastImport.textContent = "Última importação: " + currentTime;
+              localStorage.setItem(storageKeyTime, currentTime);
             };
             reader.readAsDataURL(file);
+          }
         });
-    });
-});
-
       }
 
       // Configurar os 4 containers
