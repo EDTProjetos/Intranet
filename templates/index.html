@@ -583,7 +583,7 @@
           <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">BI Geral</button>
           <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Relatório de faturamento</button>
           <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
-          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Rel Sit Bol</button>
+          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
           <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Rel de cancelamentos</button>
           <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">Relatório de Usinas</button>
           <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
@@ -594,10 +594,62 @@
         <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
       </div>
     </div>
+
+    <!-- Seção HAH Vendas Modificada -->
+    <div id="hahVendasSection" style="display: none;">
+      <h2>HAH Vendas</h2>
+      <div class="hahVendas-row">
+        <div class="hahVendas-box" data-key="hah1" tabindex="0">
+          <h3>MG</h3>
+          <img id="previewImg1" alt="MG">
+          <button class="button cloudinary-btn">Fazer Upload</button>
+          <p id="lastImport1">Última importação: --</p>
+        </div>
+        <div class="hahVendas-box" data-key="hah2" tabindex="0">
+          <h3>PB</h3>
+          <img id="previewImg2" alt="PB">
+          <button class="button cloudinary-btn">Fazer Upload</button>
+          <p id="lastImport2">Última importação: --</p>
+        </div>
+      </div>
+      <div class="hahVendas-row">
+        <div class="hahVendas-box" data-key="hah3" tabindex="0">
+          <h3>MGRJ</h3>
+          <img id="previewImg3" alt="MGRJ">
+          <button class="button cloudinary-btn">Fazer Upload</button>
+          <p id="lastImport3">Última importação: --</p>
+        </div>
+        <div class="hahVendas-box" data-key="hah4" tabindex="0">
+          <h3>TELEVENDAS</h3>
+          <img id="previewImg4" alt="TELEVENDAS">
+          <button class="button cloudinary-btn">Fazer Upload</button>
+          <p id="lastImport4">Última importação: --</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
   <div class="version">Versão 1.0.7</div>
+
+  <!-- Modais -->
+  <div id="fullScreenModal">
+    <img id="fullScreenImage" src="" alt="Visão Cheia">
+  </div>
+
+  <div id="versionModal">
+    <div class="modal-content">
+      <h2>Desenvolvimento</h2>
+      <p>Desenvolvimento por <br>Raphael Barbosa</p>
+      <p>Desenvolvimento Front e Back-end <br>Raphael Barbosa</p>
+      <p>Contato <br>31 9 9243-4398</p>
+      <button id="closeVersionModal">Fechar</button>
+    </div>
+  </div>
+
+  <div id="containerImageModal">
+    <img id="containerModalImage" src="" alt="Zoom">
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -626,31 +678,6 @@ const cloudinaryWidget = cloudinary.createUploadWidget({
           activeContainerKey = e.target.closest('.hahVendas-box').dataset.key;
           cloudinaryWidget.open();
         });
-      });
-
-      // Configurar Ctrl+V
-      document.addEventListener('paste', async (e) => {
-        const items = e.clipboardData.items;
-        for (const item of items) {
-          if (item.type.indexOf('image') !== -1) {
-            const blob = item.getAsFile();
-            const formData = new FormData();
-            formData.append('file', blob);
-            formData.append('upload_preset', uploadPreset);
-
-            try {
-              const response = await fetch(
-                `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-                { method: 'POST', body: formData }
-              );
-              const data = await response.json();
-              updateImageDisplay(data.secure_url);
-              saveImageData(activeContainerKey, data.secure_url);
-            } catch (error) {
-              console.error('Erro no upload:', error);
-            }
-          }
-        }
       });
 
       // Funções auxiliares
@@ -709,6 +736,8 @@ async function loadInitialImages() {
           activeContainerKey = box.dataset.key;
         });
       });
+
+      loadInitialImages();
 
       loadInitialImages();
 
