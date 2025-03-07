@@ -475,70 +475,12 @@
       margin-bottom: 8px;
       cursor: pointer;
     }
-
-    /* === MODIFICAÇÕES PARA CLOUDINARY === */
-    #hahVendasSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    .hahVendas-row {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-
-    .hahVendas-box {
-      flex: 1;
-      min-height: 250px;
-      border: 2px solid #009688;
-      border-radius: 10px;
-      background-color: #fff;
-      padding: 15px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-
-    .hahVendas-box h3 {
-      margin-top: 0;
-      color: #009688;
-    }
-
-    .hahVendas-box img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: contain;
-      display: none;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .cloudinary-btn {
-      background-color: #fcb414 !important;
-    }
-
-    .cloudinary-btn:hover {
-      background-color: #e0a012 !important;
-    }
   </style>
 </head>
 <body>
   <!-- Conteúdo HTML original completo -->
   <div id="headerTitle">Intranet EDT</div>
-  
+
   <div class="sidebar">
     <img src="static/logo 2.png" alt="Logo" class="logo">
     <button class="button" id="googleDriveLink" style="margin-top: 230px;">Google Drive</button>
@@ -561,7 +503,7 @@
       </a>
     </div>
   </div>
-  
+
   <div class="content">
     <div id="homeSliders">
       <div class="slider-container">
@@ -641,7 +583,7 @@
           <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">BI Geral</button>
           <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Relatório de faturamento</button>
           <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
-          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
+          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Rel Sit Bol</button>
           <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Rel de cancelamentos</button>
           <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">Relatório de Usinas</button>
           <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
@@ -652,62 +594,10 @@
         <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
       </div>
     </div>
-
-    <!-- Seção HAH Vendas Modificada -->
-    <div id="hahVendasSection" style="display: none;">
-      <h2>HAH Vendas</h2>
-      <div class="hahVendas-row">
-        <div class="hahVendas-box" data-key="hah1" tabindex="0">
-          <h3>MG</h3>
-          <img id="previewImg1" alt="MG">
-          <button class="button cloudinary-btn">Fazer Upload</button>
-          <p id="lastImport1">Última importação: --</p>
-        </div>
-        <div class="hahVendas-box" data-key="hah2" tabindex="0">
-          <h3>PB</h3>
-          <img id="previewImg2" alt="PB">
-          <button class="button cloudinary-btn">Fazer Upload</button>
-          <p id="lastImport2">Última importação: --</p>
-        </div>
-      </div>
-      <div class="hahVendas-row">
-        <div class="hahVendas-box" data-key="hah3" tabindex="0">
-          <h3>MGRJ</h3>
-          <img id="previewImg3" alt="MGRJ">
-          <button class="button cloudinary-btn">Fazer Upload</button>
-          <p id="lastImport3">Última importação: --</p>
-        </div>
-        <div class="hahVendas-box" data-key="hah4" tabindex="0">
-          <h3>TELEVENDAS</h3>
-          <img id="previewImg4" alt="TELEVENDAS">
-          <button class="button cloudinary-btn">Fazer Upload</button>
-          <p id="lastImport4">Última importação: --</p>
-        </div>
-      </div>
-    </div>
   </div>
 
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
   <div class="version">Versão 1.0.7</div>
-
-  <!-- Modais -->
-  <div id="fullScreenModal">
-    <img id="fullScreenImage" src="" alt="Visão Cheia">
-  </div>
-
-  <div id="versionModal">
-    <div class="modal-content">
-      <h2>Desenvolvimento</h2>
-      <p>Desenvolvimento por <br>Raphael Barbosa</p>
-      <p>Desenvolvimento Front e Back-end <br>Raphael Barbosa</p>
-      <p>Contato <br>31 9 9243-4398</p>
-      <button id="closeVersionModal">Fechar</button>
-    </div>
-  </div>
-
-  <div id="containerImageModal">
-    <img id="containerModalImage" src="" alt="Zoom">
-  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -876,7 +766,7 @@ async function loadInitialImages() {
       }
       
       /* ======================
-         Slider 1 – Informativos Fevereiro
+         Slider 1 – Informativos Março
          ====================== */
       const slider = document.getElementById("slider");
       const slides = slider.querySelectorAll(".slide");
@@ -886,7 +776,7 @@ async function loadInitialImages() {
       const pauseSlideBtn = document.getElementById("pauseSlideBtn");
       
       let currentSlideIndex = 0;
-      let slideInterval = 6000; // 6 segundos por slide
+      let slideInterval = 7000; // 6 segundos por slide
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
