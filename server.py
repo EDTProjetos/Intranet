@@ -62,7 +62,7 @@ def upload_imagem():
 
     # Verifica a extensão do arquivo
     if not allowed_file(file.filename):
-        return jsonify({"error": "Formato de arquivo não permitido. Apenas imagens são aceitas."}), 400
+        return jsonify({"error": f"Formato de arquivo não permitido. Arquivo recebido: {file.filename}."}), 400
 
     try:
         # Garantir que o nome do arquivo é seguro
@@ -75,11 +75,14 @@ def upload_imagem():
         last_uploaded_image = upload_result["secure_url"]
         last_uploaded_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
-        # Atualizando um arquivo JSON (ou banco de dados)
-        with open("upload_data.json", "w") as f:
-            json.dump({"last_uploaded_image": last_uploaded_image, "last_uploaded_time": last_uploaded_time}, f)
+        # Verifica se o arquivo JSON já existe e é válido
+        image_data = load_image_data()
 
-        # Retorna a URL segura da imagem carregada
+        # Atualiza apenas se houver uma imagem nova
+        if image_data.get("last_uploaded_image") != last_uploaded_image:
+            with open("upload_data.json", "w") as f:
+                json.dump({"last_uploaded_image": last_uploaded_image, "last_uploaded_time": last_uploaded_time}, f)
+
         return jsonify({"message": "Imagem carregada com sucesso!", "url": last_uploaded_image, "time": last_uploaded_time})
     
     except Exception as e:
@@ -88,25 +91,27 @@ def upload_imagem():
 # Função para verificar se o arquivo é uma imagem permitida
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    if '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS:
+        return True
+    return False
+
+# Função para carregar os dados da última imagem
+def load_image_data():
+    if os.path.exists("upload_data.json"):
+        with open("upload_data.json", "r") as f:
+            return json.load(f)
+    else:
+        # Se o arquivo não existir, cria um com valores padrão
+        return {"last_uploaded_image": None, "last_uploaded_time": None}
 
 # Rota para obter os dados da última imagem carregada
 @app.route("/get_last_upload", methods=["GET"])
 def get_last_upload():
-    global last_uploaded_image, last_uploaded_time
+    data = load_image_data()  # Função que garante o arquivo existente
+    if not data['last_uploaded_image'] or not data['last_uploaded_time']:
+        return jsonify({"error": "Nenhuma imagem foi carregada ainda."}), 404
     
-    # Verifica se existe a informação da última imagem
-    if not last_uploaded_image or not last_uploaded_time:
-        try:
-            # Tenta carregar os dados do arquivo JSON (ou banco de dados)
-            with open("upload_data.json", "r") as f:
-                data = json.load(f)
-                last_uploaded_image = data.get("last_uploaded_image")
-                last_uploaded_time = data.get("last_uploaded_time")
-        except FileNotFoundError:
-            return jsonify({"error": "Nenhuma imagem foi carregada ainda."}), 404
-    
-    return jsonify({"last_uploaded_image": last_uploaded_image, "last_uploaded_time": last_uploaded_time})
+    return jsonify(data)
 
 # Função para executar o script
 def executar_script():
