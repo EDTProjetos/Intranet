@@ -795,7 +795,7 @@ const cloudinaryWidget = cloudinary.createUploadWidget({
       // Carregar imagens iniciais
 async function loadInitialImages() {
     try {
-        const response = await fetch('/get-images'); // Faz uma requisição para buscar as imagens do servidor
+        const response = await fetch('/get-images'); // Obtém as imagens salvas no servidor
         const images = await response.json();
 
         images.forEach(img => {
@@ -805,7 +805,7 @@ async function loadInitialImages() {
                 const timeElement = container.querySelector('p');
                 imgElement.src = img.url; // Atualiza a URL da imagem
                 imgElement.style.display = 'block'; // Exibe a imagem
-                timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`; // Exibe o horário da última importação
+                timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`; // Exibe a hora da última importação
             }
         });
     } catch (error) {
