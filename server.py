@@ -11,6 +11,7 @@ from flask_session import Session
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
+from datetime import datetime
 
 app = Flask(__name__)
 script_finalizado = False
@@ -40,6 +41,74 @@ cloudinary.config(
     secure=True
 )
 
+# Variáveis globais para armazenar a URL e o timestamp da última imagem
+last_uploaded_image = None
+last_uploaded_time = None
+
+# Função para fazer upload da imagem e salvar os dados
+@app.route("/upload_imagem", methods=["POST"])
+def upload_imagem():
+    global last_uploaded_image, last_uploaded_time
+    
+    # Verifica se o arquivo foi enviado
+    if 'file' not in request.files:
+        return jsonify({"error": "Nenhum arquivo foi enviado."}), 400
+
+    file = request.files['file']
+    
+    # Verifica se o nome do arquivo está vazio
+    if file.filename == '':
+        return jsonify({"error": "Nenhum arquivo selecionado."}), 400
+
+    # Verifica a extensão do arquivo
+    if not allowed_file(file.filename):
+        return jsonify({"error": "Formato de arquivo não permitido. Apenas imagens são aceitas."}), 400
+
+    try:
+        # Garantir que o nome do arquivo é seguro
+        filename = secure_filename(file.filename)
+        
+        # Fazendo upload para o Cloudinary
+        upload_result = cloudinary.uploader.upload(file)
+        
+        # Salvar a URL da imagem e o timestamp do upload
+        last_uploaded_image = upload_result["secure_url"]
+        last_uploaded_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        # Atualizando um arquivo JSON (ou banco de dados)
+        with open("upload_data.json", "w") as f:
+            json.dump({"last_uploaded_image": last_uploaded_image, "last_uploaded_time": last_uploaded_time}, f)
+
+        # Retorna a URL segura da imagem carregada
+        return jsonify({"message": "Imagem carregada com sucesso!", "url": last_uploaded_image, "time": last_uploaded_time})
+    
+    except Exception as e:
+        return jsonify({"error": f"Erro ao fazer upload: {str(e)}"}), 500
+
+# Função para verificar se o arquivo é uma imagem permitida
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Rota para obter os dados da última imagem carregada
+@app.route("/get_last_upload", methods=["GET"])
+def get_last_upload():
+    global last_uploaded_image, last_uploaded_time
+    
+    # Verifica se existe a informação da última imagem
+    if not last_uploaded_image or not last_uploaded_time:
+        try:
+            # Tenta carregar os dados do arquivo JSON (ou banco de dados)
+            with open("upload_data.json", "r") as f:
+                data = json.load(f)
+                last_uploaded_image = data.get("last_uploaded_image")
+                last_uploaded_time = data.get("last_uploaded_time")
+        except FileNotFoundError:
+            return jsonify({"error": "Nenhuma imagem foi carregada ainda."}), 404
+    
+    return jsonify({"last_uploaded_image": last_uploaded_image, "last_uploaded_time": last_uploaded_time})
+
+# Função para executar o script
 def executar_script():
     """Executa o script Selenium"""
     global script_finalizado
@@ -70,10 +139,6 @@ def executar_script():
     else:
         print(f"O script não foi encontrado no caminho: {script_path}")
         script_finalizado = False
-
-@app.route("/")
-def home():
-    return render_template("index.html")
 
 @app.route("/executar-script", methods=["POST"])
 def executar_script_api():
@@ -183,41 +248,6 @@ def listar_arquivos():
     
     files = results.get("files", [])
     return jsonify({"arquivos": files})
-
-# Função para upload de imagem para o Cloudinary
-@app.route("/upload_imagem", methods=["POST"])
-def upload_imagem():
-    # Verifica se o arquivo foi enviado
-    if 'file' not in request.files:
-        return jsonify({"error": "Nenhum arquivo foi enviado."}), 400
-
-    file = request.files['file']
-    
-    # Verifica se o nome do arquivo está vazio
-    if file.filename == '':
-        return jsonify({"error": "Nenhum arquivo selecionado."}), 400
-
-    # Verifica a extensão do arquivo
-    if not allowed_file(file.filename):
-        return jsonify({"error": "Formato de arquivo não permitido. Apenas imagens são aceitas."}), 400
-
-    try:
-        # Garantir que o nome do arquivo é seguro
-        filename = secure_filename(file.filename)
-        
-        # Fazendo upload para o Cloudinary
-        upload_result = cloudinary.uploader.upload(file)
-        
-        # Retorna a URL segura da imagem carregada
-        return jsonify({"message": "Imagem carregada com sucesso!", "url": upload_result["secure_url"]})
-    
-    except Exception as e:
-        return jsonify({"error": f"Erro ao fazer upload: {str(e)}"}), 500
-
-# Função para verificar se o arquivo é uma imagem permitida
-def allowed_file(filename):
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Inicia o Flask app
 if __name__ == "__main__":
