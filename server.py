@@ -40,40 +40,25 @@ cloudinary.config(
     secure=True
 )
 
-def executar_script():
-    """Executa o script Selenium"""
-    global script_finalizado
-    script_finalizado = False
-    
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    script_path = os.path.join(BASE_DIR, "gerar_perfil_aut.py")
-    
-    if os.path.exists(script_path):
-        try:
-            print(f"Executando script em: {script_path}")
-            result = subprocess.run(
-                ["python3", script_path],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True
-            )
-            print(f"Saída do script: {result.stdout}")
-            print(f"Erros do script: {result.stderr}")
-            script_finalizado = result.returncode == 0
-            if script_finalizado:
-                print("Script executado com sucesso!")
-            else:
-                print(f"Erro ao executar o script: {result.stderr}")
-        except Exception as e:
-            print(f"Erro ao executar script: {str(e)}")
-            script_finalizado = False
+# Função para carregar os dados da última imagem carregada do arquivo JSON
+def load_image_data():
+    if os.path.exists("upload_data.json"):
+        with open("upload_data.json", "r") as f:
+            return json.load(f)
     else:
-        print(f"O script não foi encontrado no caminho: {script_path}")
-        script_finalizado = False
+        # Se o arquivo não existir, cria um com valores padrão
+        return {"last_uploaded_image": None, "last_uploaded_time": None}
+
+# Função para salvar os dados da imagem no arquivo JSON
+def save_image_data(image_url):
+    data = {"last_uploaded_image": image_url, "last_uploaded_time": str(datetime.datetime.now())}
+    with open("upload_data.json", "w") as f:
+        json.dump(data, f)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    image_data = load_image_data()  # Carrega os dados da imagem do JSON
+    return render_template("index.html", image_url=image_data['last_uploaded_image'])
 
 @app.route("/executar-script", methods=["POST"])
 def executar_script_api():
@@ -86,57 +71,23 @@ def executar_script_api():
 def verificar_status():
     return jsonify({"script_finalizado": script_finalizado})
 
-# Rota para login com Google
-@app.route("/login")
-def login():
-    flow = Flow.from_client_config(
-        {
-            "web": {
-                "client_id": GOOGLE_CLIENT_ID,
-                "client_secret": GOOGLE_CLIENT_SECRET,
-                "redirect_uris": [GOOGLE_REDIRECT_URI],
-                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                "token_uri": "https://oauth2.googleapis.com/token",
-            }
-        },
-        scopes=SCOPES,
-    )
+# Função para upload de imagem para o Cloudinary e persistência no arquivo JSON
+@app.route("/upload_imagem", methods=["POST"])
+def upload_imagem():
+    image_url = request.form.get("image_url")
     
-    flow.redirect_uri = GOOGLE_REDIRECT_URI
-    authorization_url, state = flow.authorization_url(
-        access_type="offline", include_granted_scopes="true"
-    )
-    
-    session["state"] = state
-    return redirect(authorization_url)
+    try:
+        # Faz o upload da imagem para o Cloudinary
+        upload_result = cloudinary.uploader.upload(image_url)
+        
+        # Salva a URL da imagem no arquivo JSON para persistência
+        save_image_data(upload_result["secure_url"])
+        
+        return jsonify({"message": "Imagem carregada com sucesso!", "url": upload_result["secure_url"]})
+    except Exception as e:
+        return jsonify({"error": f"Erro ao fazer upload: {str(e)}"})
 
-# Callback do Google OAuth
-@app.route("/auth/callback")
-def auth_callback():
-    flow = Flow.from_client_config(
-        {
-            "web": {
-                "client_id": GOOGLE_CLIENT_ID,
-                "client_secret": GOOGLE_CLIENT_SECRET,
-                "redirect_uris": [GOOGLE_REDIRECT_URI],
-                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                "token_uri": "https://oauth2.googleapis.com/token",
-            }
-        },
-        scopes=SCOPES,
-        state=session["state"],
-    )
-    
-    flow.redirect_uri = GOOGLE_REDIRECT_URI
-    authorization_response = request.url
-    flow.fetch_token(authorization_response=authorization_response)
-
-    credentials = flow.credentials
-    session["credentials"] = credentials_to_dict(credentials)
-    
-    return redirect(url_for("dashboard"))
-
-# Converter credenciais para dicionário
+# Função para converter as credenciais para um formato dicionário
 def credentials_to_dict(credentials):
     return {
         "token": credentials.token,
@@ -183,17 +134,6 @@ def listar_arquivos():
     
     files = results.get("files", [])
     return jsonify({"arquivos": files})
-
-# Função para upload de imagem para o Cloudinary
-@app.route("/upload_imagem", methods=["POST"])
-def upload_imagem():
-    image_url = request.form.get("image_url")
-    
-    try:
-        upload_result = cloudinary.uploader.upload(image_url)
-        return jsonify({"message": "Imagem carregada com sucesso!", "url": upload_result["secure_url"]})
-    except Exception as e:
-        return jsonify({"error": f"Erro ao fazer upload: {str(e)}"})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
