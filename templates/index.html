@@ -717,19 +717,18 @@
       let activeContainerKey = null;
 
       // Configurar widget do Cloudinary
-      const cloudinaryWidget = cloudinary.createUploadWidget({
-        cloudName: cloudName,
-        uploadPreset: uploadPreset,
-        cropping: false,
-        sources: ['local', 'url', 'camera'],
-        multiple: false
-      }, (error, result) => {
-        if (!error && result && result.event === "success") {
-          updateImageDisplay(result.info.secure_url);
-          saveImageData(activeContainerKey, result.info.secure_url);
-        }
-      });
-
+const cloudinaryWidget = cloudinary.createUploadWidget({
+    cloudName: cloudName,
+    uploadPreset: uploadPreset,
+    cropping: false,
+    sources: ['local', 'url', 'camera'],
+    multiple: false
+}, (error, result) => {
+    if (!error && result && result.event === "success") {
+        updateImageDisplay(result.info.secure_url);  // Atualiza a imagem com a URL retornada pelo Cloudinary
+        saveImageData(activeContainerKey, result.info.secure_url);  // Salva a URL da imagem
+    }
+});
       // Configurar eventos de upload
       document.querySelectorAll('.cloudinary-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -766,16 +765,17 @@
 
       // Funções auxiliares
       function updateImageDisplay(url) {
-        const container = document.querySelector(`[data-key="${activeContainerKey}"]`);
-        if (container) {
-          const img = container.querySelector('img');
-          const time = container.querySelector('p');
-          img.src = url;
-          img.style.display = 'block';
-          time.textContent = `Última importação: ${new Date().toLocaleString()}`;
-        }
-      }
-
+    const container = document.querySelector(`[data-key="${activeContainerKey}"]`); // Certifique-se de que activeContainerKey está correto
+    if (container) {
+        const img = container.querySelector('img');
+        const time = container.querySelector('p');
+        img.src = url;  // Atualiza a URL da imagem
+        img.style.display = 'block';  // Exibe a imagem
+        time.textContent = `Última importação: ${new Date().toLocaleString()}`;  // Atualiza o timestamp da importação
+    } else {
+        console.error("Container não encontrado para a chave ativa:", activeContainerKey);
+    }
+}
       async function saveImageData(key, url) {
         try {
           await fetch('/save-image', {
@@ -793,25 +793,25 @@
       }
 
       // Carregar imagens iniciais
-      async function loadInitialImages() {
-        try {
-          const response = await fetch('/get-images');
-          const images = await response.json();
-          
-          images.forEach(img => {
-            const container = document.querySelector(`[data-key="${img.key}"]`);
+async function loadInitialImages() {
+    try {
+        const response = await fetch('/get-images'); // Obtém as imagens salvas no servidor
+        const images = await response.json();
+
+        images.forEach(img => {
+            const container = document.querySelector(`[data-key="${img.key}"]`); // Encontra o container com a chave correta
             if (container) {
-              const imgElement = container.querySelector('img');
-              const timeElement = container.querySelector('p');
-              imgElement.src = img.url;
-              imgElement.style.display = 'block';
-              timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`;
+                const imgElement = container.querySelector('img');
+                const timeElement = container.querySelector('p');
+                imgElement.src = img.url; // Atualiza a URL da imagem
+                imgElement.style.display = 'block'; // Exibe a imagem
+                timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`; // Exibe a hora da última importação
             }
-          });
-        } catch (error) {
-          console.error('Erro ao carregar imagens:', error);
-        }
-      }
+        });
+    } catch (error) {
+        console.error('Erro ao carregar imagens:', error); // Exibe erro no console se não conseguir carregar as imagens
+    }
+}
 
       // Inicialização
       document.querySelectorAll('.hahVendas-box').forEach(box => {
