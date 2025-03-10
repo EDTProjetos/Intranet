@@ -310,173 +310,6 @@
       border: none;
     }
 
-    #planejamentoSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    #planejamentoSection h2 {
-      margin-top: 0;
-    }
-
-    #importacoesSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    #importacoesSection h2 {
-      margin-top: 0;
-    }
-
-    #monitoriaManuaisSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    #monitoriaManuaisSection h2 {
-      margin-top: 0;
-    }
-
-    #biReportsContainer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: nowrap;
-    }
-
-    #biReportsMenu {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 10px;
-    }
-
-    .arrowBtn {
-      width: 40px;
-      text-align: center;
-      margin: 0;
-      padding: 8px;
-      font-size: 1.5rem;
-    }
-
-    #biReportContent {
-      width: 100%;
-      height: calc(100vh - 300px);
-      box-sizing: border-box;
-    }
-
-    #planejamentoFrame {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    #toggleSidebarBtn {
-      position: fixed;
-      left: 10px;
-      bottom: 10px;
-      background-color: #009688;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 9999;
-    }
-
-    #toggleSidebarBtn:hover {
-      background-color: #00796B;
-    }
-
-    .version {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background-color: #009688;
-      color: #fff;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #versionModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      align-items: center;
-      justify-content: center;
-      z-index: 100000;
-    }
-
-    #versionModal .modal-content {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-    }
-
-    #versionModal button {
-      margin-top: 15px;
-      padding: 8px 16px;
-      background-color: #009688;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #versionModal button:hover {
-      background-color: #00796B;
-    }
-
-    #executionTime,
-    #successMessage {
-      display: none;
-    }
-
-    .energy-of-todos {
-      position: absolute;
-      bottom: 30px;
-      left: 10px;
-      text-align: left;
-      color: #fff;
-    }
-
-    .energy-of-todos img {
-      width: 290px;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-
-    /* === MODIFICAÇÕES PARA CLOUDINARY === */
     #hahVendasSection {
       display: none;
       margin: 10px 26px 0 10px;
@@ -536,9 +369,7 @@
   </style>
 </head>
 <body>
-  <!-- Conteúdo HTML original completo -->
   <div id="headerTitle">Intranet EDT</div>
-  
   <div class="sidebar">
     <img src="static/logo 2.png" alt="Logo" class="logo">
     <button class="button" id="googleDriveLink" style="margin-top: 230px;">Google Drive</button>
@@ -600,59 +431,6 @@
       </div>
     </div>
 
-    <!-- Seção de Login -->
-    <div id="loginMenu">
-      <h3>Login</h3>
-      <input type="text" id="username" placeholder="Usuário">
-      <input type="password" id="password" placeholder="Senha">
-      <button class="button" id="loginBtn">Entrar</button>
-      <p id="loginError">Usuário ou senha incorretos!</p>
-    </div>
-
-    <!-- Seção de Perfil -->
-    <div id="profileMenu">
-      <h3>Geração Automática de Perfil</h3>
-      <button class="button" id="generateProfileBtn">Gerar Perfil</button>
-      <p id="executionTime">Última execução: --</p>
-      <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
-    </div>
-
-    <!-- Demais seções -->
-    <div id="driveSection">
-      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
-    </div>
-
-    <div id="importacoesSection">
-      <h2>Importações</h2>
-      <p>Aqui você encontra o conteúdo referente às importações.</p>
-    </div>
-
-    <div id="monitoriaManuaisSection">
-      <h2>Manuais de Monitoria</h2>
-      <p>Aqui você encontra os manuais de monitoria.</p>
-    </div>
-
-    <div id="planejamentoSection">
-      <h2>Planejamento BI</h2>
-      <div id="biReportsContainer">
-        <button class="button arrowBtn" id="prevReport">&#8592;</button>
-        <div id="biReportsMenu">
-          <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">BI Inicial</button>
-          <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">BI Geral</button>
-          <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Relatório de faturamento</button>
-          <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
-          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
-          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Rel de cancelamentos</button>
-          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">Relatório de Usinas</button>
-          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
-        </div>
-        <button class="button arrowBtn" id="nextReport">&#8594;</button>
-      </div>
-      <div id="biReportContent">
-        <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
-      </div>
-    </div>
-
     <!-- Seção HAH Vendas Modificada -->
     <div id="hahVendasSection" style="display: none;">
       <h2>HAH Vendas</h2>
@@ -711,24 +489,24 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // ============== INTEGRAÇÃO CLOUDINARY ==============
       const cloudName = 'do4nm0wfn'; // Substituir pelo seu
       const uploadPreset = 'upload_arquivos'; // Substituir pelo seu
       let activeContainerKey = null;
 
       // Configurar widget do Cloudinary
-const cloudinaryWidget = cloudinary.createUploadWidget({
-    cloudName: cloudName,
-    uploadPreset: uploadPreset,
-    cropping: false,
-    sources: ['local', 'url', 'camera'],
-    multiple: false
-}, (error, result) => {
-    if (!error && result && result.event === "success") {
-        updateImageDisplay(result.info.secure_url);  // Atualiza a imagem com a URL retornada pelo Cloudinary
-        saveImageData(activeContainerKey, result.info.secure_url);  // Salva a URL da imagem
-    }
-});
+      const cloudinaryWidget = cloudinary.createUploadWidget({
+          cloudName: cloudName,
+          uploadPreset: uploadPreset,
+          cropping: false,
+          sources: ['local', 'url', 'camera'],
+          multiple: false
+      }, (error, result) => {
+          if (!error && result && result.event === "success") {
+              updateImageDisplay(result.info.secure_url);
+              saveImageData(activeContainerKey, result.info.secure_url);
+          }
+      });
+
       // Configurar eventos de upload
       document.querySelectorAll('.cloudinary-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -765,17 +543,18 @@ const cloudinaryWidget = cloudinary.createUploadWidget({
 
       // Funções auxiliares
       function updateImageDisplay(url) {
-    const container = document.querySelector(`[data-key="${activeContainerKey}"]`); // Certifique-se de que activeContainerKey está correto
-    if (container) {
-        const img = container.querySelector('img');
-        const time = container.querySelector('p');
-        img.src = url;  // Atualiza a URL da imagem
-        img.style.display = 'block';  // Exibe a imagem
-        time.textContent = `Última importação: ${new Date().toLocaleString()}`;  // Atualiza o timestamp da importação
-    } else {
-        console.error("Container não encontrado para a chave ativa:", activeContainerKey);
-    }
-}
+        const container = document.querySelector(`[data-key="${activeContainerKey}"]`);
+        if (container) {
+            const img = container.querySelector('img');
+            const time = container.querySelector('p');
+            img.src = url;
+            img.style.display = 'block';
+            time.textContent = `Última importação: ${new Date().toLocaleString()}`;
+        } else {
+            console.error("Container não encontrado para a chave ativa:", activeContainerKey);
+        }
+      }
+
       async function saveImageData(key, url) {
         try {
           await fetch('/save-image', {
@@ -792,36 +571,29 @@ const cloudinaryWidget = cloudinary.createUploadWidget({
         }
       }
 
-      // Carregar imagens iniciais
-async function loadInitialImages() {
-    try {
-        const response = await fetch('/get-images'); // Obtém as imagens salvas no servidor
-        const images = await response.json();
+      async function loadInitialImages() {
+        try {
+            const response = await fetch('/get-images');
+            const images = await response.json();
 
-        images.forEach(img => {
-            const container = document.querySelector(`[data-key="${img.key}"]`); // Encontra o container com a chave correta
-            if (container) {
-                const imgElement = container.querySelector('img');
-                const timeElement = container.querySelector('p');
-                imgElement.src = img.url; // Atualiza a URL da imagem
-                imgElement.style.display = 'block'; // Exibe a imagem
-                timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`; // Exibe a hora da última importação
-            }
-        });
-    } catch (error) {
-        console.error('Erro ao carregar imagens:', error); // Exibe erro no console se não conseguir carregar as imagens
-    }
-}
-
-      // Inicialização
-      document.querySelectorAll('.hahVendas-box').forEach(box => {
-        box.addEventListener('click', () => {
-          activeContainerKey = box.dataset.key;
-        });
-      });
+            images.forEach(img => {
+                const container = document.querySelector(`[data-key="${img.key}"]`);
+                if (container) {
+                    const imgElement = container.querySelector('img');
+                    const timeElement = container.querySelector('p');
+                    imgElement.src = img.url;
+                    imgElement.style.display = 'block';
+                    timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`;
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao carregar imagens:', error);
+        }
+      }
 
       loadInitialImages();
-
+    });
+    
       // ============== CÓDIGO ORIGINAL COMPLETO ==============
       let loggedIn = false;
       let requestedSection = null;
