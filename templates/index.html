@@ -599,89 +599,59 @@
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
   <div class="version">Versão 1.0.7</div>
 
-  <!-- Modais -->
-  <div id="fullScreenModal">
-    <img id="fullScreenImage" src="" alt="Visão Cheia">
-  </div>
-
-  <div id="versionModal">
-    <div class="modal-content">
-      <h2>Desenvolvimento</h2>
-      <p>Desenvolvimento por <br>Raphael Barbosa</p>
-      <p>Desenvolvimento Front e Back-end <br>Raphael Barbosa</p>
-      <p>Contato <br>31 9 9243-4398</p>
-      <button id="closeVersionModal">Fechar</button>
-    </div>
-  </div>
-
-  <div id="containerImageModal">
-    <img id="containerModalImage" src="" alt="Zoom">
-  </div>
-
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Ocultar a integração com o Cloudinary
-      const cloudinaryWidget = null;
-      // Configurações para os botões e interações
-      let loggedIn = false;
-      let requestedSection = null;
-      let profileTimeout;
-
+      const sidebar = document.querySelector(".sidebar");
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       const headerTitle = document.getElementById("headerTitle");
       const logo = document.querySelector(".logo");
-      const googleDriveLink = document.getElementById("googleDriveLink");
-      const planejamentoBtn = document.getElementById("planejamentoBtn");
-      const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
-      const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
-      const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
-      const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
+      
+      toggleSidebarBtn.addEventListener("click", function () {
+        if (sidebar.style.transform === "translateX(-100%)") {
+          sidebar.style.transform = "translateX(0)";
+          toggleSidebarBtn.innerText = "Ocultar Sidebar";
+        } else {
+          sidebar.style.transform = "translateX(-100%)";
+          toggleSidebarBtn.innerText = "Mostrar Sidebar";
+        }
+      });
 
-      const monitoriaBtn = document.getElementById("monitoriaBtn");
-      const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
-      const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
+      logo.addEventListener("click", function () {
+        updateHeaderTitle("Intranet EDT");
+      });
 
-      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
-      const sidebar = document.querySelector(".sidebar");
+      // Funções de navegação entre as seções
+      document.getElementById("planejamentoBtn").addEventListener("click", function () {
+        document.getElementById("planejamentoSubmenu").style.display = "block";
+      });
 
-      const loginMenu = document.getElementById("loginMenu");
-      const loginBtn = document.getElementById("loginBtn");
-      const usernameInput = document.getElementById("username");
-      const passwordInput = document.getElementById("password");
-      const loginError = document.getElementById("loginError");
+      document.getElementById("planejamentoBIBtn").addEventListener("click", function () {
+        document.getElementById("planejamentoSection").style.display = "block";
+        updateHeaderTitle("Planejamento BI");
+      });
 
-      const profileMenu = document.getElementById("profileMenu");
-      const generateProfileBtn = document.getElementById("generateProfileBtn");
-      const executionTime = document.getElementById("executionTime");
-      const successMessage = document.getElementById("successMessage");
+      document.getElementById("planejamentoPerfilBtn").addEventListener("click", function () {
+        document.getElementById("profileMenu").style.display = "block";
+        updateHeaderTitle("Geração de perfil");
+      });
 
-      const driveSection = document.getElementById("driveSection");
-      const planejamentoSection = document.getElementById("planejamentoSection");
-      const importacoesSection = document.getElementById("importacoesSection");
-      const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
+      document.getElementById("planejamentoImportacoesBtn").addEventListener("click", function () {
+        document.getElementById("importacoesSection").style.display = "block";
+        updateHeaderTitle("Importações");
+      });
 
-      function hideAllMenus() {
-        document.getElementById("loginMenu").style.display = "none";
-        document.getElementById("profileMenu").style.display = "none";
-        document.getElementById("driveSection").style.display = "none";
-        document.getElementById("planejamentoSection").style.display = "none";
-        document.getElementById("importacoesSection").style.display = "none";
-        document.getElementById("monitoriaManuaisSection").style.display = "none";
-        document.getElementById("planejamentoSubmenu").style.display = "none";
-        document.getElementById("monitoriaSubmenu").style.display = "none";
-      }
+      document.getElementById("monitoriaBtn").addEventListener("click", function () {
+        document.getElementById("monitoriaSubmenu").style.display = "block";
+      });
+
+      document.getElementById("monitoriaManuaisBtn").addEventListener("click", function () {
+        document.getElementById("monitoriaManuaisSection").style.display = "block";
+        updateHeaderTitle("Manuais de Monitoria");
+      });
 
       function updateHeaderTitle(text) {
-        document.getElementById("headerTitle").innerText = text;
+        headerTitle.innerText = text;
       }
-
-      function hideSidebar() {
-        const sidebar = document.querySelector(".sidebar");
-        const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
-        sidebar.style.transform = "translateX(-100%)";
-        toggleSidebarBtn.innerText = "Mostrar Sidebar";
-      }
-
-      // Código de interações como login, seção, etc.
     });
   </script>
 </body>
