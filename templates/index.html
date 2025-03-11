@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Intranet EDT</title>
   <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
   <style>
-    /* === ESTILOS DO LAYOUT === */
+    /* === ESTILOS ORIGINAIS COMPLETOS === */
     body {
       display: flex;
       font-family: Arial, sans-serif;
@@ -711,25 +711,24 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // ============== INTEGRAÇÃO CLOUDINARY ============== 
+      // ============== INTEGRAÇÃO CLOUDINARY ==============
       const cloudName = 'do4nm0wfn'; // Substituir pelo seu
       const uploadPreset = 'upload_arquivos'; // Substituir pelo seu
       let activeContainerKey = null;
 
       // Configurar widget do Cloudinary
-      const cloudinaryWidget = cloudinary.createUploadWidget({
-        cloudName: cloudName,
-        uploadPreset: uploadPreset,
-        cropping: false,
-        sources: ['local', 'url', 'camera'],
-        multiple: false
-      }, (error, result) => {
-        if (!error && result && result.event === "success") {
-          updateImageDisplay(result.info.secure_url);  // Atualiza a imagem com a URL retornada pelo Cloudinary
-          saveImageData(activeContainerKey, result.info.secure_url);  // Salva a URL da imagem
-        }
-      });
-
+const cloudinaryWidget = cloudinary.createUploadWidget({
+    cloudName: cloudName,
+    uploadPreset: uploadPreset,
+    cropping: false,
+    sources: ['local', 'url', 'camera'],
+    multiple: false
+}, (error, result) => {
+    if (!error && result && result.event === "success") {
+        updateImageDisplay(result.info.secure_url);  // Atualiza a imagem com a URL retornada pelo Cloudinary
+        saveImageData(activeContainerKey, result.info.secure_url);  // Salva a URL da imagem
+    }
+});
       // Configurar eventos de upload
       document.querySelectorAll('.cloudinary-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -766,18 +765,17 @@
 
       // Funções auxiliares
       function updateImageDisplay(url) {
-        const container = document.querySelector(`[data-key="${activeContainerKey}"]`); // Certifique-se de que activeContainerKey está correto
-        if (container) {
-          const img = container.querySelector('img');
-          const time = container.querySelector('p');
-          img.src = url;  // Atualiza a URL da imagem
-          img.style.display = 'block';  // Exibe a imagem
-          time.textContent = `Última importação: ${new Date().toLocaleString()}`;  // Atualiza o timestamp da importação
-        } else {
-          console.error("Container não encontrado para a chave ativa:", activeContainerKey);
-        }
-      }
-
+    const container = document.querySelector(`[data-key="${activeContainerKey}"]`); // Certifique-se de que activeContainerKey está correto
+    if (container) {
+        const img = container.querySelector('img');
+        const time = container.querySelector('p');
+        img.src = url;  // Atualiza a URL da imagem
+        img.style.display = 'block';  // Exibe a imagem
+        time.textContent = `Última importação: ${new Date().toLocaleString()}`;  // Atualiza o timestamp da importação
+    } else {
+        console.error("Container não encontrado para a chave ativa:", activeContainerKey);
+    }
+}
       async function saveImageData(key, url) {
         try {
           await fetch('/save-image', {
@@ -795,518 +793,555 @@
       }
 
       // Carregar imagens iniciais
-      async function loadInitialImages() {
-        try {
-          const response = await fetch('/get-images'); // Obtém as imagens salvas no servidor
-          const images = await response.json();
+async function loadInitialImages() {
+    try {
+        const response = await fetch('/get-images'); // Obtém as imagens salvas no servidor
+        const images = await response.json();
 
-          images.forEach(img => {
+        images.forEach(img => {
             const container = document.querySelector(`[data-key="${img.key}"]`); // Encontra o container com a chave correta
             if (container) {
-              const imgElement = container.querySelector('img');
-              const timeElement = container.querySelector('p');
-              imgElement.src = img.url; // Atualiza a URL da imagem
-              imgElement.style.display = 'block'; // Exibe a imagem
-              timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`; // Exibe a hora da última importação
+                const imgElement = container.querySelector('img');
+                const timeElement = container.querySelector('p');
+                imgElement.src = img.url; // Atualiza a URL da imagem
+                imgElement.style.display = 'block'; // Exibe a imagem
+                timeElement.textContent = `Última importação: ${new Date(img.timestamp).toLocaleString()}`; // Exibe a hora da última importação
             }
-          });
-        } catch (error) {
-          console.error('Erro ao carregar imagens:', error); // Exibe erro no console se não conseguir carregar as imagens
-        }
-      }
+        });
+    } catch (error) {
+        console.error('Erro ao carregar imagens:', error); // Exibe erro no console se não conseguir carregar as imagens
+    }
+}
+
+      // Inicialização
+      document.querySelectorAll('.hahVendas-box').forEach(box => {
+        box.addEventListener('click', () => {
+          activeContainerKey = box.dataset.key;
+        });
+      });
 
       loadInitialImages();
-    });
 
-    // ============== CÓDIGO ORIGINAL COMPLETO ==============
-    let loggedIn = false;
-    let requestedSection = null;
-    let profileTimeout;
-    let activeContainer = null; // Para identificar qual container está ativo para colagem via Ctrl+V
-    
-    // Oculta mensagens de perfil inicialmente
-    document.getElementById("executionTime").style.display = "none";
-    document.getElementById("successMessage").style.display = "none";
-    
-    const headerTitle = document.getElementById("headerTitle");
-    const logo = document.querySelector(".logo");
-    const googleDriveLink = document.getElementById("googleDriveLink");
-    const planejamentoBtn = document.getElementById("planejamentoBtn");
-    const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
-    const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
-    const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
-    const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
-    
-    const monitoriaBtn = document.getElementById("monitoriaBtn");
-    const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
-    const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
-    
-    const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
-    const sidebar = document.querySelector(".sidebar");
-    
-    const loginMenu = document.getElementById("loginMenu");
-    const loginBtn = document.getElementById("loginBtn");
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const loginError = document.getElementById("loginError");
-    
-    const profileMenu = document.getElementById("profileMenu");
-    const generateProfileBtn = document.getElementById("generateProfileBtn");
-    const executionTime = document.getElementById("executionTime");
-    const successMessage = document.getElementById("successMessage");
-    
-    const driveSection = document.getElementById("driveSection");
-    const planejamentoSection = document.getElementById("planejamentoSection");
-    const importacoesSection = document.getElementById("importacoesSection");
-    const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
-    const hahVendasSection = document.getElementById("hahVendasSection");
-    
-    /* Funções para exibir/ocultar os sliders da home */
-    function showHomeSliders() {
-      const homeSliders = document.getElementById("homeSliders");
-      if(homeSliders) homeSliders.style.display = "block";
-    }
-    function hideHomeSliders() {
-      const homeSliders = document.getElementById("homeSliders");
-      if(homeSliders) homeSliders.style.display = "none";
-    }
-    
-    /* ======================
-       Slider 1 – Informativos Fevereiro
-       ====================== */
-    const slider = document.getElementById("slider");
-    const slides = slider.querySelectorAll(".slide");
-    const arrowLeft = document.getElementById("arrowLeft");
-    const arrowRight = document.getElementById("arrowRight");
-    const progressFill = document.getElementById("progressFill");
-    const pauseSlideBtn = document.getElementById("pauseSlideBtn");
-    
-    let currentSlideIndex = 0;
-    let slideInterval = 6000; // 6 segundos por slide
-    let slideTimer = null;
-    let progressTimer = null;
-    let progress = 0;
-    let isPaused = false;
-    
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
-      });
-    }
-    function nextSlide() {
-      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-      showSlide(currentSlideIndex);
-      resetProgress();
-    }
-    function prevSlide() {
-      currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-      showSlide(currentSlideIndex);
-      resetProgress();
-    }
-    function startSlider() {
-      slideTimer = setInterval(nextSlide, slideInterval);
-      progressTimer = setInterval(() => {
-        progress += (100 / (slideInterval / 100));
-        if (progress >= 100) progress = 100;
-        progressFill.style.width = progress + "%";
-      }, 100);
-    }
-    function stopSlider() {
-      clearInterval(slideTimer);
-      clearInterval(progressTimer);
-    }
-    function resetProgress() {
-      progress = 0;
-      progressFill.style.width = "0%";
-      stopSlider();
-      if (!isPaused) startSlider();
-    }
-    pauseSlideBtn.addEventListener("click", function () {
-      if (!isPaused) {
-        isPaused = true;
+      // ============== CÓDIGO ORIGINAL COMPLETO ==============
+      let loggedIn = false;
+      let requestedSection = null;
+      let profileTimeout;
+      let activeContainer = null; // Para identificar qual container está ativo para colagem via Ctrl+V
+      
+      // Oculta mensagens de perfil inicialmente
+      document.getElementById("executionTime").style.display = "none";
+      document.getElementById("successMessage").style.display = "none";
+      
+      const headerTitle = document.getElementById("headerTitle");
+      const logo = document.querySelector(".logo");
+      const googleDriveLink = document.getElementById("googleDriveLink");
+      const planejamentoBtn = document.getElementById("planejamentoBtn");
+      const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
+      const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
+      const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
+      const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
+      
+      const monitoriaBtn = document.getElementById("monitoriaBtn");
+      const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
+      const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
+      
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
+      const sidebar = document.querySelector(".sidebar");
+      
+      const loginMenu = document.getElementById("loginMenu");
+      const loginBtn = document.getElementById("loginBtn");
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+      const loginError = document.getElementById("loginError");
+      
+      const profileMenu = document.getElementById("profileMenu");
+      const generateProfileBtn = document.getElementById("generateProfileBtn");
+      const executionTime = document.getElementById("executionTime");
+      const successMessage = document.getElementById("successMessage");
+      
+      const driveSection = document.getElementById("driveSection");
+      const planejamentoSection = document.getElementById("planejamentoSection");
+      const importacoesSection = document.getElementById("importacoesSection");
+      const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
+      const hahVendasSection = document.getElementById("hahVendasSection");
+      
+      /* Funções para exibir/ocultar os sliders da home */
+      function showHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "block";
+      }
+      function hideHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "none";
+      }
+      
+      /* ======================
+         Slider 1 – Informativos Fevereiro
+         ====================== */
+      const slider = document.getElementById("slider");
+      const slides = slider.querySelectorAll(".slide");
+      const arrowLeft = document.getElementById("arrowLeft");
+      const arrowRight = document.getElementById("arrowRight");
+      const progressFill = document.getElementById("progressFill");
+      const pauseSlideBtn = document.getElementById("pauseSlideBtn");
+      
+      let currentSlideIndex = 0;
+      let slideInterval = 6000; // 6 segundos por slide
+      let slideTimer = null;
+      let progressTimer = null;
+      let progress = 0;
+      let isPaused = false;
+      
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
+      function nextSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+      function prevSlide() {
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
+      function startSlider() {
+        slideTimer = setInterval(nextSlide, slideInterval);
+        progressTimer = setInterval(() => {
+          progress += (100 / (slideInterval / 100));
+          if (progress >= 100) progress = 100;
+          progressFill.style.width = progress + "%";
+        }, 100);
+      }
+      function stopSlider() {
+        clearInterval(slideTimer);
+        clearInterval(progressTimer);
+      }
+      function resetProgress() {
+        progress = 0;
+        progressFill.style.width = "0%";
         stopSlider();
-        pauseSlideBtn.innerText = "▶";
-      } else {
-        isPaused = false;
-        startSlider();
-        pauseSlideBtn.innerText = "⏸";
+        if (!isPaused) startSlider();
       }
-    });
-    arrowLeft.addEventListener("click", prevSlide);
-    arrowRight.addEventListener("click", nextSlide);
-    
-    showSlide(currentSlideIndex);
-    startSlider();
-    
-    /* ======================
-       Slider 2 – Informativos Março
-       ====================== */
-    const slider2 = document.getElementById("slider2");
-    const arrowLeft2 = document.getElementById("arrowLeft2");
-    const arrowRight2 = document.getElementById("arrowRight2");
-    const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
-    const progressFill2 = document.getElementById("progressFill2");
-    let currentSlideIndex2 = 0;
-    let slideInterval2 = 6000;
-    let slideTimer2 = null;
-    let progressTimer2 = null;
-    let progress2 = 0;
-    let isPaused2 = false;
-    
-    function showSlide2(index) {
-      const slides2 = document.querySelectorAll("#slider2 .slide");
-      slides2.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
+      pauseSlideBtn.addEventListener("click", function () {
+        if (!isPaused) {
+          isPaused = true;
+          stopSlider();
+          pauseSlideBtn.innerText = "▶";
+        } else {
+          isPaused = false;
+          startSlider();
+          pauseSlideBtn.innerText = "⏸";
+        }
       });
-    }
-    function nextSlide2() {
-      const slides2 = document.querySelectorAll("#slider2 .slide");
-      currentSlideIndex2 = (currentSlideIndex2 + 1) % slides2.length;
-      showSlide2(currentSlideIndex2);
-      resetProgress2();
-    }
-    function prevSlide2() {
-      const slides2 = document.querySelectorAll("#slider2 .slide");
-      currentSlideIndex2 = (currentSlideIndex2 - 1 + slides2.length) % slides2.length;
-      showSlide2(currentSlideIndex2);
-      resetProgress2();
-    }
-    function startSlider2() {
-      slideTimer2 = setInterval(nextSlide2, slideInterval2);
-      progressTimer2 = setInterval(() => {
-        progress2 += (100 / (slideInterval2 / 100));
-        if (progress2 >= 100) progress2 = 100;
-        progressFill2.style.width = progress2 + "%";
-      }, 100);
-    }
-    function stopSlider2() {
-      clearInterval(slideTimer2);
-      clearInterval(progressTimer2);
-    }
-    function resetProgress2() {
-      progress2 = 0;
-      progressFill2.style.width = "0%";
-      stopSlider2();
-      if (!isPaused2) startSlider2();
-    }
-    arrowLeft2.addEventListener("click", prevSlide2);
-    arrowRight2.addEventListener("click", nextSlide2);
-    pauseSlideBtn2.addEventListener("click", function () {
-      if (!isPaused2) {
-        isPaused2 = true;
+      arrowLeft.addEventListener("click", prevSlide);
+      arrowRight.addEventListener("click", nextSlide);
+      
+      showSlide(currentSlideIndex);
+      startSlider();
+      
+      /* ======================
+         Slider 2 – Informativos Março
+         ====================== */
+      const slider2 = document.getElementById("slider2");
+      const arrowLeft2 = document.getElementById("arrowLeft2");
+      const arrowRight2 = document.getElementById("arrowRight2");
+      const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
+      const progressFill2 = document.getElementById("progressFill2");
+      let currentSlideIndex2 = 0;
+      let slideInterval2 = 6000;
+      let slideTimer2 = null;
+      let progressTimer2 = null;
+      let progress2 = 0;
+      let isPaused2 = false;
+      
+      function showSlide2(index) {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        slides2.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
+      function nextSlide2() {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        currentSlideIndex2 = (currentSlideIndex2 + 1) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
+      function prevSlide2() {
+        const slides2 = document.querySelectorAll("#slider2 .slide");
+        currentSlideIndex2 = (currentSlideIndex2 - 1 + slides2.length) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
+      function startSlider2() {
+        slideTimer2 = setInterval(nextSlide2, slideInterval2);
+        progressTimer2 = setInterval(() => {
+          progress2 += (100 / (slideInterval2 / 100));
+          if (progress2 >= 100) progress2 = 100;
+          progressFill2.style.width = progress2 + "%";
+        }, 100);
+      }
+      function stopSlider2() {
+        clearInterval(slideTimer2);
+        clearInterval(progressTimer2);
+      }
+      function resetProgress2() {
+        progress2 = 0;
+        progressFill2.style.width = "0%";
         stopSlider2();
-        this.innerText = "▶";
-      } else {
-        isPaused2 = false;
-        startSlider2();
-        this.innerText = "⏸";
+        if (!isPaused2) startSlider2();
       }
-    });
-    
-    showSlide2(currentSlideIndex2);
-    startSlider2();
-    
-    /* ======================
-       Eventos de clique e navegação
-       ====================== */
-    logo.addEventListener("click", function () {
-      hideAllMenus();
-      updateHeaderTitle("Intranet EDT");
-      showHomeSliders();
-      requestedSection = null;
-    });
-    
-    // Ao clicar no botão "Google Drive", abre uma nova guia
-    googleDriveLink.addEventListener("click", function () {
-      window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
-    });
-    
-    planejamentoBtn.addEventListener("click", function () {
-      if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
-        planejamentoSubmenu.style.display = "flex";
-        planejamentoSubmenu.style.flexDirection = "column";
-      } else {
-        planejamentoSubmenu.style.display = "none";
-      }
-      hideHomeSliders();
-    });
-    
-    planejamentoBIBtn.addEventListener("click", function () {
-      hideAllButSubmenu();
-      if (loggedIn) {
-        planejamentoSection.style.display = "block";
-        updateHeaderTitle("Planejamento BI");
-        hideSidebar();
-      } else {
-        loginError.style.display = "none";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        loginMenu.style.display = "block";
-        requestedSection = "planejamentoBI";
-        updateHeaderTitle("Login - Planejamento BI");
-      }
-      hideHomeSliders();
-    });
-    
-    planejamentoPerfilBtn.addEventListener("click", function () {
-      hideAllButSubmenu();
-      if (loggedIn) {
-        profileMenu.style.display = "block";
-        updateHeaderTitle("Geração de perfil");
-      } else {
-        loginError.style.display = "none";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        loginMenu.style.display = "block";
-        requestedSection = "planejamentoPerfil";
-        updateHeaderTitle("Login - Geração de perfil");
-      }
-      hideHomeSliders();
-    });
-    
-    planejamentoImportacoesBtn.addEventListener("click", function () {
-      hideAllButSubmenu();
-      if (loggedIn) {
-        importacoesSection.style.display = "block";
-        updateHeaderTitle("Importações");
-      } else {
-        loginError.style.display = "none";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        loginMenu.style.display = "block";
-        requestedSection = "importacoes";
-        updateHeaderTitle("Login - Importações");
-      }
-      hideHomeSliders();
-    });
-
-    // Monitoria (submenu)
-    monitoriaBtn.addEventListener("click", function () {
-      if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
-        monitoriaSubmenu.style.display = "flex";
-        monitoriaSubmenu.style.flexDirection = "column";
-      } else {
-        monitoriaSubmenu.style.display = "none";
-      }
-      hideHomeSliders();
-    });
-    monitoriaManuaisBtn.addEventListener("click", function() {
-      hideAllMenus();
-      monitoriaManuaisSection.style.display = "block";
-      updateHeaderTitle("Manuais de Monitoria");
-    });
-    
-    loginBtn.addEventListener("click", function () {
-      if (usernameInput.value === "admin" && passwordInput.value === "admin") {
-        loggedIn = true;
-        loginMenu.style.display = "none";
-        if (requestedSection === "planejamentoBI") {
+      arrowLeft2.addEventListener("click", prevSlide2);
+      arrowRight2.addEventListener("click", nextSlide2);
+      pauseSlideBtn2.addEventListener("click", function () {
+        if (!isPaused2) {
+          isPaused2 = true;
+          stopSlider2();
+          this.innerText = "▶";
+        } else {
+          isPaused2 = false;
+          startSlider2();
+          this.innerText = "⏸";
+        }
+      });
+      
+      showSlide2(currentSlideIndex2);
+      startSlider2();
+      
+      /* ======================
+         Eventos de clique e navegação
+         ====================== */
+      logo.addEventListener("click", function () {
+        hideAllMenus();
+        updateHeaderTitle("Intranet EDT");
+        showHomeSliders();
+        requestedSection = null;
+      });
+      
+      // Ao clicar no botão "Google Drive", abre uma nova guia
+      googleDriveLink.addEventListener("click", function () {
+        window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
+      });
+      
+      planejamentoBtn.addEventListener("click", function () {
+        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
+          planejamentoSubmenu.style.display = "flex";
+          planejamentoSubmenu.style.flexDirection = "column";
+        } else {
+          planejamentoSubmenu.style.display = "none";
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoBIBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
           planejamentoSection.style.display = "block";
           updateHeaderTitle("Planejamento BI");
           hideSidebar();
-        } else if (requestedSection === "planejamentoPerfil") {
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "planejamentoBI";
+          updateHeaderTitle("Login - Planejamento BI");
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoPerfilBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
           profileMenu.style.display = "block";
           updateHeaderTitle("Geração de perfil");
-        } else if (requestedSection === "importacoes") {
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "planejamentoPerfil";
+          updateHeaderTitle("Login - Geração de perfil");
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoImportacoesBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
           importacoesSection.style.display = "block";
           updateHeaderTitle("Importações");
-        } else if (requestedSection === "hahVendas") {
-          hahVendasSection.style.display = "block";
-          updateHeaderTitle("HAH Vendas");
         } else {
-          updateHeaderTitle("Intranet EDT");
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "importacoes";
+          updateHeaderTitle("Login - Importações");
         }
-      } else {
-        loginError.style.display = "block";
-      }
-    });
-    
-    generateProfileBtn.addEventListener("click", function () {
-      if (profileTimeout) clearTimeout(profileTimeout);
-      generateProfileBtn.disabled = true;
-      generateProfileBtn.style.backgroundColor = "#A9A9A9";
-      generateProfileBtn.innerText = "Gerando...";
-      successMessage.style.display = "none";
-      executionTime.style.display = "none";
-      fetch("/executar-script", { method: "POST" })
-        .then(response => response.json())
-        .then(data => {
-          const currentTime = new Date().toLocaleString();
-          localStorage.setItem("lastExecutionTime", currentTime);
-          executionTime.innerText = `Última execução: ${currentTime}`;
-          executionTime.style.display = "block";
-          profileTimeout = setTimeout(() => {
-            successMessage.style.display = "block";
+        hideHomeSliders();
+      });
+
+      // Monitoria (submenu)
+      monitoriaBtn.addEventListener("click", function () {
+        if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
+          monitoriaSubmenu.style.display = "flex";
+          monitoriaSubmenu.style.flexDirection = "column";
+        } else {
+          monitoriaSubmenu.style.display = "none";
+        }
+        hideHomeSliders();
+      });
+      monitoriaManuaisBtn.addEventListener("click", function() {
+        hideAllMenus();
+        monitoriaManuaisSection.style.display = "block";
+        updateHeaderTitle("Manuais de Monitoria");
+      });
+      
+      loginBtn.addEventListener("click", function () {
+        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
+          loggedIn = true;
+          loginMenu.style.display = "none";
+          if (requestedSection === "planejamentoBI") {
+            planejamentoSection.style.display = "block";
+            updateHeaderTitle("Planejamento BI");
+            hideSidebar();
+          } else if (requestedSection === "planejamentoPerfil") {
+            profileMenu.style.display = "block";
+            updateHeaderTitle("Geração de perfil");
+          } else if (requestedSection === "importacoes") {
+            importacoesSection.style.display = "block";
+            updateHeaderTitle("Importações");
+          } else if (requestedSection === "hahVendas") {
+            hahVendasSection.style.display = "block";
+            updateHeaderTitle("HAH Vendas");
+          } else {
+            updateHeaderTitle("Intranet EDT");
+          }
+        } else {
+          loginError.style.display = "block";
+        }
+      });
+      
+      generateProfileBtn.addEventListener("click", function () {
+        if (profileTimeout) clearTimeout(profileTimeout);
+        generateProfileBtn.disabled = true;
+        generateProfileBtn.style.backgroundColor = "#A9A9A9";
+        generateProfileBtn.innerText = "Gerando...";
+        successMessage.style.display = "none";
+        executionTime.style.display = "none";
+        fetch("/executar-script", { method: "POST" })
+          .then(response => response.json())
+          .then(data => {
+            const currentTime = new Date().toLocaleString();
+            localStorage.setItem("lastExecutionTime", currentTime);
+            executionTime.innerText = `Última execução: ${currentTime}`;
+            executionTime.style.display = "block";
+            profileTimeout = setTimeout(() => {
+              successMessage.style.display = "block";
+              generateProfileBtn.disabled = false;
+              generateProfileBtn.style.backgroundColor = "#009688";
+              generateProfileBtn.innerText = "Gerar Perfil";
+              setTimeout(() => {
+                successMessage.style.display = "none";
+              }, 3000);
+            }, 10000);
+          })
+          .catch(error => {
+            alert("Ocorreu um erro ao gerar o perfil.");
             generateProfileBtn.disabled = false;
             generateProfileBtn.style.backgroundColor = "#009688";
             generateProfileBtn.innerText = "Gerar Perfil";
-            setTimeout(() => {
-              successMessage.style.display = "none";
-            }, 3000);
-          }, 10000);
-        })
-        .catch(error => {
-          alert("Ocorreu um erro ao gerar o perfil.");
-          generateProfileBtn.disabled = false;
-          generateProfileBtn.style.backgroundColor = "#009688";
-          generateProfileBtn.innerText = "Gerar Perfil";
+          });
+      });
+      
+      const otherButtons = document.querySelectorAll(
+        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn):not(#hahVendasBtn)"
+      );
+      otherButtons.forEach(btn => {
+        btn.addEventListener("click", function () {
+          hideAllMenus();
+          updateHeaderTitle(this.innerText);
+          requestedSection = null;
+          hideHomeSliders();
         });
-    });
-    
-    const otherButtons = document.querySelectorAll(
-      ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn):not(#hahVendasBtn)"
-    );
-    otherButtons.forEach(btn => {
-      btn.addEventListener("click", function () {
-        hideAllMenus();
-        updateHeaderTitle(this.innerText);
-        requestedSection = null;
-        hideHomeSliders();
       });
-    });
-    
-    toggleSidebarBtn.addEventListener("click", function () {
-      if (sidebar.style.transform === "translateX(-100%)") {
-        sidebar.style.transform = "translateX(0)";
-        toggleSidebarBtn.innerText = "Ocultar Sidebar";
-      } else {
-        sidebar.style.transform = "translateX(-100%)";
-        toggleSidebarBtn.innerText = "Mostrar Sidebar";
-      }
-    });
-    
-    const biReportsMenu = document.getElementById("biReportsMenu");
-    const reportButtons = biReportsMenu.querySelectorAll(".button");
-    const planejamentoFrame = document.getElementById("planejamentoFrame");
-    let currentReportIndex = 0;
-    
-    function updateIframeFromIndex() {
-      if (reportButtons.length > 0) {
-        const btn = reportButtons[currentReportIndex];
-        const newSrc = btn.getAttribute("data-src");
-        planejamentoFrame.src = newSrc;
-        document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
-      }
-    }
-    
-    reportButtons.forEach((btn, index) => {
-      btn.addEventListener("click", () => {
-        currentReportIndex = index;
-        updateIframeFromIndex();
+      
+      toggleSidebarBtn.addEventListener("click", function () {
+        if (sidebar.style.transform === "translateX(-100%)") {
+          sidebar.style.transform = "translateX(0)";
+          toggleSidebarBtn.innerText = "Ocultar Sidebar";
+        } else {
+          sidebar.style.transform = "translateX(-100%)";
+          toggleSidebarBtn.innerText = "Mostrar Sidebar";
+        }
       });
-    });
-    
-    const prevReport = document.getElementById("prevReport");
-    const nextReport = document.getElementById("nextReport");
-    
-    prevReport.addEventListener("click", function () {
-      if (currentReportIndex > 0) {
-        currentReportIndex--;
-        updateIframeFromIndex();
-      }
-    });
-    
-    nextReport.addEventListener("click", function () {
-      if (currentReportIndex < reportButtons.length - 1) {
-        currentReportIndex++;
-        updateIframeFromIndex();
-      }
-    });
-    
-    window.addEventListener("scroll", function () {
-      if (planejamentoSection && planejamentoSection.style.display !== "none") {
-        headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
-      } else {
-        headerTitle.style.opacity = 1;
-      }
-    });
-    
-    const fullScreenModal = document.getElementById("fullScreenModal");
-    const fullScreenImage = document.getElementById("fullScreenImage");
-    
-    // Ao clicar na imagem do primeiro slider, abre o modal centralizado
-    slider.addEventListener("click", function (event) {
-      if (event.target.tagName === "IMG") {
-        fullScreenImage.src = event.target.src;
-        fullScreenModal.style.display = "flex";
-      }
-    });
-    
-    // Ao clicar na imagem do segundo slider, também abre o modal
-    slider2.addEventListener("click", function (event) {
-      if (event.target.tagName === "IMG") {
-        fullScreenImage.src = event.target.src;
-        fullScreenModal.style.display = "flex";
-      }
-    });
-    
-    // Se clicar no modal, ele é fechado
-    fullScreenModal.addEventListener("click", function () {
-      fullScreenModal.style.display = "none";
-    });
-    
-    const versionDiv = document.querySelector(".version");
-    const versionModal = document.getElementById("versionModal");
-    versionDiv.addEventListener("click", function () {
-      versionModal.style.display = "flex";
-    });
-    versionModal.addEventListener("click", function (e) {
-      if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
-        versionModal.style.display = "none";
-      }
-    });
-
-    /* ============================
-       LÓGICA DE UPLOAD E EXIBIÇÃO PARA HAH VENDAS
-    ============================ */
-
-    // Botão do submenu "HAH Vendas"
-    const hahVendasBtn = document.getElementById("hahVendasBtn");
-    hahVendasBtn.addEventListener("click", function () {
-      hideAllButSubmenu();
-      if (loggedIn) {
-        hahVendasSection.style.display = "block";
-        updateHeaderTitle("HAH Vendas");
-      } else {
-        loginError.style.display = "none";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        loginMenu.style.display = "block";
-        requestedSection = "hahVendas";
-        updateHeaderTitle("Login - HAH Vendas");
-      }
-      hideHomeSliders();
-    });
-
-    // Permitir colar imagem (Ctrl+V) para o container ativo
-    window.addEventListener("paste", function(e) {
-      if (activeContainer !== null) {
-        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
-        for (let i = 0; i < items.length; i++) {
-          if (items[i].type.indexOf("image") !== -1) {
-            const blob = items[i].getAsFile();
-            const reader = new FileReader();
-            reader.onload = function(event) {
-              const previewImgId = "previewImg" + activeContainer;
-              const lastImportId = "lastImport" + activeContainer;
-              const storageKeyImg = "hahVendasImg" + activeContainer;
-              const storageKeyTime = "hahVendasTime" + activeContainer;
-              const previewImg = document.getElementById(previewImgId);
-              const lastImport = document.getElementById(lastImportId);
-              previewImg.src = event.target.result;
-              previewImg.style.display = "block";
-              const currentTime = new Date().toLocaleString();
-              lastImport.textContent = "Última importação: " + currentTime;
-              localStorage.setItem(storageKeyImg, event.target.result);
-              localStorage.setItem(storageKeyTime, currentTime);
-            };
-            reader.readAsDataURL(blob);
-            break; // Processa somente a primeira imagem
-          }
+      
+      const biReportsMenu = document.getElementById("biReportsMenu");
+      const reportButtons = biReportsMenu.querySelectorAll(".button");
+      const planejamentoFrame = document.getElementById("planejamentoFrame");
+      let currentReportIndex = 0;
+      
+      function updateIframeFromIndex() {
+        if (reportButtons.length > 0) {
+          const btn = reportButtons[currentReportIndex];
+          const newSrc = btn.getAttribute("data-src");
+          planejamentoFrame.src = newSrc;
+          document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
+      
+      reportButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          currentReportIndex = index;
+          updateIframeFromIndex();
+        });
+      });
+      
+      const prevReport = document.getElementById("prevReport");
+      const nextReport = document.getElementById("nextReport");
+      
+      prevReport.addEventListener("click", function () {
+        if (currentReportIndex > 0) {
+          currentReportIndex--;
+          updateIframeFromIndex();
+        }
+      });
+      
+      nextReport.addEventListener("click", function () {
+        if (currentReportIndex < reportButtons.length - 1) {
+          currentReportIndex++;
+          updateIframeFromIndex();
+        }
+      });
+      
+      window.addEventListener("scroll", function () {
+        if (planejamentoSection && planejamentoSection.style.display !== "none") {
+          headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
+        } else {
+          headerTitle.style.opacity = 1;
+        }
+      });
+      
+      const fullScreenModal = document.getElementById("fullScreenModal");
+      const fullScreenImage = document.getElementById("fullScreenImage");
+      
+      // Ao clicar na imagem do primeiro slider, abre o modal centralizado
+      slider.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      // Ao clicar na imagem do segundo slider, também abre o modal
+      slider2.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      // Se clicar no modal, ele é fechado
+      fullScreenModal.addEventListener("click", function () {
+        fullScreenModal.style.display = "none";
+      });
+      
+      const versionDiv = document.querySelector(".version");
+      const versionModal = document.getElementById("versionModal");
+      versionDiv.addEventListener("click", function () {
+        versionModal.style.display = "flex";
+      });
+      versionModal.addEventListener("click", function (e) {
+        if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
+          versionModal.style.display = "none";
+        }
+      });
+
+      /* ============================
+         LÓGICA DE UPLOAD E EXIBIÇÃO PARA HAH VENDAS
+      ============================ */
+
+      // Botão do submenu "HAH Vendas"
+      const hahVendasBtn = document.getElementById("hahVendasBtn");
+      hahVendasBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
+          hahVendasSection.style.display = "block";
+          updateHeaderTitle("HAH Vendas");
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "hahVendas";
+          updateHeaderTitle("Login - HAH Vendas");
+        }
+        hideHomeSliders();
+      });
+
+      // Permitir colar imagem (Ctrl+V) para o container ativo
+      window.addEventListener("paste", function(e) {
+        if (activeContainer !== null) {
+          const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf("image") !== -1) {
+              const blob = items[i].getAsFile();
+              const reader = new FileReader();
+              reader.onload = function(event) {
+                const previewImgId = "previewImg" + activeContainer;
+                const lastImportId = "lastImport" + activeContainer;
+                const storageKeyImg = "hahVendasImg" + activeContainer;
+                const storageKeyTime = "hahVendasTime" + activeContainer;
+                const previewImg = document.getElementById(previewImgId);
+                const lastImport = document.getElementById(lastImportId);
+                previewImg.src = event.target.result;
+                previewImg.style.display = "block";
+                const currentTime = new Date().toLocaleString();
+                lastImport.textContent = "Última importação: " + currentTime;
+                localStorage.setItem(storageKeyImg, event.target.result);
+                localStorage.setItem(storageKeyTime, currentTime);
+              };
+              reader.readAsDataURL(blob);
+              break; // Processa somente a primeira imagem
+            }
+          }
+        }
+      });
+      
     });
     
+    function hideAllButSubmenu() {
+      document.getElementById("loginMenu").style.display = "none";
+      document.getElementById("profileMenu").style.display = "none";
+      document.getElementById("driveSection").style.display = "none";
+      document.getElementById("planejamentoSection").style.display = "none";
+      document.getElementById("importacoesSection").style.display = "none";
+      document.getElementById("monitoriaManuaisSection").style.display = "none";
+      document.getElementById("hahVendasSection").style.display = "none";
+    }
+    function hideAllMenus() {
+      document.getElementById("loginMenu").style.display = "none";
+      document.getElementById("profileMenu").style.display = "none";
+      document.getElementById("driveSection").style.display = "none";
+      document.getElementById("planejamentoSection").style.display = "none";
+      document.getElementById("importacoesSection").style.display = "none";
+      document.getElementById("monitoriaManuaisSection").style.display = "none";
+      document.getElementById("planejamentoSubmenu").style.display = "none";
+      document.getElementById("monitoriaSubmenu").style.display = "none";
+      document.getElementById("hahVendasSection").style.display = "none";
+    }
+    function updateHeaderTitle(text) {
+      document.getElementById("headerTitle").innerText = text;
+    }
+    function hideSidebar() {
+      const sidebar = document.querySelector(".sidebar");
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
+      sidebar.style.transform = "translateX(-100%)";
+      toggleSidebarBtn.innerText = "Mostrar Sidebar";
+    }
   </script>
 </body>
-</html>
+</html> 
