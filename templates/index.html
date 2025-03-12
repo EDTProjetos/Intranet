@@ -476,6 +476,28 @@
       margin-bottom: 8px;
       cursor: pointer;
     }
+
+    /* Botão de voltar ao topo */
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #009688;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: opacity 0.3s ease;
+    }
+
+    #backToTop:hover {
+      background-color: #00796B;
+    }
   </style>
 </head>
 <body>
@@ -496,6 +518,7 @@
     <div id="monitoriaSubmenu" style="display: none;">
       <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
     </div>
+    <button class="button" id="feedbackBtn">Feedbacks & Melhorias</button>
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
         <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
@@ -522,28 +545,122 @@
           <p>Aqui você encontra as principais notícias e atualizações do mês.</p>
         </div>
       </div>
-    </div>
 
-    <button id="toggleSidebarBtn">Ocultar Sidebar</button>
-    <div class="version">Versão 1.0.7</div>
+      <div class="slider-container">
+        <div class="slider-info">
+          <h2>Informativos Março</h2>
+          <p>Aqui você encontra as principais notícias e atualizações do mês de março.</p>
+        </div>
+        <div id="slider2">
+          <div class="slide active"><img src="static/banner1.png" alt="Banner 1"></div>
+          <div class="slide"><img src="static/banner2.png" alt="Banner 2"></div>
+          <div class="slide"><img src="static/banner3.png" alt="Banner 3"></div>
+          <div class="slide"><img src="static/banner4.png" alt="Banner 4"></div>
+          <div class="slide"><img src="static/banner5.png" alt="Banner 5"></div>
+          <button class="slider-arrow arrow-left" id="arrowLeft2">&#10094;</button>
+          <button class="slider-arrow arrow-right" id="arrowRight2">&#10095;</button>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill2"></div></div>
+          <button class="slider-pause" id="pauseSlideBtn2">⏸</button>
+        </div>
+      </div>
 
-    <div id="versionModal">
-      <div class="modal-content">
-        <h2>Desenvolvimento</h2>
-        <p>Desenvolvimento por <br>Raphael Barbosa</p>
-        <p>Desenvolvimento Front e Back-end <br>Raphael Barbosa</p>
-        <p>Contato <br>31 9 9243-4398</p>
-        <button id="closeVersionModal">Fechar</button>
+      <div class="slider-container">
+        <div id="slider3">
+          <div class="slide active"><img src="static/banner1.png" alt="Banner 1"></div>
+          <div class="slide"><img src="static/banner2.png" alt="Banner 2"></div>
+          <div class="slide"><img src="static/banner3.png" alt="Banner 3"></div>
+          <div class="slide"><img src="static/banner4.png" alt="Banner 4"></div>
+          <div class="slide"><img src="static/banner5.png" alt="Banner 5"></div>
+          <button class="slider-arrow arrow-left" id="arrowLeft3">&#10094;</button>
+          <button class="slider-arrow arrow-right" id="arrowRight3">&#10095;</button>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill3"></div></div>
+          <button class="slider-pause" id="pauseSlideBtn3">⏸</button>
+        </div>
+        <div class="slider-info">
+          <h2>Informativos Abril</h2>
+          <p>Aqui você encontra as principais notícias e atualizações do mês de abril.</p>
+        </div>
       </div>
     </div>
 
-    <div id="executionTime">Última execução: --</div>
-    <div id="successMessage">✔ Perfil gerado com sucesso! ✅</div>
+    <div id="loginMenu">
+      <h3>Login</h3>
+      <input type="text" id="username" placeholder="Usuário">
+      <input type="password" id="password" placeholder="Senha">
+      <button class="button" id="loginBtn">Entrar</button>
+      <p id="loginError">Usuário ou senha incorretos!</p>
+    </div>
+
+    <div id="profileMenu">
+      <h3>Geração Automática de Perfil</h3>
+      <button class="button" id="generateProfileBtn">Gerar Perfil</button>
+      <p id="executionTime">Última execução: --</p>
+      <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
+    </div>
+
+    <div id="driveSection">
+      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
+    </div>
+
+    <div id="importacoesSection">
+      <h2>Importações</h2>
+      <p>Aqui você encontra o conteúdo referente às importações.</p>
+    </div>
+
+    <div id="monitoriaManuaisSection">
+      <h2>Manuais de Monitoria</h2>
+      <p>Aqui você encontra os manuais de monitoria.</p>
+    </div>
+
+    <div id="planejamentoSection">
+      <h2>Planejamento BI</h2>
+      <div id="biReportsContainer">
+        <button class="button arrowBtn" id="prevReport">&#8592;</button>
+        <div id="biReportsMenu">
+          <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">BI Inicial</button>
+          <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">BI Geral</button>
+          <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Relatório de faturamento</button>
+          <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
+          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
+          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Rel de cancelamentos</button>
+          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">Relatório de Usinas</button>
+          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
+        </div>
+        <button class="button arrowBtn" id="nextReport">&#8594;</button>
+      </div>
+      <div id="biReportContent">
+        <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
+      </div>
+    </div>
   </div>
+
+  <button id="toggleSidebarBtn">Ocultar Sidebar</button>
+  <div class="version">Versão 1.0.7</div>
+
+  <div id="fullScreenModal">
+    <img id="fullScreenImage" src="" alt="Visão Cheia">
+  </div>
+
+  <div id="versionModal">
+    <div class="modal-content">
+      <h2>Desenvolvimento</h2>
+      <p>Desenvolvimento por <br>Raphael Barbosa</p>
+      <p>Desenvolvimento Front e Back-end <br>Raphael Barbosa</p>
+      <p>Contato <br>31 9 9243-4398</p>
+      <button id="closeVersionModal">Fechar</button>
+    </div>
+  </div>
+
+  <div id="containerImageModal">
+    <img id="containerModalImage" src="" alt="Zoom">
+  </div>
+
+  <!-- Botão de voltar ao topo -->
+  <button id="backToTop">&#8679;</button>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // === SLIDER 1 ===
+      // ============== SLIDER 1 ==============
       let currentSlideIndex = 0;
       const slider = document.getElementById("slider");
       const slides = slider.querySelectorAll(".slide");
@@ -614,9 +731,7 @@
       showSlide(currentSlideIndex);
       startSlider();
 
-      // === Restante do JavaScript ===
-    });
-      // === SLIDER 2 ===
+      // ============== SLIDER 2 ==============
       let currentSlideIndex2 = 0;
       const slider2 = document.getElementById("slider2");
       const arrowLeft2 = document.getElementById("arrowLeft2");
@@ -687,7 +802,7 @@
       showSlide2(currentSlideIndex2);
       startSlider2();
 
-      // === SLIDER 3 ===
+      // ============== SLIDER 3 ==============
       let currentSlideIndex3 = 0;
       const slider3 = document.getElementById("slider3");
       const arrowLeft3 = document.getElementById("arrowLeft3");
@@ -758,14 +873,14 @@
       showSlide3(currentSlideIndex3);
       startSlider3();
 
-      // === Menu Sidebar ===
+      // ============== RESTANTE DO JAVASCRIPT ==============
       let loggedIn = false;
       let requestedSection = null;
       let profileTimeout;
-
+      
       document.getElementById("executionTime").style.display = "none";
       document.getElementById("successMessage").style.display = "none";
-
+      
       const headerTitle = document.getElementById("headerTitle");
       const logo = document.querySelector(".logo");
       const googleDriveLink = document.getElementById("googleDriveLink");
@@ -774,51 +889,51 @@
       const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
       const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
       const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
-
+      
       const monitoriaBtn = document.getElementById("monitoriaBtn");
       const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
       const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
-
+      
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       const sidebar = document.querySelector(".sidebar");
-
+      
       const loginMenu = document.getElementById("loginMenu");
       const loginBtn = document.getElementById("loginBtn");
       const usernameInput = document.getElementById("username");
       const passwordInput = document.getElementById("password");
       const loginError = document.getElementById("loginError");
-
+      
       const profileMenu = document.getElementById("profileMenu");
       const generateProfileBtn = document.getElementById("generateProfileBtn");
       const executionTime = document.getElementById("executionTime");
       const successMessage = document.getElementById("successMessage");
-
+      
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
       const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
-
+      
       function showHomeSliders() {
         const homeSliders = document.getElementById("homeSliders");
         if(homeSliders) homeSliders.style.display = "block";
       }
-
+      
       function hideHomeSliders() {
         const homeSliders = document.getElementById("homeSliders");
         if(homeSliders) homeSliders.style.display = "none";
       }
-
+      
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
         showHomeSliders();
         requestedSection = null;
       });
-
+      
       googleDriveLink.addEventListener("click", function () {
         window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
       });
-
+      
       planejamentoBtn.addEventListener("click", function () {
         if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
@@ -828,7 +943,7 @@
         }
         hideHomeSliders();
       });
-
+      
       planejamentoBIBtn.addEventListener("click", function () {
         hideAllButSubmenu();
         if (loggedIn) {
@@ -845,7 +960,7 @@
         }
         hideHomeSliders();
       });
-
+      
       planejamentoPerfilBtn.addEventListener("click", function () {
         hideAllButSubmenu();
         if (loggedIn) {
@@ -861,7 +976,7 @@
         }
         hideHomeSliders();
       });
-
+      
       planejamentoImportacoesBtn.addEventListener("click", function () {
         hideAllButSubmenu();
         if (loggedIn) {
@@ -887,13 +1002,13 @@
         }
         hideHomeSliders();
       });
-
+      
       monitoriaManuaisBtn.addEventListener("click", function() {
         hideAllMenus();
         monitoriaManuaisSection.style.display = "block";
         updateHeaderTitle("Manuais de Monitoria");
       });
-
+      
       loginBtn.addEventListener("click", function () {
         if (usernameInput.value === "admin" && passwordInput.value === "admin") {
           loggedIn = true;
@@ -915,7 +1030,7 @@
           loginError.style.display = "block";
         }
       });
-
+      
       generateProfileBtn.addEventListener("click", function () {
         if (profileTimeout) clearTimeout(profileTimeout);
         generateProfileBtn.disabled = true;
@@ -947,7 +1062,7 @@
             generateProfileBtn.innerText = "Gerar Perfil";
           });
       });
-
+      
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
       );
@@ -959,7 +1074,7 @@
           hideHomeSliders();
         });
       });
-
+      
       toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
@@ -969,12 +1084,12 @@
           toggleSidebarBtn.innerText = "Mostrar Sidebar";
         }
       });
-
+      
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
       let currentReportIndex = 0;
-
+      
       function updateIframeFromIndex() {
         if (reportButtons.length > 0) {
           const btn = reportButtons[currentReportIndex];
@@ -983,31 +1098,31 @@
           document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
-
+      
       reportButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
           currentReportIndex = index;
           updateIframeFromIndex();
         });
       });
-
+      
       const prevReport = document.getElementById("prevReport");
       const nextReport = document.getElementById("nextReport");
-
+      
       prevReport.addEventListener("click", function () {
         if (currentReportIndex > 0) {
           currentReportIndex--;
           updateIframeFromIndex();
         }
       });
-
+      
       nextReport.addEventListener("click", function () {
         if (currentReportIndex < reportButtons.length - 1) {
           currentReportIndex++;
           updateIframeFromIndex();
         }
       });
-
+      
       window.addEventListener("scroll", function () {
         if (planejamentoSection && planejamentoSection.style.display !== "none") {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
@@ -1015,35 +1130,35 @@
           headerTitle.style.opacity = 1;
         }
       });
-
+      
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
-
+      
       slider.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-
+      
       slider2.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-
+      
       slider3.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-
+      
       fullScreenModal.addEventListener("click", function () {
         fullScreenModal.style.display = "none";
       });
-
+      
       const versionDiv = document.querySelector(".version");
       const versionModal = document.getElementById("versionModal");
       versionDiv.addEventListener("click", function () {
@@ -1054,8 +1169,28 @@
           versionModal.style.display = "none";
         }
       });
-    });
 
+      // Botão de voltar ao topo
+      const backToTopBtn = document.getElementById("backToTop");
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 100) {
+          backToTopBtn.style.display = "block";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      });
+
+      backToTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Botão de feedback
+      const feedbackBtn = document.getElementById("feedbackBtn");
+      feedbackBtn.addEventListener("click", function () {
+        window.open("https://forms.gle/6Apvv45k6G6jDxNt6", "_blank");
+      });
+    });
+    
     function hideAllButSubmenu() {
       document.getElementById("loginMenu").style.display = "none";
       document.getElementById("profileMenu").style.display = "none";
@@ -1064,7 +1199,7 @@
       document.getElementById("importacoesSection").style.display = "none";
       document.getElementById("monitoriaManuaisSection").style.display = "none";
     }
-
+    
     function hideAllMenus() {
       document.getElementById("loginMenu").style.display = "none";
       document.getElementById("profileMenu").style.display = "none";
@@ -1075,11 +1210,11 @@
       document.getElementById("planejamentoSubmenu").style.display = "none";
       document.getElementById("monitoriaSubmenu").style.display = "none";
     }
-
+    
     function updateHeaderTitle(text) {
       document.getElementById("headerTitle").innerText = text;
     }
-
+    
     function hideSidebar() {
       const sidebar = document.querySelector(".sidebar");
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
@@ -1089,4 +1224,3 @@
   </script>
 </body>
 </html>
-
