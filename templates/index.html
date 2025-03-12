@@ -476,6 +476,26 @@
       margin-bottom: 8px;
       cursor: pointer;
     }
+
+    /* Botão voltar ao topo */
+    #backToTopBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #009688;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+      z-index: 9999;
+    }
+
+    #backToTopBtn:hover {
+      background-color: #00796B;
+    }
   </style>
 </head>
 <body>
@@ -846,6 +866,21 @@
 
       showSlide3(currentSlideIndex3);
       startSlider3();
+
+      // Função do botão voltar ao topo
+      const backToTopBtn = document.getElementById('backToTopBtn');
+      window.onscroll = function () {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          backToTopBtn.style.display = "block";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      };
+
+      backToTopBtn.addEventListener('click', function () {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      });
 
       // ============== RESTANTE DO JAVASCRIPT ==============
       let loggedIn = false;
