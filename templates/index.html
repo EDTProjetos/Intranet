@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -476,28 +477,6 @@
       margin-bottom: 8px;
       cursor: pointer;
     }
-
-    /* Botão de voltar ao topo */
-    #backToTop {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #009688;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 1000;
-      transition: opacity 0.3s ease;
-    }
-
-    #backToTop:hover {
-      background-color: #00796B;
-    }
   </style>
 </head>
 <body>
@@ -518,7 +497,6 @@
     <div id="monitoriaSubmenu" style="display: none;">
       <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
     </div>
-    <button class="button" id="feedbackBtn">Feedbacks & Melhorias</button>
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
         <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
@@ -654,9 +632,6 @@
   <div id="containerImageModal">
     <img id="containerModalImage" src="" alt="Zoom">
   </div>
-
-  <!-- Botão de voltar ao topo -->
-  <button id="backToTop">&#8679;</button>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -1168,26 +1143,6 @@
         if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
           versionModal.style.display = "none";
         }
-      });
-
-      // Botão de voltar ao topo
-      const backToTopBtn = document.getElementById("backToTop");
-      window.addEventListener("scroll", function () {
-        if (window.scrollY > 100) {
-          backToTopBtn.style.display = "block";
-        } else {
-          backToTopBtn.style.display = "none";
-        }
-      });
-
-      backToTopBtn.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-
-      // Botão de feedback
-      const feedbackBtn = document.getElementById("feedbackBtn");
-      feedbackBtn.addEventListener("click", function () {
-        window.open("https://forms.gle/6Apvv45k6G6jDxNt6", "_blank");
       });
     });
     
