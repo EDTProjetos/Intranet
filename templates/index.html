@@ -639,7 +639,14 @@
 
     <div id="linksOperacionaisSection">
       <h2>Links Operacionais</h2>
-      <p>Aqui você encontra os links operacionais.</p>
+      <div id="linksOperacionaisContainer">
+        <button class="button" id="solatioBtn">Solatio</button>
+        <button class="button" id="channelsBtn">Channels</button>
+        <button class="button" id="qrPointBtn">Qr Point</button>
+        <button class="button" id="googleKeepBtn">Google Keep</button>
+        <button class="button" id="blipBtn">Blip</button>
+        <button class="button" id="gestaoBtn">Gestão</button>
+      </div>
     </div>
 
     <div id="planejamentoSection">
@@ -763,10 +770,11 @@
     // ============== SLIDER 2 ==============
     let currentSlideIndex2 = 0;
     const slider2 = document.getElementById("slider2");
+    const slides2 = slider2.querySelectorAll(".slide");
     const arrowLeft2 = document.getElementById("arrowLeft2");
     const arrowRight2 = document.getElementById("arrowRight2");
-    const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
     const progressFill2 = document.getElementById("progressFill2");
+    const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
     let slideInterval2 = 6000;
     let slideTimer2 = null;
     let progressTimer2 = null;
@@ -774,7 +782,6 @@
     let isPaused2 = false;
 
     function showSlide2(index) {
-      const slides2 = document.querySelectorAll("#slider2 .slide");
       slides2.forEach((slide, i) => {
         slide.classList.toggle("active", i === index);
       });
@@ -813,9 +820,6 @@
       if (!isPaused2) startSlider2();
     }
 
-    arrowLeft2.addEventListener("click", prevSlide2);
-    arrowRight2.addEventListener("click", nextSlide2);
-
     pauseSlideBtn2.addEventListener("click", function () {
       if (!isPaused2) {
         isPaused2 = true;
@@ -828,16 +832,20 @@
       }
     });
 
+    arrowLeft2.addEventListener("click", prevSlide2);
+    arrowRight2.addEventListener("click", nextSlide2);
+
     showSlide2(currentSlideIndex2);
     startSlider2();
 
     // ============== SLIDER 3 ==============
     let currentSlideIndex3 = 0;
     const slider3 = document.getElementById("slider3");
+    const slides3 = slider3.querySelectorAll(".slide");
     const arrowLeft3 = document.getElementById("arrowLeft3");
     const arrowRight3 = document.getElementById("arrowRight3");
-    const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
     const progressFill3 = document.getElementById("progressFill3");
+    const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
     let slideInterval3 = 6000;
     let slideTimer3 = null;
     let progressTimer3 = null;
@@ -845,7 +853,6 @@
     let isPaused3 = false;
 
     function showSlide3(index) {
-      const slides3 = document.querySelectorAll("#slider3 .slide");
       slides3.forEach((slide, i) => {
         slide.classList.toggle("active", i === index);
       });
@@ -884,9 +891,6 @@
       if (!isPaused3) startSlider3();
     }
 
-    arrowLeft3.addEventListener("click", prevSlide3);
-    arrowRight3.addEventListener("click", nextSlide3);
-
     pauseSlideBtn3.addEventListener("click", function () {
       if (!isPaused3) {
         isPaused3 = true;
@@ -898,6 +902,9 @@
         this.innerText = "⏸";
       }
     });
+
+    arrowLeft3.addEventListener("click", prevSlide3);
+    arrowRight3.addEventListener("click", nextSlide3);
 
     showSlide3(currentSlideIndex3);
     startSlider3();
