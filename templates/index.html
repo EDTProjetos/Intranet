@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Intranet EDT</title>
   <style>
     /* === ESTILOS COMPLETOS === */
@@ -75,7 +75,8 @@
     }
 
     #planejamentoSubmenu .button,
-    #monitoriaSubmenu .button {
+    #monitoriaSubmenu .button,
+    #linksOperacionaisSubmenu .button {
       width: auto;
       margin: 5px;
       padding: 8px 12px;
@@ -481,7 +482,7 @@
     #backToTop {
       display: none;
       position: fixed;
-      bottom: 20px;
+      bottom: 60px;
       right: 20px;
       background-color: #009688;
       color: white;
@@ -497,6 +498,26 @@
 
     #backToTop:hover {
       background-color: #00796B;
+    }
+
+    #linksOperacionaisSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+
+    #linksOperacionaisSection h2 {
+      margin-top: 0;
+    }
+
+    #linksOperacionaisSection .button {
+      width: 100%;
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -517,6 +538,14 @@
     <button class="button" id="monitoriaBtn">Monitoria</button>
     <div id="monitoriaSubmenu" style="display: none;">
       <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
+    </div>
+    <button class="button" id="linksOperacionaisBtn">Links Operacionais</button>
+    <div id="linksOperacionaisSubmenu" style="display: none;">
+      <button class="button" id="solatioBtn">Solatio</button>
+      <button class="button" id="channelsBtn">Channels</button>
+      <button class="button" id="qrPointBtn">Qr Point</button>
+      <button class="button" id="googleKeepBtn">Google Keep</button>
+      <button class="button" id="blipBtn">Blip</button>
     </div>
     <button class="button" id="feedbackBtn">Feedbacks & Melhorias</button>
     <div class="energy-of-todos">
@@ -582,56 +611,6 @@
         </div>
       </div>
     </div>
-
-    <div id="loginMenu">
-      <h3>Login</h3>
-      <input type="text" id="username" placeholder="Usuário">
-      <input type="password" id="password" placeholder="Senha">
-      <button class="button" id="loginBtn">Entrar</button>
-      <p id="loginError">Usuário ou senha incorretos!</p>
-    </div>
-
-    <div id="profileMenu">
-      <h3>Geração Automática de Perfil</h3>
-      <button class="button" id="generateProfileBtn">Gerar Perfil</button>
-      <p id="executionTime">Última execução: --</p>
-      <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
-    </div>
-
-    <div id="driveSection">
-      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
-    </div>
-
-    <div id="importacoesSection">
-      <h2>Importações</h2>
-      <p>Aqui você encontra o conteúdo referente às importações.</p>
-    </div>
-
-    <div id="monitoriaManuaisSection">
-      <h2>Manuais de Monitoria</h2>
-      <p>Aqui você encontra os manuais de monitoria.</p>
-    </div>
-
-    <div id="planejamentoSection">
-      <h2>Planejamento BI</h2>
-      <div id="biReportsContainer">
-        <button class="button arrowBtn" id="prevReport">&#8592;</button>
-        <div id="biReportsMenu">
-          <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">BI Inicial</button>
-          <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">BI Geral</button>
-          <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Relatório de faturamento</button>
-          <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
-          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
-          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Rel de cancelamentos</button>
-          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">Relatório de Usinas</button>
-          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
-        </div>
-        <button class="button arrowBtn" id="nextReport">&#8594;</button>
-      </div>
-      <div id="biReportContent">
-        <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
-      </div>
-    </div>
   </div>
 
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
@@ -660,7 +639,8 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // ============== SLIDER 1 ==============
+      // === Adjusted JavaScript for Sliders ===
+      // Slider 1
       let currentSlideIndex = 0;
       const slider = document.getElementById("slider");
       const slides = slider.querySelectorAll(".slide");
@@ -731,13 +711,14 @@
       showSlide(currentSlideIndex);
       startSlider();
 
-      // ============== SLIDER 2 ==============
+      // Slider 2
       let currentSlideIndex2 = 0;
       const slider2 = document.getElementById("slider2");
+      const slides2 = slider2.querySelectorAll(".slide");
       const arrowLeft2 = document.getElementById("arrowLeft2");
       const arrowRight2 = document.getElementById("arrowRight2");
-      const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
       const progressFill2 = document.getElementById("progressFill2");
+      const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
       let slideInterval2 = 6000;
       let slideTimer2 = null;
       let progressTimer2 = null;
@@ -745,7 +726,6 @@
       let isPaused2 = false;
 
       function showSlide2(index) {
-        const slides2 = document.querySelectorAll("#slider2 .slide");
         slides2.forEach((slide, i) => {
           slide.classList.toggle("active", i === index);
         });
@@ -784,9 +764,6 @@
         if (!isPaused2) startSlider2();
       }
 
-      arrowLeft2.addEventListener("click", prevSlide2);
-      arrowRight2.addEventListener("click", nextSlide2);
-
       pauseSlideBtn2.addEventListener("click", function () {
         if (!isPaused2) {
           isPaused2 = true;
@@ -799,16 +776,20 @@
         }
       });
 
+      arrowLeft2.addEventListener("click", prevSlide2);
+      arrowRight2.addEventListener("click", nextSlide2);
+
       showSlide2(currentSlideIndex2);
       startSlider2();
 
-      // ============== SLIDER 3 ==============
+      // Slider 3
       let currentSlideIndex3 = 0;
       const slider3 = document.getElementById("slider3");
+      const slides3 = slider3.querySelectorAll(".slide");
       const arrowLeft3 = document.getElementById("arrowLeft3");
       const arrowRight3 = document.getElementById("arrowRight3");
-      const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
       const progressFill3 = document.getElementById("progressFill3");
+      const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
       let slideInterval3 = 6000;
       let slideTimer3 = null;
       let progressTimer3 = null;
@@ -816,7 +797,6 @@
       let isPaused3 = false;
 
       function showSlide3(index) {
-        const slides3 = document.querySelectorAll("#slider3 .slide");
         slides3.forEach((slide, i) => {
           slide.classList.toggle("active", i === index);
         });
@@ -855,9 +835,6 @@
         if (!isPaused3) startSlider3();
       }
 
-      arrowLeft3.addEventListener("click", prevSlide3);
-      arrowRight3.addEventListener("click", nextSlide3);
-
       pauseSlideBtn3.addEventListener("click", function () {
         if (!isPaused3) {
           isPaused3 = true;
@@ -870,308 +847,13 @@
         }
       });
 
+      arrowLeft3.addEventListener("click", prevSlide3);
+      arrowRight3.addEventListener("click", nextSlide3);
+
       showSlide3(currentSlideIndex3);
       startSlider3();
-      
-    });
-      // ============== RESTANTE DO JAVASCRIPT ==============
-      let loggedIn = false;
-      let requestedSection = null;
-      let profileTimeout;
-      
-      document.getElementById("executionTime").style.display = "none";
-      document.getElementById("successMessage").style.display = "none";
-      
-      const headerTitle = document.getElementById("headerTitle");
-      const logo = document.querySelector(".logo");
-      const googleDriveLink = document.getElementById("googleDriveLink");
-      const planejamentoBtn = document.getElementById("planejamentoBtn");
-      const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
-      const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
-      const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
-      const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
-      
-      const monitoriaBtn = document.getElementById("monitoriaBtn");
-      const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
-      const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
-      
-      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
-      const sidebar = document.querySelector(".sidebar");
-      
-      const loginMenu = document.getElementById("loginMenu");
-      const loginBtn = document.getElementById("loginBtn");
-      const usernameInput = document.getElementById("username");
-      const passwordInput = document.getElementById("password");
-      const loginError = document.getElementById("loginError");
-      
-      const profileMenu = document.getElementById("profileMenu");
-      const generateProfileBtn = document.getElementById("generateProfileBtn");
-      const executionTime = document.getElementById("executionTime");
-      const successMessage = document.getElementById("successMessage");
-      
-      const driveSection = document.getElementById("driveSection");
-      const planejamentoSection = document.getElementById("planejamentoSection");
-      const importacoesSection = document.getElementById("importacoesSection");
-      const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
-      
-      function showHomeSliders() {
-        const homeSliders = document.getElementById("homeSliders");
-        if(homeSliders) homeSliders.style.display = "block";
-      }
-      
-      function hideHomeSliders() {
-        const homeSliders = document.getElementById("homeSliders");
-        if(homeSliders) homeSliders.style.display = "none";
-      }
-      
-      logo.addEventListener("click", function () {
-        hideAllMenus();
-        updateHeaderTitle("Intranet EDT");
-        showHomeSliders();
-        requestedSection = null;
-      });
-      
-      googleDriveLink.addEventListener("click", function () {
-        window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
-      });
-      
-      planejamentoBtn.addEventListener("click", function () {
-        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
-          planejamentoSubmenu.style.display = "flex";
-          planejamentoSubmenu.style.flexDirection = "column";
-        } else {
-          planejamentoSubmenu.style.display = "none";
-        }
-        hideHomeSliders();
-      });
-      
-      planejamentoBIBtn.addEventListener("click", function () {
-        hideAllButSubmenu();
-        if (loggedIn) {
-          planejamentoSection.style.display = "block";
-          updateHeaderTitle("Planejamento BI");
-          hideSidebar();
-        } else {
-          loginError.style.display = "none";
-          usernameInput.value = "";
-          passwordInput.value = "";
-          loginMenu.style.display = "block";
-          requestedSection = "planejamentoBI";
-          updateHeaderTitle("Login - Planejamento BI");
-        }
-        hideHomeSliders();
-      });
-      
-      planejamentoPerfilBtn.addEventListener("click", function () {
-        hideAllButSubmenu();
-        if (loggedIn) {
-          profileMenu.style.display = "block";
-          updateHeaderTitle("Geração de perfil");
-        } else {
-          loginError.style.display = "none";
-          usernameInput.value = "";
-          passwordInput.value = "";
-          loginMenu.style.display = "block";
-          requestedSection = "planejamentoPerfil";
-          updateHeaderTitle("Login - Geração de perfil");
-        }
-        hideHomeSliders();
-      });
-      
-      planejamentoImportacoesBtn.addEventListener("click", function () {
-        hideAllButSubmenu();
-        if (loggedIn) {
-          importacoesSection.style.display = "block";
-          updateHeaderTitle("Importações");
-        } else {
-          loginError.style.display = "none";
-          usernameInput.value = "";
-          passwordInput.value = "";
-          loginMenu.style.display = "block";
-          requestedSection = "importacoes";
-          updateHeaderTitle("Login - Importações");
-        }
-        hideHomeSliders();
-      });
 
-      monitoriaBtn.addEventListener("click", function () {
-        if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
-          monitoriaSubmenu.style.display = "flex";
-          monitoriaSubmenu.style.flexDirection = "column";
-        } else {
-          monitoriaSubmenu.style.display = "none";
-        }
-        hideHomeSliders();
-      });
-      
-      monitoriaManuaisBtn.addEventListener("click", function() {
-        hideAllMenus();
-        monitoriaManuaisSection.style.display = "block";
-        updateHeaderTitle("Manuais de Monitoria");
-      });
-      
-      loginBtn.addEventListener("click", function () {
-        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
-          loggedIn = true;
-          loginMenu.style.display = "none";
-          if (requestedSection === "planejamentoBI") {
-            planejamentoSection.style.display = "block";
-            updateHeaderTitle("Planejamento BI");
-            hideSidebar();
-          } else if (requestedSection === "planejamentoPerfil") {
-            profileMenu.style.display = "block";
-            updateHeaderTitle("Geração de perfil");
-          } else if (requestedSection === "importacoes") {
-            importacoesSection.style.display = "block";
-            updateHeaderTitle("Importações");
-          } else {
-            updateHeaderTitle("Intranet EDT");
-          }
-        } else {
-          loginError.style.display = "block";
-        }
-      });
-      
-      generateProfileBtn.addEventListener("click", function () {
-        if (profileTimeout) clearTimeout(profileTimeout);
-        generateProfileBtn.disabled = true;
-        generateProfileBtn.style.backgroundColor = "#A9A9A9";
-        generateProfileBtn.innerText = "Gerando...";
-        successMessage.style.display = "none";
-        executionTime.style.display = "none";
-        fetch("/executar-script", { method: "POST" })
-          .then(response => response.json())
-          .then(data => {
-            const currentTime = new Date().toLocaleString();
-            localStorage.setItem("lastExecutionTime", currentTime);
-            executionTime.innerText = `Última execução: ${currentTime}`;
-            executionTime.style.display = "block";
-            profileTimeout = setTimeout(() => {
-              successMessage.style.display = "block";
-              generateProfileBtn.disabled = false;
-              generateProfileBtn.style.backgroundColor = "#009688";
-              generateProfileBtn.innerText = "Gerar Perfil";
-              setTimeout(() => {
-                successMessage.style.display = "none";
-              }, 3000);
-            }, 10000);
-          })
-          .catch(error => {
-            alert("Ocorreu um erro ao gerar o perfil.");
-            generateProfileBtn.disabled = false;
-            generateProfileBtn.style.backgroundColor = "#009688";
-            generateProfileBtn.innerText = "Gerar Perfil";
-          });
-      });
-      
-      const otherButtons = document.querySelectorAll(
-        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
-      );
-      otherButtons.forEach(btn => {
-        btn.addEventListener("click", function () {
-          hideAllMenus();
-          updateHeaderTitle(this.innerText);
-          requestedSection = null;
-          hideHomeSliders();
-        });
-      });
-      
-      toggleSidebarBtn.addEventListener("click", function () {
-        if (sidebar.style.transform === "translateX(-100%)") {
-          sidebar.style.transform = "translateX(0)";
-          toggleSidebarBtn.innerText = "Ocultar Sidebar";
-        } else {
-          sidebar.style.transform = "translateX(-100%)";
-          toggleSidebarBtn.innerText = "Mostrar Sidebar";
-        }
-      });
-      
-      const biReportsMenu = document.getElementById("biReportsMenu");
-      const reportButtons = biReportsMenu.querySelectorAll(".button");
-      const planejamentoFrame = document.getElementById("planejamentoFrame");
-      let currentReportIndex = 0;
-      
-      function updateIframeFromIndex() {
-        if (reportButtons.length > 0) {
-          const btn = reportButtons[currentReportIndex];
-          const newSrc = btn.getAttribute("data-src");
-          planejamentoFrame.src = newSrc;
-          document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
-        }
-      }
-      
-      reportButtons.forEach((btn, index) => {
-        btn.addEventListener("click", () => {
-          currentReportIndex = index;
-          updateIframeFromIndex();
-        });
-      });
-      
-      const prevReport = document.getElementById("prevReport");
-      const nextReport = document.getElementById("nextReport");
-      
-      prevReport.addEventListener("click", function () {
-        if (currentReportIndex > 0) {
-          currentReportIndex--;
-          updateIframeFromIndex();
-        }
-      });
-      
-      nextReport.addEventListener("click", function () {
-        if (currentReportIndex < reportButtons.length - 1) {
-          currentReportIndex++;
-          updateIframeFromIndex();
-        }
-      });
-      
-      window.addEventListener("scroll", function () {
-        if (planejamentoSection && planejamentoSection.style.display !== "none") {
-          headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
-        } else {
-          headerTitle.style.opacity = 1;
-        }
-      });
-      
-      const fullScreenModal = document.getElementById("fullScreenModal");
-      const fullScreenImage = document.getElementById("fullScreenImage");
-      
-      slider.addEventListener("click", function (event) {
-        if (event.target.tagName === "IMG") {
-          fullScreenImage.src = event.target.src;
-          fullScreenModal.style.display = "flex";
-        }
-      });
-      
-      slider2.addEventListener("click", function (event) {
-        if (event.target.tagName === "IMG") {
-          fullScreenImage.src = event.target.src;
-          fullScreenModal.style.display = "flex";
-        }
-      });
-      
-      slider3.addEventListener("click", function (event) {
-        if (event.target.tagName === "IMG") {
-          fullScreenImage.src = event.target.src;
-          fullScreenModal.style.display = "flex";
-        }
-      });
-      
-      fullScreenModal.addEventListener("click", function () {
-        fullScreenModal.style.display = "none";
-      });
-      
-      const versionDiv = document.querySelector(".version");
-      const versionModal = document.getElementById("versionModal");
-      versionDiv.addEventListener("click", function () {
-        versionModal.style.display = "flex";
-      });
-      versionModal.addEventListener("click", function (e) {
-        if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
-          versionModal.style.display = "none";
-        }
-      });
-
-      // Botão de voltar ao topo
+      // === Botão de Voltar ao Topo ===
       const backToTopBtn = document.getElementById("backToTop");
       window.addEventListener("scroll", function () {
         if (window.scrollY > 100) {
@@ -1185,43 +867,308 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
-      // Botão de feedback
-      const feedbackBtn = document.getElementById("feedbackBtn");
-      feedbackBtn.addEventListener("click", function () {
-        window.open("https://forms.gle/6Apvv45k6G6jDxNt6", "_blank");
+      // === Título da Página ===
+      window.addEventListener("scroll", function () {
+        const headerTitle = document.getElementById("headerTitle");
+        if (window.scrollY > 10) {
+          headerTitle.style.opacity = 0;
+        } else {
+          headerTitle.style.opacity = 1;
+        }
+      });
+
+      // === Links Operacionais ===
+      const linksOperacionaisBtn = document.getElementById("linksOperacionaisBtn");
+      const linksOperacionaisSubmenu = document.getElementById("linksOperacionaisSubmenu");
+
+      linksOperacionaisBtn.addEventListener("click", function () {
+        linksOperacionaisSubmenu.style.display = linksOperacionaisSubmenu.style.display === "none" ? "block" : "none";
+      });
+
+      document.getElementById("solatioBtn").addEventListener("click", function () {
+        window.open("https://admin.solatioenergialivre.com.br/#/list/EnergyMeters", "_blank");
+      });
+
+      document.getElementById("channelsBtn").addEventListener("click", function () {
+        window.open("https://atendimento.redeservice.com.br/v2/operador/#", "_blank");
+      });
+
+      document.getElementById("qrPointBtn").addEventListener("click", function () {
+        window.open("https://app.qrpoint.com.br/auth/registrar-ponto", "_blank");
+      });
+
+      document.getElementById("googleKeepBtn").addEventListener("click", function () {
+        window.open("https://keep.google.com/u/0/", "_blank");
+      });
+
+      document.getElementById("blipBtn").addEventListener("click", function () {
+        window.open("https://solatioenergialivre.desk.blip.ai/drawer", "_blank");
       });
     });
-    
-    function hideAllButSubmenu() {
-      document.getElementById("loginMenu").style.display = "none";
-      document.getElementById("profileMenu").style.display = "none";
-      document.getElementById("driveSection").style.display = "none";
-      document.getElementById("planejamentoSection").style.display = "none";
-      document.getElementById("importacoesSection").style.display = "none";
-      document.getElementById("monitoriaManuaisSection").style.display = "none";
+  document.addEventListener("DOMContentLoaded", function () {
+  // === Adjusted JavaScript for Sliders ===
+  // Slider 1
+  let currentSlideIndex = 0;
+  const slider = document.getElementById("slider");
+  const slides = slider.querySelectorAll(".slide");
+  const arrowLeft = document.getElementById("arrowLeft");
+  const arrowRight = document.getElementById("arrowRight");
+  const progressFill = document.getElementById("progressFill");
+  const pauseSlideBtn = document.getElementById("pauseSlideBtn");
+  let slideInterval = 6000;
+  let slideTimer = null;
+  let progressTimer = null;
+  let progress = 0;
+  let isPaused = false;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+  }
+
+  function nextSlide() {
+    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    showSlide(currentSlideIndex);
+    resetProgress();
+  }
+
+  function prevSlide() {
+    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+    showSlide(currentSlideIndex);
+    resetProgress();
+  }
+
+  function startSlider() {
+    slideTimer = setInterval(nextSlide, slideInterval);
+    progressTimer = setInterval(() => {
+      progress += (100 / (slideInterval / 100));
+      if (progress >= 100) progress = 100;
+      progressFill.style.width = progress + "%";
+    }, 100);
+  }
+
+  function stopSlider() {
+    clearInterval(slideTimer);
+    clearInterval(progressTimer);
+  }
+
+  function resetProgress() {
+    progress = 0;
+    progressFill.style.width = "0%";
+    stopSlider();
+    if (!isPaused) startSlider();
+  }
+
+  pauseSlideBtn.addEventListener("click", function () {
+    if (!isPaused) {
+      isPaused = true;
+      stopSlider();
+      this.innerText = "▶";
+    } else {
+      isPaused = false;
+      startSlider();
+      this.innerText = "⏸";
     }
-    
-    function hideAllMenus() {
-      document.getElementById("loginMenu").style.display = "none";
-      document.getElementById("profileMenu").style.display = "none";
-      document.getElementById("driveSection").style.display = "none";
-      document.getElementById("planejamentoSection").style.display = "none";
-      document.getElementById("importacoesSection").style.display = "none";
-      document.getElementById("monitoriaManuaisSection").style.display = "none";
-      document.getElementById("planejamentoSubmenu").style.display = "none";
-      document.getElementById("monitoriaSubmenu").style.display = "none";
+  });
+
+  arrowLeft.addEventListener("click", prevSlide);
+  arrowRight.addEventListener("click", nextSlide);
+
+  showSlide(currentSlideIndex);
+  startSlider();
+
+  // Slider 2
+  let currentSlideIndex2 = 0;
+  const slider2 = document.getElementById("slider2");
+  const slides2 = slider2.querySelectorAll(".slide");
+  const arrowLeft2 = document.getElementById("arrowLeft2");
+  const arrowRight2 = document.getElementById("arrowRight2");
+  const progressFill2 = document.getElementById("progressFill2");
+  const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
+  let slideInterval2 = 6000;
+  let slideTimer2 = null;
+  let progressTimer2 = null;
+  let progress2 = 0;
+  let isPaused2 = false;
+
+  function showSlide2(index) {
+    slides2.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+  }
+
+  function nextSlide2() {
+    currentSlideIndex2 = (currentSlideIndex2 + 1) % slides2.length;
+    showSlide2(currentSlideIndex2);
+    resetProgress2();
+  }
+
+  function prevSlide2() {
+    currentSlideIndex2 = (currentSlideIndex2 - 1 + slides2.length) % slides2.length;
+    showSlide2(currentSlideIndex2);
+    resetProgress2();
+  }
+
+  function startSlider2() {
+    slideTimer2 = setInterval(nextSlide2, slideInterval2);
+    progressTimer2 = setInterval(() => {
+      progress2 += (100 / (slideInterval2 / 100));
+      if (progress2 >= 100) progress2 = 100;
+      progressFill2.style.width = progress2 + "%";
+    }, 100);
+  }
+
+  function stopSlider2() {
+    clearInterval(slideTimer2);
+    clearInterval(progressTimer2);
+  }
+
+  function resetProgress2() {
+    progress2 = 0;
+    progressFill2.style.width = "0%";
+    stopSlider2();
+    if (!isPaused2) startSlider2();
+  }
+
+  pauseSlideBtn2.addEventListener("click", function () {
+    if (!isPaused2) {
+      isPaused2 = true;
+      stopSlider2();
+      this.innerText = "▶";
+    } else {
+      isPaused2 = false;
+      startSlider2();
+      this.innerText = "⏸";
     }
-    
-    function updateHeaderTitle(text) {
-      document.getElementById("headerTitle").innerText = text;
+  });
+
+  arrowLeft2.addEventListener("click", prevSlide2);
+  arrowRight2.addEventListener("click", nextSlide2);
+
+  showSlide2(currentSlideIndex2);
+  startSlider2();
+
+  // Slider 3
+  let currentSlideIndex3 = 0;
+  const slider3 = document.getElementById("slider3");
+  const slides3 = slider3.querySelectorAll(".slide");
+  const arrowLeft3 = document.getElementById("arrowLeft3");
+  const arrowRight3 = document.getElementById("arrowRight3");
+  const progressFill3 = document.getElementById("progressFill3");
+  const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
+  let slideInterval3 = 6000;
+  let slideTimer3 = null;
+  let progressTimer3 = null;
+  let progress3 = 0;
+  let isPaused3 = false;
+
+  function showSlide3(index) {
+    slides3.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+  }
+
+  function nextSlide3() {
+    currentSlideIndex3 = (currentSlideIndex3 + 1) % slides3.length;
+    showSlide3(currentSlideIndex3);
+    resetProgress3();
+  }
+
+  function prevSlide3() {
+    currentSlideIndex3 = (currentSlideIndex3 - 1 + slides3.length) % slides3.length;
+    showSlide3(currentSlideIndex3);
+    resetProgress3();
+  }
+
+  function startSlider3() {
+    slideTimer3 = setInterval(nextSlide3, slideInterval3);
+    progressTimer3 = setInterval(() => {
+      progress3 += (100 / (slideInterval3 / 100));
+      if (progress3 >= 100) progress3 = 100;
+      progressFill3.style.width = progress3 + "%";
+    }, 100);
+  }
+
+  function stopSlider3() {
+    clearInterval(slideTimer3);
+    clearInterval(progressTimer3);
+  }
+
+  function resetProgress3() {
+    progress3 = 0;
+    progressFill3.style.width = "0%";
+    stopSlider3();
+    if (!isPaused3) startSlider3();
+  }
+
+  pauseSlideBtn3.addEventListener("click", function () {
+    if (!isPaused3) {
+      isPaused3 = true;
+      stopSlider3();
+      this.innerText = "▶";
+    } else {
+      isPaused3 = false;
+      startSlider3();
+      this.innerText = "⏸";
     }
-    
-    function hideSidebar() {
-      const sidebar = document.querySelector(".sidebar");
-      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
-      sidebar.style.transform = "translateX(-100%)";
-      toggleSidebarBtn.innerText = "Mostrar Sidebar";
+  });
+
+  arrowLeft3.addEventListener("click", prevSlide3);
+  arrowRight3.addEventListener("click", nextSlide3);
+
+  showSlide3(currentSlideIndex3);
+  startSlider3();
+
+  // === Botão de Voltar ao Topo ===
+  const backToTopBtn = document.getElementById("backToTop");
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 100) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
     }
-  </script>
-</body>
-</html>
+  });
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // === Título da Página ===
+  window.addEventListener("scroll", function () {
+    const headerTitle = document.getElementById("headerTitle");
+    if (window.scrollY > 10) {
+      headerTitle.style.opacity = 0;
+    } else {
+      headerTitle.style.opacity = 1;
+    }
+  });
+
+  // === Links Operacionais ===
+  const linksOperacionaisBtn = document.getElementById("linksOperacionaisBtn");
+  const linksOperacionaisSubmenu = document.getElementById("linksOperacionaisSubmenu");
+
+  linksOperacionaisBtn.addEventListener("click", function () {
+    linksOperacionaisSubmenu.style.display = linksOperacionaisSubmenu.style.display === "none" ? "block" : "none";
+  });
+
+  document.getElementById("solatioBtn").addEventListener("click", function () {
+    window.open("https://admin.solatioenergialivre.com.br/#/list/EnergyMeters", "_blank");
+  });
+
+  document.getElementById("channelsBtn").addEventListener("click", function () {
+    window.open("https://atendimento.redeservice.com.br/v2/operador/#", "_blank");
+  });
+
+  document.getElementById("qrPointBtn").addEventListener("click", function () {
+    window.open("https://app.qrpoint.com.br/auth/registrar-ponto", "_blank");
+  });
+
+  document.getElementById("googleKeepBtn").addEventListener("click", function () {
+    window.open("https://keep.google.com/u/0/", "_blank");
+  });
+
+  document.getElementById("blipBtn").addEventListener("click", function () {
+    window.open("https://solatioenergialivre.desk.blip.ai/drawer", "_blank");
+  });
+});
