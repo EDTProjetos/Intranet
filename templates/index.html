@@ -108,7 +108,7 @@
 
     #slider, #slider2, #slider3 {
       width: 30%;
-      height: auto; 
+      height: auto;
       position: relative;
       border: 2px solid #009688;
       border-radius: 10px;
@@ -481,7 +481,7 @@
     #backToTop {
       display: none;
       position: fixed;
-      bottom: 20px;
+      bottom: 60px;
       right: 20px;
       background-color: #009688;
       color: white;
@@ -877,10 +877,10 @@
       let loggedIn = false;
       let requestedSection = null;
       let profileTimeout;
-      
+
       document.getElementById("executionTime").style.display = "none";
       document.getElementById("successMessage").style.display = "none";
-      
+
       const headerTitle = document.getElementById("headerTitle");
       const logo = document.querySelector(".logo");
       const googleDriveLink = document.getElementById("googleDriveLink");
@@ -889,51 +889,51 @@
       const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
       const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
       const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
-      
+
       const monitoriaBtn = document.getElementById("monitoriaBtn");
       const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
       const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
-      
+
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       const sidebar = document.querySelector(".sidebar");
-      
+
       const loginMenu = document.getElementById("loginMenu");
       const loginBtn = document.getElementById("loginBtn");
       const usernameInput = document.getElementById("username");
       const passwordInput = document.getElementById("password");
       const loginError = document.getElementById("loginError");
-      
+
       const profileMenu = document.getElementById("profileMenu");
       const generateProfileBtn = document.getElementById("generateProfileBtn");
       const executionTime = document.getElementById("executionTime");
       const successMessage = document.getElementById("successMessage");
-      
+
       const driveSection = document.getElementById("driveSection");
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
       const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
-      
+
       function showHomeSliders() {
         const homeSliders = document.getElementById("homeSliders");
         if(homeSliders) homeSliders.style.display = "block";
       }
-      
+
       function hideHomeSliders() {
         const homeSliders = document.getElementById("homeSliders");
         if(homeSliders) homeSliders.style.display = "none";
       }
-      
+
       logo.addEventListener("click", function () {
         hideAllMenus();
         updateHeaderTitle("Intranet EDT");
         showHomeSliders();
         requestedSection = null;
       });
-      
+
       googleDriveLink.addEventListener("click", function () {
         window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
       });
-      
+
       planejamentoBtn.addEventListener("click", function () {
         if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
           planejamentoSubmenu.style.display = "flex";
@@ -943,7 +943,7 @@
         }
         hideHomeSliders();
       });
-      
+
       planejamentoBIBtn.addEventListener("click", function () {
         hideAllButSubmenu();
         if (loggedIn) {
@@ -960,7 +960,7 @@
         }
         hideHomeSliders();
       });
-      
+
       planejamentoPerfilBtn.addEventListener("click", function () {
         hideAllButSubmenu();
         if (loggedIn) {
@@ -976,7 +976,7 @@
         }
         hideHomeSliders();
       });
-      
+
       planejamentoImportacoesBtn.addEventListener("click", function () {
         hideAllButSubmenu();
         if (loggedIn) {
@@ -1002,13 +1002,13 @@
         }
         hideHomeSliders();
       });
-      
+
       monitoriaManuaisBtn.addEventListener("click", function() {
         hideAllMenus();
         monitoriaManuaisSection.style.display = "block";
         updateHeaderTitle("Manuais de Monitoria");
       });
-      
+
       loginBtn.addEventListener("click", function () {
         if (usernameInput.value === "admin" && passwordInput.value === "admin") {
           loggedIn = true;
@@ -1030,7 +1030,7 @@
           loginError.style.display = "block";
         }
       });
-      
+
       generateProfileBtn.addEventListener("click", function () {
         if (profileTimeout) clearTimeout(profileTimeout);
         generateProfileBtn.disabled = true;
@@ -1062,7 +1062,7 @@
             generateProfileBtn.innerText = "Gerar Perfil";
           });
       });
-      
+
       const otherButtons = document.querySelectorAll(
         ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
       );
@@ -1074,7 +1074,7 @@
           hideHomeSliders();
         });
       });
-      
+
       toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
@@ -1084,12 +1084,12 @@
           toggleSidebarBtn.innerText = "Mostrar Sidebar";
         }
       });
-      
+
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
       let currentReportIndex = 0;
-      
+
       function updateIframeFromIndex() {
         if (reportButtons.length > 0) {
           const btn = reportButtons[currentReportIndex];
@@ -1098,31 +1098,31 @@
           document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
         }
       }
-      
+
       reportButtons.forEach((btn, index) => {
         btn.addEventListener("click", () => {
           currentReportIndex = index;
           updateIframeFromIndex();
         });
       });
-      
+
       const prevReport = document.getElementById("prevReport");
       const nextReport = document.getElementById("nextReport");
-      
+
       prevReport.addEventListener("click", function () {
         if (currentReportIndex > 0) {
           currentReportIndex--;
           updateIframeFromIndex();
         }
       });
-      
+
       nextReport.addEventListener("click", function () {
         if (currentReportIndex < reportButtons.length - 1) {
           currentReportIndex++;
           updateIframeFromIndex();
         }
       });
-      
+
       window.addEventListener("scroll", function () {
         if (planejamentoSection && planejamentoSection.style.display !== "none") {
           headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
@@ -1130,35 +1130,35 @@
           headerTitle.style.opacity = 1;
         }
       });
-      
+
       const fullScreenModal = document.getElementById("fullScreenModal");
       const fullScreenImage = document.getElementById("fullScreenImage");
-      
+
       slider.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-      
+
       slider2.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-      
+
       slider3.addEventListener("click", function (event) {
         if (event.target.tagName === "IMG") {
           fullScreenImage.src = event.target.src;
           fullScreenModal.style.display = "flex";
         }
       });
-      
+
       fullScreenModal.addEventListener("click", function () {
         fullScreenModal.style.display = "none";
       });
-      
+
       const versionDiv = document.querySelector(".version");
       const versionModal = document.getElementById("versionModal");
       versionDiv.addEventListener("click", function () {
@@ -1190,7 +1190,7 @@
         window.open("https://forms.gle/6Apvv45k6G6jDxNt6", "_blank");
       });
     });
-    
+
     function hideAllButSubmenu() {
       document.getElementById("loginMenu").style.display = "none";
       document.getElementById("profileMenu").style.display = "none";
@@ -1199,7 +1199,7 @@
       document.getElementById("importacoesSection").style.display = "none";
       document.getElementById("monitoriaManuaisSection").style.display = "none";
     }
-    
+
     function hideAllMenus() {
       document.getElementById("loginMenu").style.display = "none";
       document.getElementById("profileMenu").style.display = "none";
@@ -1210,11 +1210,11 @@
       document.getElementById("planejamentoSubmenu").style.display = "none";
       document.getElementById("monitoriaSubmenu").style.display = "none";
     }
-    
+
     function updateHeaderTitle(text) {
       document.getElementById("headerTitle").innerText = text;
     }
-    
+
     function hideSidebar() {
       const sidebar = document.querySelector(".sidebar");
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
