@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<html lang="pt-BR"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Intranet EDT</title>
@@ -522,7 +520,7 @@
   </style>
 </head>
 <body>
-  <div id="headerTitle">Intranet EDT</div>
+  <div id="headerTitle">Links Operacionais</div>
   
   <div class="sidebar">
     <img src="static/logo 2.png" alt="Logo" class="logo">
@@ -539,7 +537,7 @@
     <div id="monitoriaSubmenu" style="display: none;">
       <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
     </div>
-    <button class="button" id="feedbackBtn">Feedbacks & Melhorias</button>
+    <button class="button" id="feedbackBtn">Feedbacks &amp; Melhorias</button>
     <button class="button" id="linksOperacionaisBtn">Links Operacionais</button>
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
@@ -549,7 +547,7 @@
   </div>
   
   <div class="content">
-    <div id="homeSliders">
+    <div id="homeSliders" style="display: none;">
       <div class="slider-container">
         <div id="slider">
           <div class="slide active"><img src="static/banner1.png" alt="Banner 1"></div>
@@ -557,9 +555,9 @@
           <div class="slide"><img src="static/banner3.png" alt="Banner 3"></div>
           <div class="slide"><img src="static/banner4.png" alt="Banner 4"></div>
           <div class="slide"><img src="static/banner5.png" alt="Banner 5"></div>
-          <button class="slider-arrow arrow-left" id="arrowLeft">&#10094;</button>
-          <button class="slider-arrow arrow-right" id="arrowRight">&#10095;</button>
-          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <button class="slider-arrow arrow-left" id="arrowLeft">❮</button>
+          <button class="slider-arrow arrow-right" id="arrowRight">❯</button>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 1.66667%;"></div></div>
           <button class="slider-pause" id="pauseSlideBtn">⏸</button>
         </div>
         <div class="slider-info">
@@ -579,9 +577,9 @@
           <div class="slide"><img src="static/banner3.png" alt="Banner 3"></div>
           <div class="slide"><img src="static/banner4.png" alt="Banner 4"></div>
           <div class="slide"><img src="static/banner5.png" alt="Banner 5"></div>
-          <button class="slider-arrow arrow-left" id="arrowLeft2">&#10094;</button>
-          <button class="slider-arrow arrow-right" id="arrowRight2">&#10095;</button>
-          <div class="progress-bar"><div class="progress-fill" id="progressFill2"></div></div>
+          <button class="slider-arrow arrow-left" id="arrowLeft2">❮</button>
+          <button class="slider-arrow arrow-right" id="arrowRight2">❯</button>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill2" style="width: 1.66667%;"></div></div>
           <button class="slider-pause" id="pauseSlideBtn2">⏸</button>
         </div>
       </div>
@@ -593,9 +591,9 @@
           <div class="slide"><img src="static/banner3.png" alt="Banner 3"></div>
           <div class="slide"><img src="static/banner4.png" alt="Banner 4"></div>
           <div class="slide"><img src="static/banner5.png" alt="Banner 5"></div>
-          <button class="slider-arrow arrow-left" id="arrowLeft3">&#10094;</button>
-          <button class="slider-arrow arrow-right" id="arrowRight3">&#10095;</button>
-          <div class="progress-bar"><div class="progress-fill" id="progressFill3"></div></div>
+          <button class="slider-arrow arrow-left" id="arrowLeft3">❮</button>
+          <button class="slider-arrow arrow-right" id="arrowRight3">❯</button>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill3" style="width: 1.66667%;"></div></div>
           <button class="slider-pause" id="pauseSlideBtn3">⏸</button>
         </div>
         <div class="slider-info">
@@ -605,7 +603,7 @@
       </div>
     </div>
 
-    <div id="loginMenu">
+    <div id="loginMenu" style="display: none;">
       <h3>Login</h3>
       <input type="text" id="username" placeholder="Usuário">
       <input type="password" id="password" placeholder="Senha">
@@ -613,49 +611,49 @@
       <p id="loginError">Usuário ou senha incorretos!</p>
     </div>
 
-    <div id="profileMenu">
+    <div id="profileMenu" style="display: none;">
       <h3>Geração Automática de Perfil</h3>
       <button class="button" id="generateProfileBtn">Gerar Perfil</button>
-      <p id="executionTime">Última execução: --</p>
-      <p id="successMessage">✔ Perfil gerado com sucesso! ✅</p>
+      <p id="executionTime" style="display: none;">Última execução: --</p>
+      <p id="successMessage" style="display: none;">✔ Perfil gerado com sucesso! ✅</p>
     </div>
 
-    <div id="driveSection">
-      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR" type="text/html"></object>
+    <div id="driveSection" style="display: none;">
+      <object id="driveObject" data="/proxy?url=https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&amp;hl=pt-BR" type="text/html"></object>
     </div>
 
-    <div id="importacoesSection">
+    <div id="importacoesSection" style="display: none;">
       <h2>Importações</h2>
       <p>Aqui você encontra o conteúdo referente às importações.</p>
     </div>
 
-    <div id="monitoriaManuaisSection">
+    <div id="monitoriaManuaisSection" style="display: none;">
       <h2>Manuais de Monitoria</h2>
       <p>Aqui você encontra os manuais de monitoria.</p>
     </div>
 
-    <div id="planejamentoSection">
+    <div id="planejamentoSection" style="display: none;">
       <h2>Planejamento BI</h2>
       <div id="biReportsContainer">
-        <button class="button arrowBtn" id="prevReport">&#8592;</button>
+        <button class="button arrowBtn" id="prevReport">←</button>
         <div id="biReportsMenu">
-          <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488">BI Inicial</button>
+          <button class="button" data-src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=9cf066805cc685ec3488">BI Inicial</button>
           <button class="button" id="btnBIGeral" data-src="https://app.powerbi.com/view?r=eyJrIjoiZjFlN2FhYjgtNDk5NC00ZTdhLTk5YmMtYzk0ZjlhYzdkOGM4IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9">BI Geral</button>
-          <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Relatório de faturamento</button>
-          <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
-          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
-          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=ReportSection">Rel de cancelamentos</button>
-          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=17d4daffb487684393d0">Relatório de Usinas</button>
-          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
+          <button class="button" id="btnFaturamento" data-src="https://app.powerbi.com/view?r=eyJrIjoiZDE3OTQxZjgtOTA3ZC00MGM5LWExNWMtZWVkOTFhNTg2MGFkIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=ReportSection">Relatório de faturamento</button>
+          <button class="button" id="btnFranquias" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzFjNzc4ZWYtOTdkYy00ZGY2LTkwMGYtYzc0MTMwMTIyNWFlIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=ReportSectionea173901456c5f88f391">Relatório das franquias</button>
+          <button class="button" id="btnSitBol" data-src="https://app.powerbi.com/view?r=eyJrIjoiNjkxOWEwMzQtOGY1Ni00YTU1LTlhZTktY2Q3YzlmMTg5MzBiIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=b7c814d99add204cddda">Relatório Sit Bol</button>
+          <button class="button" id="btnCancelamentos" data-src="https://app.powerbi.com/view?r=eyJrIjoiOWRlNDZiYmYtMWIwNi00YmY4LWFjOTYtZDZmNjU0NzYxYmZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=ReportSection">Rel de cancelamentos</button>
+          <button class="button" id="btnUsinas" data-src="https://app.powerbi.com/view?r=eyJrIjoiNzU2ZmQ2ODEtNThmNS00ODFmLWE2MzYtMTMyMmExYjcwMzk2IiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=17d4daffb487684393d0">Relatório de Usinas</button>
+          <button class="button" id="btnVendas" data-src="https://app.powerbi.com/view?r=eyJrIjoiOGU3YmQyNTgtZDljYy00YjAwLTliNDctM2RiYmYzOGI4Y2ZmIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=6a81d79931cdfae4adca">Rel de Vendas</button>
         </div>
-        <button class="button arrowBtn" id="nextReport">&#8594;</button>
+        <button class="button arrowBtn" id="nextReport">→</button>
       </div>
       <div id="biReportContent">
-        <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
+        <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&amp;pageName=9cf066805cc685ec3488" allowfullscreen="true"></iframe>
       </div>
     </div>
 
-    <div id="linksOperacionaisSection">
+    <div id="linksOperacionaisSection" style="display: block;">
       <h2>Links Operação</h2>
       <button class="button" onclick="window.open('https://admin.solatioenergialivre.com.br/#/list/EnergyMeters', '_blank')">Solatio</button>
       <button class="button" onclick="window.open('https://atendimento.redeservice.com.br/v2/operador/#', '_blank')">Channels</button>
@@ -664,7 +662,15 @@
       <button class="button" onclick="window.open('https://solatioenergialivre.desk.blip.ai/drawer', '_blank')">Blip</button>
       <button class="button" onclick="window.open('https://cobranca01.redeservice.com.br/cobranca.fe.energia/Login.aspx', '_blank')">Gestão</button>
     </div>
-  </div>
+  <div id="linksOperacionaisSection" style="display: block;">
+      <h2>Links Operação</h2>
+      <button class="button" onclick="window.open('https://admin.solatioenergialivre.com.br/#/list/EnergyMeters', '_blank')">Solatio</button>
+      <button class="button" onclick="window.open('https://atendimento.redeservice.com.br/v2/operador/#', '_blank')">Channels</button>
+      <button class="button" onclick="window.open('https://app.qrpoint.com.br/auth/registrar-ponto', '_blank')">Qr Point</button>
+      <button class="button" onclick="window.open('https://keep.google.com/u/0/', '_blank')">Google Keep</button>
+      <button class="button" onclick="window.open('https://solatioenergialivre.desk.blip.ai/drawer', '_blank')">Blip</button>
+      <button class="button" onclick="window.open('https://cobranca01.redeservice.com.br/cobranca.fe.energia/Login.aspx', '_blank')">Gestão</button>
+    </div></div>
 
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
   <div class="version">Versão 1.0.7</div>
@@ -688,7 +694,7 @@
   </div>
 
   <!-- Botão de voltar ao topo -->
-  <button id="backToTop">&#8679;</button>
+  <button id="backToTop">⇧</button>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -1265,5 +1271,5 @@
       toggleSidebarBtn.innerText = "Mostrar Sidebar";
     }
   </script>
-</body>
-</html>
+
+</body></html>
