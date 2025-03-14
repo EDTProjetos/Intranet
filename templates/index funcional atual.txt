@@ -498,6 +498,27 @@
     #backToTop:hover {
       background-color: #00796B;
     }
+
+    /* Estilos para a seção de Links Operacionais */
+    #linksOperacionaisSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+
+    #linksOperacionaisSection h2 {
+      margin-top: 0;
+    }
+
+    #linksOperacionaisSection .button {
+      width: 100%;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
@@ -519,6 +540,7 @@
       <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
     </div>
     <button class="button" id="feedbackBtn">Feedbacks & Melhorias</button>
+    <button class="button" id="linksOperacionaisBtn">Links Operacionais</button>
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
         <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
@@ -632,6 +654,16 @@
         <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
       </div>
     </div>
+
+    <div id="linksOperacionaisSection">
+      <h2>Links Operação</h2>
+      <button class="button" onclick="window.open('https://admin.solatioenergialivre.com.br/#/list/EnergyMeters', '_blank')">Solatio</button>
+      <button class="button" onclick="window.open('https://atendimento.redeservice.com.br/v2/operador/#', '_blank')">Channels</button>
+      <button class="button" onclick="window.open('https://app.qrpoint.com.br/auth/registrar-ponto', '_blank')">Qr Point</button>
+      <button class="button" onclick="window.open('https://keep.google.com/u/0/', '_blank')">Google Keep</button>
+      <button class="button" onclick="window.open('https://solatioenergialivre.desk.blip.ai/drawer', '_blank')">Blip</button>
+      <button class="button" onclick="window.open('https://cobranca01.redeservice.com.br/cobranca.fe.energia/Login.aspx', '_blank')">Gestão</button>
+    </div>
   </div>
 
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
@@ -734,6 +766,7 @@
       // ============== SLIDER 2 ==============
       let currentSlideIndex2 = 0;
       const slider2 = document.getElementById("slider2");
+      const slides2 = slider2.querySelectorAll(".slide");
       const arrowLeft2 = document.getElementById("arrowLeft2");
       const arrowRight2 = document.getElementById("arrowRight2");
       const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
@@ -745,7 +778,6 @@
       let isPaused2 = false;
 
       function showSlide2(index) {
-        const slides2 = document.querySelectorAll("#slider2 .slide");
         slides2.forEach((slide, i) => {
           slide.classList.toggle("active", i === index);
         });
@@ -784,9 +816,6 @@
         if (!isPaused2) startSlider2();
       }
 
-      arrowLeft2.addEventListener("click", prevSlide2);
-      arrowRight2.addEventListener("click", nextSlide2);
-
       pauseSlideBtn2.addEventListener("click", function () {
         if (!isPaused2) {
           isPaused2 = true;
@@ -799,12 +828,16 @@
         }
       });
 
+      arrowLeft2.addEventListener("click", prevSlide2);
+      arrowRight2.addEventListener("click", nextSlide2);
+
       showSlide2(currentSlideIndex2);
       startSlider2();
 
       // ============== SLIDER 3 ==============
       let currentSlideIndex3 = 0;
       const slider3 = document.getElementById("slider3");
+      const slides3 = slider3.querySelectorAll(".slide");
       const arrowLeft3 = document.getElementById("arrowLeft3");
       const arrowRight3 = document.getElementById("arrowRight3");
       const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
@@ -816,7 +849,6 @@
       let isPaused3 = false;
 
       function showSlide3(index) {
-        const slides3 = document.querySelectorAll("#slider3 .slide");
         slides3.forEach((slide, i) => {
           slide.classList.toggle("active", i === index);
         });
@@ -855,9 +887,6 @@
         if (!isPaused3) startSlider3();
       }
 
-      arrowLeft3.addEventListener("click", prevSlide3);
-      arrowRight3.addEventListener("click", nextSlide3);
-
       pauseSlideBtn3.addEventListener("click", function () {
         if (!isPaused3) {
           isPaused3 = true;
@@ -869,6 +898,9 @@
           this.innerText = "⏸";
         }
       });
+
+      arrowLeft3.addEventListener("click", prevSlide3);
+      arrowRight3.addEventListener("click", nextSlide3);
 
       showSlide3(currentSlideIndex3);
       startSlider3();
@@ -912,6 +944,7 @@
       const planejamentoSection = document.getElementById("planejamentoSection");
       const importacoesSection = document.getElementById("importacoesSection");
       const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
+      const linksOperacionaisSection = document.getElementById("linksOperacionaisSection");
       
       function showHomeSliders() {
         const homeSliders = document.getElementById("homeSliders");
@@ -1124,8 +1157,8 @@
       });
       
       window.addEventListener("scroll", function () {
-        if (planejamentoSection && planejamentoSection.style.display !== "none") {
-          headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
+        if (window.scrollY > 10) {
+          headerTitle.style.opacity = 0;
         } else {
           headerTitle.style.opacity = 1;
         }
@@ -1189,6 +1222,14 @@
       feedbackBtn.addEventListener("click", function () {
         window.open("https://forms.gle/6Apvv45k6G6jDxNt6", "_blank");
       });
+
+      // Botão de Links Operacionais
+      const linksOperacionaisBtn = document.getElementById("linksOperacionaisBtn");
+      linksOperacionaisBtn.addEventListener("click", function () {
+        hideAllMenus();
+        linksOperacionaisSection.style.display = "block";
+        updateHeaderTitle("Links Operacionais");
+      });
     });
     
     function hideAllButSubmenu() {
@@ -1198,6 +1239,7 @@
       document.getElementById("planejamentoSection").style.display = "none";
       document.getElementById("importacoesSection").style.display = "none";
       document.getElementById("monitoriaManuaisSection").style.display = "none";
+      document.getElementById("linksOperacionaisSection").style.display = "none";
     }
     
     function hideAllMenus() {
@@ -1209,6 +1251,7 @@
       document.getElementById("monitoriaManuaisSection").style.display = "none";
       document.getElementById("planejamentoSubmenu").style.display = "none";
       document.getElementById("monitoriaSubmenu").style.display = "none";
+      document.getElementById("linksOperacionaisSection").style.display = "none";
     }
     
     function updateHeaderTitle(text) {
