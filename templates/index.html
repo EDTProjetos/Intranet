@@ -75,8 +75,7 @@
     }
 
     #planejamentoSubmenu .button,
-    #monitoriaSubmenu .button,
-    #linksOperacionaisSubmenu .button {
+    #monitoriaSubmenu .button {
       width: auto;
       margin: 5px;
       padding: 8px 12px;
@@ -357,21 +356,6 @@
       margin-top: 0;
     }
 
-    #linksOperacionaisSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
-
-    #linksOperacionaisSection h2 {
-      margin-top: 0;
-    }
-
     #biReportsContainer {
       display: flex;
       align-items: center;
@@ -514,6 +498,27 @@
     #backToTop:hover {
       background-color: #00796B;
     }
+
+    /* Estilos para a seção de Links Operacionais */
+    #linksOperacionaisSection {
+      display: none;
+      margin: 10px 26px 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #009688;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: calc(100% - 270px - 36px);
+    }
+
+    #linksOperacionaisSection h2 {
+      margin-top: 0;
+    }
+
+    #linksOperacionaisSection .button {
+      width: 100%;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
@@ -534,16 +539,8 @@
     <div id="monitoriaSubmenu" style="display: none;">
       <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
     </div>
-    <button class="button" id="linksOperacionaisBtn">Links Operacionais</button>
-    <div id="linksOperacionaisSubmenu" style="display: none;">
-      <button class="button" id="solatioBtn">Solatio</button>
-      <button class="button" id="channelsBtn">Channels</button>
-      <button class="button" id="qrPointBtn">Qr Point</button>
-      <button class="button" id="googleKeepBtn">Google Keep</button>
-      <button class="button" id="blipBtn">Blip</button>
-      <button class="button" id="gestaoBtn">Gestão</button>
-    </div>
     <button class="button" id="feedbackBtn">Feedbacks & Melhorias</button>
+    <button class="button" id="linksOperacionaisBtn">Links Operacionais</button>
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
         <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
@@ -637,11 +634,6 @@
       <p>Aqui você encontra os manuais de monitoria.</p>
     </div>
 
-    <div id="linksOperacionaisSection">
-      <h2>Links Operacionais</h2>
-      <p>Aqui você encontra os links operacionais.</p>
-    </div>
-
     <div id="planejamentoSection">
       <h2>Planejamento BI</h2>
       <div id="biReportsContainer">
@@ -661,6 +653,15 @@
       <div id="biReportContent">
         <iframe id="planejamentoFrame" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlNGM2ODUtNWI0MC00MGRlLWJiZDgtYjBiMmNkZjRlOWMxIiwidCI6IjhlN2FhNTJiLTBkZjktNGI4OC1iODM3LTRjNzg0MjQ0MWZlNiJ9&pageName=9cf066805cc685ec3488" allowFullScreen="true"></iframe>
       </div>
+    </div>
+
+    <div id="linksOperacionaisSection">
+      <h2>Links Operacionais</h2>
+      <button class="button" onclick="window.open('https://admin.solatioenergialivre.com.br/#/list/EnergyMeters', '_blank')">Solatio</button>
+      <button class="button" onclick="window.open('https://atendimento.redeservice.com.br/v2/operador/#', '_blank')">Channels</button>
+      <button class="button" onclick="window.open('https://app.qrpoint.com.br/auth/registrar-ponto', '_blank')">Qr Point</button>
+      <button class="button" onclick="window.open('https://keep.google.com/u/0/', '_blank')">Google Keep</button>
+      <button class="button" onclick="window.open('https://solatioenergialivre.desk.blip.ai/drawer', '_blank')">Blip</button>
     </div>
   </div>
 
@@ -689,582 +690,579 @@
   <button id="backToTop">&#8679;</button>
 
   <script>
-    // ============== SLIDER 1 ==============
-    let currentSlideIndex = 0;
-    const slider = document.getElementById("slider");
-    const slides = slider.querySelectorAll(".slide");
-    const arrowLeft = document.getElementById("arrowLeft");
-    const arrowRight = document.getElementById("arrowRight");
-    const progressFill = document.getElementById("progressFill");
-    const pauseSlideBtn = document.getElementById("pauseSlideBtn");
-    let slideInterval = 6000;
-    let slideTimer = null;
-    let progressTimer = null;
-    let progress = 0;
-    let isPaused = false;
+    document.addEventListener("DOMContentLoaded", function () {
+      // ============== SLIDER 1 ==============
+      let currentSlideIndex = 0;
+      const slider = document.getElementById("slider");
+      const slides = slider.querySelectorAll(".slide");
+      const arrowLeft = document.getElementById("arrowLeft");
+      const arrowRight = document.getElementById("arrowRight");
+      const progressFill = document.getElementById("progressFill");
+      const pauseSlideBtn = document.getElementById("pauseSlideBtn");
+      let slideInterval = 6000;
+      let slideTimer = null;
+      let progressTimer = null;
+      let progress = 0;
+      let isPaused = false;
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
-      });
-    }
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
 
-    function nextSlide() {
-      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-      showSlide(currentSlideIndex);
-      resetProgress();
-    }
+      function nextSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
 
-    function prevSlide() {
-      currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-      showSlide(currentSlideIndex);
-      resetProgress();
-    }
+      function prevSlide() {
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        showSlide(currentSlideIndex);
+        resetProgress();
+      }
 
-    function startSlider() {
-      slideTimer = setInterval(nextSlide, slideInterval);
-      progressTimer = setInterval(() => {
-        progress += (100 / (slideInterval / 100));
-        if (progress >= 100) progress = 100;
-        progressFill.style.width = progress + "%";
-      }, 100);
-    }
+      function startSlider() {
+        slideTimer = setInterval(nextSlide, slideInterval);
+        progressTimer = setInterval(() => {
+          progress += (100 / (slideInterval / 100));
+          if (progress >= 100) progress = 100;
+          progressFill.style.width = progress + "%";
+        }, 100);
+      }
 
-    function stopSlider() {
-      clearInterval(slideTimer);
-      clearInterval(progressTimer);
-    }
+      function stopSlider() {
+        clearInterval(slideTimer);
+        clearInterval(progressTimer);
+      }
 
-    function resetProgress() {
-      progress = 0;
-      progressFill.style.width = "0%";
-      stopSlider();
-      if (!isPaused) startSlider();
-    }
-
-    pauseSlideBtn.addEventListener("click", function () {
-      if (!isPaused) {
-        isPaused = true;
+      function resetProgress() {
+        progress = 0;
+        progressFill.style.width = "0%";
         stopSlider();
-        this.innerText = "▶";
-      } else {
-        isPaused = false;
-        startSlider();
-        this.innerText = "⏸";
+        if (!isPaused) startSlider();
       }
-    });
 
-    arrowLeft.addEventListener("click", prevSlide);
-    arrowRight.addEventListener("click", nextSlide);
-
-    showSlide(currentSlideIndex);
-    startSlider();
-
-    // ============== SLIDER 2 ==============
-    let currentSlideIndex2 = 0;
-    const slider2 = document.getElementById("slider2");
-    const arrowLeft2 = document.getElementById("arrowLeft2");
-    const arrowRight2 = document.getElementById("arrowRight2");
-    const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
-    const progressFill2 = document.getElementById("progressFill2");
-    let slideInterval2 = 6000;
-    let slideTimer2 = null;
-    let progressTimer2 = null;
-    let progress2 = 0;
-    let isPaused2 = false;
-
-    function showSlide2(index) {
-      const slides2 = document.querySelectorAll("#slider2 .slide");
-      slides2.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
+      pauseSlideBtn.addEventListener("click", function () {
+        if (!isPaused) {
+          isPaused = true;
+          stopSlider();
+          this.innerText = "▶";
+        } else {
+          isPaused = false;
+          startSlider();
+          this.innerText = "⏸";
+        }
       });
-    }
 
-    function nextSlide2() {
-      currentSlideIndex2 = (currentSlideIndex2 + 1) % slides2.length;
-      showSlide2(currentSlideIndex2);
-      resetProgress2();
-    }
+      arrowLeft.addEventListener("click", prevSlide);
+      arrowRight.addEventListener("click", nextSlide);
 
-    function prevSlide2() {
-      currentSlideIndex2 = (currentSlideIndex2 - 1 + slides2.length) % slides2.length;
-      showSlide2(currentSlideIndex2);
-      resetProgress2();
-    }
+      showSlide(currentSlideIndex);
+      startSlider();
 
-    function startSlider2() {
-      slideTimer2 = setInterval(nextSlide2, slideInterval2);
-      progressTimer2 = setInterval(() => {
-        progress2 += (100 / (slideInterval2 / 100));
-        if (progress2 >= 100) progress2 = 100;
-        progressFill2.style.width = progress2 + "%";
-      }, 100);
-    }
+      // ============== SLIDER 2 ==============
+      let currentSlideIndex2 = 0;
+      const slider2 = document.getElementById("slider2");
+      const slides2 = slider2.querySelectorAll(".slide");
+      const arrowLeft2 = document.getElementById("arrowLeft2");
+      const arrowRight2 = document.getElementById("arrowRight2");
+      const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
+      const progressFill2 = document.getElementById("progressFill2");
+      let slideInterval2 = 6000;
+      let slideTimer2 = null;
+      let progressTimer2 = null;
+      let progress2 = 0;
+      let isPaused2 = false;
 
-    function stopSlider2() {
-      clearInterval(slideTimer2);
-      clearInterval(progressTimer2);
-    }
+      function showSlide2(index) {
+        slides2.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
 
-    function resetProgress2() {
-      progress2 = 0;
-      progressFill2.style.width = "0%";
-      stopSlider2();
-      if (!isPaused2) startSlider2();
-    }
+      function nextSlide2() {
+        currentSlideIndex2 = (currentSlideIndex2 + 1) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
 
-    arrowLeft2.addEventListener("click", prevSlide2);
-    arrowRight2.addEventListener("click", nextSlide2);
+      function prevSlide2() {
+        currentSlideIndex2 = (currentSlideIndex2 - 1 + slides2.length) % slides2.length;
+        showSlide2(currentSlideIndex2);
+        resetProgress2();
+      }
 
-    pauseSlideBtn2.addEventListener("click", function () {
-      if (!isPaused2) {
-        isPaused2 = true;
+      function startSlider2() {
+        slideTimer2 = setInterval(nextSlide2, slideInterval2);
+        progressTimer2 = setInterval(() => {
+          progress2 += (100 / (slideInterval2 / 100));
+          if (progress2 >= 100) progress2 = 100;
+          progressFill2.style.width = progress2 + "%";
+        }, 100);
+      }
+
+      function stopSlider2() {
+        clearInterval(slideTimer2);
+        clearInterval(progressTimer2);
+      }
+
+      function resetProgress2() {
+        progress2 = 0;
+        progressFill2.style.width = "0%";
         stopSlider2();
-        this.innerText = "▶";
-      } else {
-        isPaused2 = false;
-        startSlider2();
-        this.innerText = "⏸";
+        if (!isPaused2) startSlider2();
       }
-    });
 
-    showSlide2(currentSlideIndex2);
-    startSlider2();
-
-    // ============== SLIDER 3 ==============
-    let currentSlideIndex3 = 0;
-    const slider3 = document.getElementById("slider3");
-    const arrowLeft3 = document.getElementById("arrowLeft3");
-    const arrowRight3 = document.getElementById("arrowRight3");
-    const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
-    const progressFill3 = document.getElementById("progressFill3");
-    let slideInterval3 = 6000;
-    let slideTimer3 = null;
-    let progressTimer3 = null;
-    let progress3 = 0;
-    let isPaused3 = false;
-
-    function showSlide3(index) {
-      const slides3 = document.querySelectorAll("#slider3 .slide");
-      slides3.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
+      pauseSlideBtn2.addEventListener("click", function () {
+        if (!isPaused2) {
+          isPaused2 = true;
+          stopSlider2();
+          this.innerText = "▶";
+        } else {
+          isPaused2 = false;
+          startSlider2();
+          this.innerText = "⏸";
+        }
       });
-    }
 
-    function nextSlide3() {
-      currentSlideIndex3 = (currentSlideIndex3 + 1) % slides3.length;
-      showSlide3(currentSlideIndex3);
-      resetProgress3();
-    }
+      arrowLeft2.addEventListener("click", prevSlide2);
+      arrowRight2.addEventListener("click", nextSlide2);
 
-    function prevSlide3() {
-      currentSlideIndex3 = (currentSlideIndex3 - 1 + slides3.length) % slides3.length;
-      showSlide3(currentSlideIndex3);
-      resetProgress3();
-    }
+      showSlide2(currentSlideIndex2);
+      startSlider2();
 
-    function startSlider3() {
-      slideTimer3 = setInterval(nextSlide3, slideInterval3);
-      progressTimer3 = setInterval(() => {
-        progress3 += (100 / (slideInterval3 / 100));
-        if (progress3 >= 100) progress3 = 100;
-        progressFill3.style.width = progress3 + "%";
-      }, 100);
-    }
+      // ============== SLIDER 3 ==============
+      let currentSlideIndex3 = 0;
+      const slider3 = document.getElementById("slider3");
+      const slides3 = slider3.querySelectorAll(".slide");
+      const arrowLeft3 = document.getElementById("arrowLeft3");
+      const arrowRight3 = document.getElementById("arrowRight3");
+      const pauseSlideBtn3 = document.getElementById("pauseSlideBtn3");
+      const progressFill3 = document.getElementById("progressFill3");
+      let slideInterval3 = 6000;
+      let slideTimer3 = null;
+      let progressTimer3 = null;
+      let progress3 = 0;
+      let isPaused3 = false;
 
-    function stopSlider3() {
-      clearInterval(slideTimer3);
-      clearInterval(progressTimer3);
-    }
+      function showSlide3(index) {
+        slides3.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
 
-    function resetProgress3() {
-      progress3 = 0;
-      progressFill3.style.width = "0%";
-      stopSlider3();
-      if (!isPaused3) startSlider3();
-    }
+      function nextSlide3() {
+        currentSlideIndex3 = (currentSlideIndex3 + 1) % slides3.length;
+        showSlide3(currentSlideIndex3);
+        resetProgress3();
+      }
 
-    arrowLeft3.addEventListener("click", prevSlide3);
-    arrowRight3.addEventListener("click", nextSlide3);
+      function prevSlide3() {
+        currentSlideIndex3 = (currentSlideIndex3 - 1 + slides3.length) % slides3.length;
+        showSlide3(currentSlideIndex3);
+        resetProgress3();
+      }
 
-    pauseSlideBtn3.addEventListener("click", function () {
-      if (!isPaused3) {
-        isPaused3 = true;
+      function startSlider3() {
+        slideTimer3 = setInterval(nextSlide3, slideInterval3);
+        progressTimer3 = setInterval(() => {
+          progress3 += (100 / (slideInterval3 / 100));
+          if (progress3 >= 100) progress3 = 100;
+          progressFill3.style.width = progress3 + "%";
+        }, 100);
+      }
+
+      function stopSlider3() {
+        clearInterval(slideTimer3);
+        clearInterval(progressTimer3);
+      }
+
+      function resetProgress3() {
+        progress3 = 0;
+        progressFill3.style.width = "0%";
         stopSlider3();
-        this.innerText = "▶";
-      } else {
-        isPaused3 = false;
-        startSlider3();
-        this.innerText = "⏸";
+        if (!isPaused3) startSlider3();
       }
-    });
 
-    showSlide3(currentSlideIndex3);
-    startSlider3();
+      pauseSlideBtn3.addEventListener("click", function () {
+        if (!isPaused3) {
+          isPaused3 = true;
+          stopSlider3();
+          this.innerText = "▶";
+        } else {
+          isPaused3 = false;
+          startSlider3();
+          this.innerText = "⏸";
+        }
+      });
 
-    // ============== RESTANTE DO JAVASCRIPT ==============
-    let loggedIn = false;
-    let requestedSection = null;
-    let profileTimeout;
-    
-    document.getElementById("executionTime").style.display = "none";
-    document.getElementById("successMessage").style.display = "none";
-    
-    const headerTitle = document.getElementById("headerTitle");
-    const logo = document.querySelector(".logo");
-    const googleDriveLink = document.getElementById("googleDriveLink");
-    const planejamentoBtn = document.getElementById("planejamentoBtn");
-    const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
-    const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
-    const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
-    const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
-    
-    const monitoriaBtn = document.getElementById("monitoriaBtn");
-    const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
-    const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
-    
-    const linksOperacionaisBtn = document.getElementById("linksOperacionaisBtn");
-    const linksOperacionaisSubmenu = document.getElementById("linksOperacionaisSubmenu");
-    const solatioBtn = document.getElementById("solatioBtn");
-    const channelsBtn = document.getElementById("channelsBtn");
-    const qrPointBtn = document.getElementById("qrPointBtn");
-    const googleKeepBtn = document.getElementById("googleKeepBtn");
-    const blipBtn = document.getElementById("blipBtn");
-    const gestaoBtn = document.getElementById("gestaoBtn");
-    
-    const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
-    const sidebar = document.querySelector(".sidebar");
-    
-    const loginMenu = document.getElementById("loginMenu");
-    const loginBtn = document.getElementById("loginBtn");
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const loginError = document.getElementById("loginError");
-    
-    const profileMenu = document.getElementById("profileMenu");
-    const generateProfileBtn = document.getElementById("generateProfileBtn");
-    const executionTime = document.getElementById("executionTime");
-    const successMessage = document.getElementById("successMessage");
-    
-    const driveSection = document.getElementById("driveSection");
-    const planejamentoSection = document.getElementById("planejamentoSection");
-    const importacoesSection = document.getElementById("importacoesSection");
-    const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
-    const linksOperacionaisSection = document.getElementById("linksOperacionaisSection");
-    
-    function showHomeSliders() {
-      const homeSliders = document.getElementById("homeSliders");
-      if(homeSliders) homeSliders.style.display = "block";
-    }
-    
-    function hideHomeSliders() {
-      const homeSliders = document.getElementById("homeSliders");
-      if(homeSliders) homeSliders.style.display = "none";
-    }
-    
-    logo.addEventListener("click", function () {
-      hideAllMenus();
-      updateHeaderTitle("Intranet EDT");
-      showHomeSliders();
-      requestedSection = null;
-    });
-    
-    googleDriveLink.addEventListener("click", function () {
-      window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
-    });
-    
-    planejamentoBtn.addEventListener("click", function () {
-      if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
-        planejamentoSubmenu.style.display = "flex";
-        planejamentoSubmenu.style.flexDirection = "column";
-      } else {
-        planejamentoSubmenu.style.display = "none";
-      }
-      hideHomeSliders();
-    });
-    
-    planejamentoBIBtn.addEventListener("click", function () {
-      hideAllButSubmenu();
-      if (loggedIn) {
-        planejamentoSection.style.display = "block";
-        updateHeaderTitle("Planejamento BI");
-        hideSidebar();
-      } else {
-        loginError.style.display = "none";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        loginMenu.style.display = "block";
-        requestedSection = "planejamentoBI";
-        updateHeaderTitle("Login - Planejamento BI");
-      }
-      hideHomeSliders();
-    });
-    
-    planejamentoPerfilBtn.addEventListener("click", function () {
-      hideAllButSubmenu();
-      if (loggedIn) {
-        profileMenu.style.display = "block";
-        updateHeaderTitle("Geração de perfil");
-      } else {
-        loginError.style.display = "none";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        loginMenu.style.display = "block";
-        requestedSection = "planejamentoPerfil";
-        updateHeaderTitle("Login - Geração de perfil");
-      }
-      hideHomeSliders();
-    });
-    
-    planejamentoImportacoesBtn.addEventListener("click", function () {
-      hideAllButSubmenu();
-      if (loggedIn) {
-        importacoesSection.style.display = "block";
-        updateHeaderTitle("Importações");
-      } else {
-        loginError.style.display = "none";
-        usernameInput.value = "";
-        passwordInput.value = "";
-        loginMenu.style.display = "block";
-        requestedSection = "importacoes";
-        updateHeaderTitle("Login - Importações");
-      }
-      hideHomeSliders();
-    });
+      arrowLeft3.addEventListener("click", prevSlide3);
+      arrowRight3.addEventListener("click", nextSlide3);
 
-    monitoriaBtn.addEventListener("click", function () {
-      if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
-        monitoriaSubmenu.style.display = "flex";
-        monitoriaSubmenu.style.flexDirection = "column";
-      } else {
-        monitoriaSubmenu.style.display = "none";
+      showSlide3(currentSlideIndex3);
+      startSlider3();
+
+      // ============== RESTANTE DO JAVASCRIPT ==============
+      let loggedIn = false;
+      let requestedSection = null;
+      let profileTimeout;
+      
+      document.getElementById("executionTime").style.display = "none";
+      document.getElementById("successMessage").style.display = "none";
+      
+      const headerTitle = document.getElementById("headerTitle");
+      const logo = document.querySelector(".logo");
+      const googleDriveLink = document.getElementById("googleDriveLink");
+      const planejamentoBtn = document.getElementById("planejamentoBtn");
+      const planejamentoSubmenu = document.getElementById("planejamentoSubmenu");
+      const planejamentoBIBtn = document.getElementById("planejamentoBIBtn");
+      const planejamentoPerfilBtn = document.getElementById("planejamentoPerfilBtn");
+      const planejamentoImportacoesBtn = document.getElementById("planejamentoImportacoesBtn");
+      
+      const monitoriaBtn = document.getElementById("monitoriaBtn");
+      const monitoriaSubmenu = document.getElementById("monitoriaSubmenu");
+      const monitoriaManuaisBtn = document.getElementById("monitoriaManuaisBtn");
+      
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
+      const sidebar = document.querySelector(".sidebar");
+      
+      const loginMenu = document.getElementById("loginMenu");
+      const loginBtn = document.getElementById("loginBtn");
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+      const loginError = document.getElementById("loginError");
+      
+      const profileMenu = document.getElementById("profileMenu");
+      const generateProfileBtn = document.getElementById("generateProfileBtn");
+      const executionTime = document.getElementById("executionTime");
+      const successMessage = document.getElementById("successMessage");
+      
+      const driveSection = document.getElementById("driveSection");
+      const planejamentoSection = document.getElementById("planejamentoSection");
+      const importacoesSection = document.getElementById("importacoesSection");
+      const monitoriaManuaisSection = document.getElementById("monitoriaManuaisSection");
+      const linksOperacionaisSection = document.getElementById("linksOperacionaisSection");
+      
+      function showHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "block";
       }
-      hideHomeSliders();
-    });
-    
-    monitoriaManuaisBtn.addEventListener("click", function() {
-      hideAllMenus();
-      monitoriaManuaisSection.style.display = "block";
-      updateHeaderTitle("Manuais de Monitoria");
-    });
-    
-    linksOperacionaisBtn.addEventListener("click", function () {
-      if (linksOperacionaisSubmenu.style.display === "none" || linksOperacionaisSubmenu.style.display === "") {
-        linksOperacionaisSubmenu.style.display = "flex";
-        linksOperacionaisSubmenu.style.flexDirection = "column";
-      } else {
-        linksOperacionaisSubmenu.style.display = "none";
+      
+      function hideHomeSliders() {
+        const homeSliders = document.getElementById("homeSliders");
+        if(homeSliders) homeSliders.style.display = "none";
       }
-      hideHomeSliders();
-    });
-    
-    solatioBtn.addEventListener("click", function () {
-      window.open("https://admin.solatioenergialivre.com.br/#/list/EnergyMeters", "_blank");
-    });
-    
-    channelsBtn.addEventListener("click", function () {
-      window.open("https://atendimento.redeservice.com.br/v2/operador/#", "_blank");
-    });
-    
-    qrPointBtn.addEventListener("click", function () {
-      window.open("https://app.qrpoint.com.br/auth/registrar-ponto", "_blank");
-    });
-    
-    googleKeepBtn.addEventListener("click", function () {
-      window.open("https://keep.google.com/u/0/", "_blank");
-    });
-    
-    blipBtn.addEventListener("click", function () {
-      window.open("https://solatioenergialivre.desk.blip.ai/drawer", "_blank");
-    });
-    
-    gestaoBtn.addEventListener("click", function () {
-      window.open("https://cobranca01.redeservice.com.br/cobranca.fe.energia/Login.aspx", "_blank");
-    });
-    
-    loginBtn.addEventListener("click", function () {
-      if (usernameInput.value === "admin" && passwordInput.value === "admin") {
-        loggedIn = true;
-        loginMenu.style.display = "none";
-        if (requestedSection === "planejamentoBI") {
+      
+      logo.addEventListener("click", function () {
+        hideAllMenus();
+        updateHeaderTitle("Intranet EDT");
+        showHomeSliders();
+        requestedSection = null;
+      });
+      
+      googleDriveLink.addEventListener("click", function () {
+        window.open("https://accounts.google.com/ServiceLogin?continue=https://drive.google.com/drive/&hl=pt-BR", "_blank");
+      });
+      
+      planejamentoBtn.addEventListener("click", function () {
+        if (planejamentoSubmenu.style.display === "none" || planejamentoSubmenu.style.display === "") {
+          planejamentoSubmenu.style.display = "flex";
+          planejamentoSubmenu.style.flexDirection = "column";
+        } else {
+          planejamentoSubmenu.style.display = "none";
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoBIBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
           planejamentoSection.style.display = "block";
           updateHeaderTitle("Planejamento BI");
           hideSidebar();
-        } else if (requestedSection === "planejamentoPerfil") {
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "planejamentoBI";
+          updateHeaderTitle("Login - Planejamento BI");
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoPerfilBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
           profileMenu.style.display = "block";
           updateHeaderTitle("Geração de perfil");
-        } else if (requestedSection === "importacoes") {
+        } else {
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "planejamentoPerfil";
+          updateHeaderTitle("Login - Geração de perfil");
+        }
+        hideHomeSliders();
+      });
+      
+      planejamentoImportacoesBtn.addEventListener("click", function () {
+        hideAllButSubmenu();
+        if (loggedIn) {
           importacoesSection.style.display = "block";
           updateHeaderTitle("Importações");
-        } else if (requestedSection === "linksOperacionais") {
-          linksOperacionaisSection.style.display = "block";
-          updateHeaderTitle("Links Operacionais");
         } else {
-          updateHeaderTitle("Intranet EDT");
+          loginError.style.display = "none";
+          usernameInput.value = "";
+          passwordInput.value = "";
+          loginMenu.style.display = "block";
+          requestedSection = "importacoes";
+          updateHeaderTitle("Login - Importações");
         }
-      } else {
-        loginError.style.display = "block";
-      }
-    });
-    
-    generateProfileBtn.addEventListener("click", function () {
-      if (profileTimeout) clearTimeout(profileTimeout);
-      generateProfileBtn.disabled = true;
-      generateProfileBtn.style.backgroundColor = "#A9A9A9";
-      generateProfileBtn.innerText = "Gerando...";
-      successMessage.style.display = "none";
-      executionTime.style.display = "none";
-      fetch("/executar-script", { method: "POST" })
-        .then(response => response.json())
-        .then(data => {
-          const currentTime = new Date().toLocaleString();
-          localStorage.setItem("lastExecutionTime", currentTime);
-          executionTime.innerText = `Última execução: ${currentTime}`;
-          executionTime.style.display = "block";
-          profileTimeout = setTimeout(() => {
-            successMessage.style.display = "block";
+        hideHomeSliders();
+      });
+
+      monitoriaBtn.addEventListener("click", function () {
+        if (monitoriaSubmenu.style.display === "none" || monitoriaSubmenu.style.display === "") {
+          monitoriaSubmenu.style.display = "flex";
+          monitoriaSubmenu.style.flexDirection = "column";
+        } else {
+          monitoriaSubmenu.style.display = "none";
+        }
+        hideHomeSliders();
+      });
+      
+      monitoriaManuaisBtn.addEventListener("click", function() {
+        hideAllMenus();
+        monitoriaManuaisSection.style.display = "block";
+        updateHeaderTitle("Manuais de Monitoria");
+      });
+      
+      loginBtn.addEventListener("click", function () {
+        if (usernameInput.value === "admin" && passwordInput.value === "admin") {
+          loggedIn = true;
+          loginMenu.style.display = "none";
+          if (requestedSection === "planejamentoBI") {
+            planejamentoSection.style.display = "block";
+            updateHeaderTitle("Planejamento BI");
+            hideSidebar();
+          } else if (requestedSection === "planejamentoPerfil") {
+            profileMenu.style.display = "block";
+            updateHeaderTitle("Geração de perfil");
+          } else if (requestedSection === "importacoes") {
+            importacoesSection.style.display = "block";
+            updateHeaderTitle("Importações");
+          } else {
+            updateHeaderTitle("Intranet EDT");
+          }
+        } else {
+          loginError.style.display = "block";
+        }
+      });
+      
+      generateProfileBtn.addEventListener("click", function () {
+        if (profileTimeout) clearTimeout(profileTimeout);
+        generateProfileBtn.disabled = true;
+        generateProfileBtn.style.backgroundColor = "#A9A9A9";
+        generateProfileBtn.innerText = "Gerando...";
+        successMessage.style.display = "none";
+        executionTime.style.display = "none";
+        fetch("/executar-script", { method: "POST" })
+          .then(response => response.json())
+          .then(data => {
+            const currentTime = new Date().toLocaleString();
+            localStorage.setItem("lastExecutionTime", currentTime);
+            executionTime.innerText = `Última execução: ${currentTime}`;
+            executionTime.style.display = "block";
+            profileTimeout = setTimeout(() => {
+              successMessage.style.display = "block";
+              generateProfileBtn.disabled = false;
+              generateProfileBtn.style.backgroundColor = "#009688";
+              generateProfileBtn.innerText = "Gerar Perfil";
+              setTimeout(() => {
+                successMessage.style.display = "none";
+              }, 3000);
+            }, 10000);
+          })
+          .catch(error => {
+            alert("Ocorreu um erro ao gerar o perfil.");
             generateProfileBtn.disabled = false;
             generateProfileBtn.style.backgroundColor = "#009688";
             generateProfileBtn.innerText = "Gerar Perfil";
-            setTimeout(() => {
-              successMessage.style.display = "none";
-            }, 3000);
-          }, 10000);
-        })
-        .catch(error => {
-          alert("Ocorreu um erro ao gerar o perfil.");
-          generateProfileBtn.disabled = false;
-          generateProfileBtn.style.backgroundColor = "#009688";
-          generateProfileBtn.innerText = "Gerar Perfil";
+          });
+      });
+      
+      const otherButtons = document.querySelectorAll(
+        ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn)"
+      );
+      otherButtons.forEach(btn => {
+        btn.addEventListener("click", function () {
+          hideAllMenus();
+          updateHeaderTitle(this.innerText);
+          requestedSection = null;
+          hideHomeSliders();
         });
-    });
-    
-    const otherButtons = document.querySelectorAll(
-      ".sidebar .button:not(#googleDriveLink):not(#planejamentoBtn):not(#planejamentoBIBtn):not(#planejamentoPerfilBtn):not(#planejamentoImportacoesBtn):not(#monitoriaBtn):not(#monitoriaManuaisBtn):not(#linksOperacionaisBtn):not(#feedbackBtn)"
-    );
-    otherButtons.forEach(btn => {
-      btn.addEventListener("click", function () {
+      });
+      
+      toggleSidebarBtn.addEventListener("click", function () {
+        if (sidebar.style.transform === "translateX(-100%)") {
+          sidebar.style.transform = "translateX(0)";
+          toggleSidebarBtn.innerText = "Ocultar Sidebar";
+        } else {
+          sidebar.style.transform = "translateX(-100%)";
+          toggleSidebarBtn.innerText = "Mostrar Sidebar";
+        }
+      });
+      
+      const biReportsMenu = document.getElementById("biReportsMenu");
+      const reportButtons = biReportsMenu.querySelectorAll(".button");
+      const planejamentoFrame = document.getElementById("planejamentoFrame");
+      let currentReportIndex = 0;
+      
+      function updateIframeFromIndex() {
+        if (reportButtons.length > 0) {
+          const btn = reportButtons[currentReportIndex];
+          const newSrc = btn.getAttribute("data-src");
+          planejamentoFrame.src = newSrc;
+          document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
+        }
+      }
+      
+      reportButtons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          currentReportIndex = index;
+          updateIframeFromIndex();
+        });
+      });
+      
+      const prevReport = document.getElementById("prevReport");
+      const nextReport = document.getElementById("nextReport");
+      
+      prevReport.addEventListener("click", function () {
+        if (currentReportIndex > 0) {
+          currentReportIndex--;
+          updateIframeFromIndex();
+        }
+      });
+      
+      nextReport.addEventListener("click", function () {
+        if (currentReportIndex < reportButtons.length - 1) {
+          currentReportIndex++;
+          updateIframeFromIndex();
+        }
+      });
+      
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 10) {
+          headerTitle.style.opacity = 0;
+        } else {
+          headerTitle.style.opacity = 1;
+        }
+      });
+      
+      const fullScreenModal = document.getElementById("fullScreenModal");
+      const fullScreenImage = document.getElementById("fullScreenImage");
+      
+      slider.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      slider2.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      slider3.addEventListener("click", function (event) {
+        if (event.target.tagName === "IMG") {
+          fullScreenImage.src = event.target.src;
+          fullScreenModal.style.display = "flex";
+        }
+      });
+      
+      fullScreenModal.addEventListener("click", function () {
+        fullScreenModal.style.display = "none";
+      });
+      
+      const versionDiv = document.querySelector(".version");
+      const versionModal = document.getElementById("versionModal");
+      versionDiv.addEventListener("click", function () {
+        versionModal.style.display = "flex";
+      });
+      versionModal.addEventListener("click", function (e) {
+        if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
+          versionModal.style.display = "none";
+        }
+      });
+
+      // Botão de voltar ao topo
+      const backToTopBtn = document.getElementById("backToTop");
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 100) {
+          backToTopBtn.style.display = "block";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      });
+
+      backToTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Botão de feedback
+      const feedbackBtn = document.getElementById("feedbackBtn");
+      feedbackBtn.addEventListener("click", function () {
+        window.open("https://forms.gle/6Apvv45k6G6jDxNt6", "_blank");
+      });
+
+      // Botão de Links Operacionais
+      const linksOperacionaisBtn = document.getElementById("linksOperacionaisBtn");
+      linksOperacionaisBtn.addEventListener("click", function () {
         hideAllMenus();
-        updateHeaderTitle(this.innerText);
-        requestedSection = null;
-        hideHomeSliders();
+        linksOperacionaisSection.style.display = "block";
+        updateHeaderTitle("Links Operacionais");
       });
     });
     
-    toggleSidebarBtn.addEventListener("click", function () {
-      if (sidebar.style.transform === "translateX(-100%)") {
-        sidebar.style.transform = "translateX(0)";
-        toggleSidebarBtn.innerText = "Ocultar Sidebar";
-      } else {
-        sidebar.style.transform = "translateX(-100%)";
-        toggleSidebarBtn.innerText = "Mostrar Sidebar";
-      }
-    });
-    
-    const biReportsMenu = document.getElementById("biReportsMenu");
-    const reportButtons = biReportsMenu.querySelectorAll(".button");
-    const planejamentoFrame = document.getElementById("planejamentoFrame");
-    let currentReportIndex = 0;
-    
-    function updateIframeFromIndex() {
-      if (reportButtons.length > 0) {
-        const btn = reportButtons[currentReportIndex];
-        const newSrc = btn.getAttribute("data-src");
-        planejamentoFrame.src = newSrc;
-        document.querySelector("#planejamentoSection h2").innerText = btn.innerText;
-      }
+    function hideAllButSubmenu() {
+      document.getElementById("loginMenu").style.display = "none";
+      document.getElementById("profileMenu").style.display = "none";
+      document.getElementById("driveSection").style.display = "none";
+      document.getElementById("planejamentoSection").style.display = "none";
+      document.getElementById("importacoesSection").style.display = "none";
+      document.getElementById("monitoriaManuaisSection").style.display = "none";
+      document.getElementById("linksOperacionaisSection").style.display = "none";
     }
     
-    reportButtons.forEach((btn, index) => {
-      btn.addEventListener("click", () => {
-        currentReportIndex = index;
-        updateIframeFromIndex();
-      });
-    });
+    function hideAllMenus() {
+      document.getElementById("loginMenu").style.display = "none";
+      document.getElementById("profileMenu").style.display = "none";
+      document.getElementById("driveSection").style.display = "none";
+      document.getElementById("planejamentoSection").style.display = "none";
+      document.getElementById("importacoesSection").style.display = "none";
+      document.getElementById("monitoriaManuaisSection").style.display = "none";
+      document.getElementById("planejamentoSubmenu").style.display = "none";
+      document.getElementById("monitoriaSubmenu").style.display = "none";
+      document.getElementById("linksOperacionaisSection").style.display = "none";
+    }
     
-    const prevReport = document.getElementById("prevReport");
-    const nextReport = document.getElementById("nextReport");
+    function updateHeaderTitle(text) {
+      document.getElementById("headerTitle").innerText = text;
+    }
     
-    prevReport.addEventListener("click", function () {
-      if (currentReportIndex > 0) {
-        currentReportIndex--;
-        updateIframeFromIndex();
-      }
-    });
-    
-    nextReport.addEventListener("click", function () {
-      if (currentReportIndex < reportButtons.length - 1) {
-        currentReportIndex++;
-        updateIframeFromIndex();
-      }
-    });
-    
-    window.addEventListener("scroll", function () {
-      if (planejamentoSection && planejamentoSection.style.display !== "none") {
-        headerTitle.style.opacity = window.scrollY > 10 ? 0 : 1;
-      } else {
-        headerTitle.style.opacity = 1;
-      }
-    });
-    
-    const fullScreenModal = document.getElementById("fullScreenModal");
-    const fullScreenImage = document.getElementById("fullScreenImage");
-    
-    slider.addEventListener("click", function (event) {
-      if (event.target.tagName === "IMG") {
-        fullScreenImage.src = event.target.src;
-        fullScreenModal.style.display = "flex";
-      }
-    });
-    
-    slider2.addEventListener("click", function (event) {
-      if (event.target.tagName === "IMG") {
-        fullScreenImage.src = event.target.src;
-        fullScreenModal.style.display = "flex";
-      }
-    });
-    
-    slider3.addEventListener("click", function (event) {
-      if (event.target.tagName === "IMG") {
-        fullScreenImage.src = event.target.src;
-        fullScreenModal.style.display = "flex";
-      }
-    });
-    
-    fullScreenModal.addEventListener("click", function () {
-      fullScreenModal.style.display = "none";
-    });
-    
-    const versionDiv = document.querySelector(".version");
-    const versionModal = document.getElementById("versionModal");
-    versionDiv.addEventListener("click", function () {
-      versionModal.style.display = "flex";
-    });
-    versionModal.addEventListener("click", function (e) {
-      if (e.target.id === "versionModal" || e.target.id === "closeVersionModal") {
-        versionModal.style.display = "none";
-      }
-    });
-
-    // Botão de voltar ao topo
-    const backToTopBtn = document.getElementById("backToTop");
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 100) {
-        backToTopBtn.style.display = "block";
-      } else {
-        backToTopBtn.style.display = "none";
-      }
-    });
-
-    backToTopBtn.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    // Botão de feedback
-    const feedbackBtn = document.getElementById("feedbackBtn");
-    feedbackBtn.addEventListener("click", function () {
-      window.open("https://forms.gle/6Apvv45k6G6jDxNt6", "_blank");
-    });
+    function hideSidebar() {
+      const sidebar = document.querySelector(".sidebar");
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
+      sidebar.style.transform = "translateX(-100%)";
+      toggleSidebarBtn.innerText = "Mostrar Sidebar";
+    }
   </script>
 </body>
 </html>
