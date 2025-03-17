@@ -504,28 +504,40 @@
     #backToTop:hover {
       background-color: #00796B;
     }
+/* Estilos para a seção de Links Operacionais */
+#linksOperacionaisSection {
+  display: none;
+  margin: 10px 26px 0 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid #009688;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  width: calc(100% - 270px - 36px); /* Garante que a seção se ajuste ao layout */
+}
 
-    /* Estilos para a seção de Links Operacionais */
-    #linksOperacionaisSection {
-      display: none;
-      margin: 10px 26px 0 10px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 2px solid #009688;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      width: calc(100% - 270px - 36px);
-    }
+#linksOperacionaisSection h2 {
+  margin-top: 0;
+}
 
-    #linksOperacionaisSection h2 {
-      margin-top: 0;
-    }
+/* Ajuste do botão dentro da seção Links Operacionais */
+#linksOperacionaisSection .button {
+  width: 100%; /* Garante que o botão ocupe toda a largura disponível */
+  padding: 15px; /* Aumenta o padding para tornar os botões mais altos */
+  font-size: 18px; /* Ajusta o tamanho da fonte para tornar o texto mais legível */
+  margin: 10px 0; /* Ajusta a margem entre os botões */
+  background-color: #009688; /* Cor do fundo do botão */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  cursor: pointer; /* Muda o cursor para indicar interatividade */
+  text-align: center; /* Centraliza o texto */
+  border-radius: 8px; /* Arredonda os cantos do botão */
+}
 
-    #linksOperacionaisSection .button {
-      width: 100%;
-      margin: 10px 0;
-
-
+/* Efeito de hover para os botões */
+#linksOperacionaisSection .button:hover {
+  background-color: #00796B; /* Cor do fundo ao passar o mouse */
+}
 
       @media (min-width: 1200px) {
   .sidebar {
