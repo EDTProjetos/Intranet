@@ -50,8 +50,8 @@
     .logo {
       position: absolute;
       top: 10px;
-      left: 10px;
-      width: 260px;
+      left: px;
+      width: 350px;
       height: auto;
       z-index: 10;
       cursor: pointer;
@@ -481,7 +481,7 @@
     #backToTop {
       display: none;
       position: fixed;
-      bottom: 20px;
+      bottom: 40px;
       right: 20px;
       background-color: #009688;
       color: white;
@@ -539,8 +539,8 @@
     <div id="monitoriaSubmenu" style="display: none;">
       <button class="button" id="monitoriaManuaisBtn">Manuais monitoria</button>
     </div>
-    <button class="button" id="feedbackBtn">Feedbacks & Melhorias</button>
     <button class="button" id="linksOperacionaisBtn">Links Operacionais</button>
+    <button class="button" id="feedbackBtn">Feedback & Sugestões</button>
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
         <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
@@ -663,11 +663,20 @@
       <button class="button" onclick="window.open('https://keep.google.com/u/0/', '_blank')">Google Keep</button>
       <button class="button" onclick="window.open('https://solatioenergialivre.desk.blip.ai/drawer', '_blank')">Blip</button>
       <button class="button" onclick="window.open('https://cobranca01.redeservice.com.br/cobranca.fe.energia/Login.aspx', '_blank')">Gestão</button>
+      
+    <div id="linksOperacionaisSection2">
+      <h2>Links ADM</h2>
+      <button class="button" onclick="window.open('https://cliente.solatioenergialivre.com.br/#/auth/login')">Solatio ADM</button>
+      <button class="button" onclick="window.open('https://atendimento.redeservice.com.br/v2/admin/login.aspx')">Channels ADM</button>
+      <button class="button" onclick="window.open('https://app.qrpoint.com.br/')">Qr Point Analítico</button>
+      <button class="button" onclick="window.open('https://dss21.redeservice.com.br/DSS/login.aspx')">DSS</button>
+      <button class="button" onclick="window.open('https://cobranca01.redeservice.com.br/cobranca.be.energia/Home/Login?ReturnUrl=%2Fcobranca.be.energia%2F')">Gestão ADM</button>
+      <button class="button" onclick="window.open('https://accounts.google.com/InteractiveLogin/signinchooser?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&emr=1&ltmpl=default&ltmplcache=2&osid=1&passive=true&rm=false&scc=1&service=mail&ss=1&ifkv=AXH0vVuq9nAdpXoy4k19zIYHFeHI29O5XmKUqUkuex1ia_dAE1GaosbS4P9cqZskwx6CwAa4ctZllA&ddm=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin')">Gmail</button>      
     </div>
   </div>
 
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
-  <div class="version">Versão 1.0.7</div>
+  <div class="version">Versão 1.0.9</div>
 
   <div id="fullScreenModal">
     <img id="fullScreenImage" src="" alt="Visão Cheia">
