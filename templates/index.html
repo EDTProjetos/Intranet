@@ -710,7 +710,7 @@
       const arrowRight = document.getElementById("arrowRight");
       const progressFill = document.getElementById("progressFill");
       const pauseSlideBtn = document.getElementById("pauseSlideBtn");
-      let slideInterval = 6000;
+      let slideInterval = 7000;
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
@@ -781,7 +781,7 @@
       const arrowRight2 = document.getElementById("arrowRight2");
       const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
       const progressFill2 = document.getElementById("progressFill2");
-      let slideInterval2 = 6000;
+      let slideInterval2 = 8000;
       let slideTimer2 = null;
       let progressTimer2 = null;
       let progress2 = 0;
@@ -914,6 +914,14 @@
 
       showSlide3(currentSlideIndex3);
       startSlider3();
+
+      // Função para embaralhar o array de índices de forma aleatória
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos
+  }
+}
 
       // ============== RESTANTE DO JAVASCRIPT ==============
       let loggedIn = false;
