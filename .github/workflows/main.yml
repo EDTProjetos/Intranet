@@ -1,0 +1,22 @@
+name: Deploy to Fly.io
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que você deseja que acione o deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Fly CLI
+        uses: superfly/flyctl-action@v0.0.8
+
+      - name: Deploy to Fly.io
+        run: |
+          flyctl auth login --access-token ${{ secrets.FLY_API_TOKEN }}
+          flyctl deploy
