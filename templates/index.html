@@ -1144,12 +1144,27 @@ function shuffleArray(array) {
       });
       
 toggleSidebarBtn.addEventListener("click", function () {
-  if (sidebar.style.transform === "translateX(-100%)") {
-    sidebar.style.transform = "translateX(0)";
-  } else {
-    sidebar.style.transform = "translateX(-100%)";
-  }
+    const sidebar = document.querySelector(".sidebar");
+
+    // Verifica se a sidebar está oculta ou visível
+    if (sidebar.style.transform === "translateX(-100%)") {
+        sidebar.style.transform = "translateX(0)";
+        toggleSidebarBtn.innerText = "Ocultar Sidebar";
+        toggleSidebarBtn.style.left = "10px"; // Fica no lado esquerdo da sidebar
+        toggleSidebarBtn.style.right = ""; // Limpa a propriedade right
+    } else {
+        sidebar.style.transform = "translateX(-100%)";
+        toggleSidebarBtn.innerText = "Mostrar Sidebar";
+        toggleSidebarBtn.style.left = ""; // Limpa a propriedade left
+        
+        // Após ocultar a sidebar, move o botão para o canto direito da tela
+        setTimeout(() => {
+            toggleSidebarBtn.style.right = "0"; // Move o botão para a borda direita da tela
+            toggleSidebarBtn.style.top = "50px"; // Ajusta a posição vertical
+        }, 300); // Espera o tempo da transição da sidebar
+    }
 });
+
 
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
@@ -1289,30 +1304,6 @@ toggleSidebarBtn.addEventListener("click", function () {
     
     function updateHeaderTitle(text) {
       document.getElementById("headerTitle").innerText = text;
-    }
-
-// Adiciona o evento de clique para alternar a sidebar e mover o botão
-toggleSidebarBtn.addEventListener("click", function () {
-    const sidebar = document.querySelector(".sidebar");
-    
-    // Verifica se a sidebar está oculta ou visível
-    if (sidebar.style.transform === "translateX(-100%)") {
-        sidebar.style.transform = "translateX(0)";
-        toggleSidebarBtn.innerText = "Ocultar Sidebar";
-        toggleSidebarBtn.style.right = "10px";  // Posição inicial do botão dentro da sidebar
-    } else {
-        sidebar.style.transform = "translateX(-100%)";
-        toggleSidebarBtn.innerText = "Mostrar Sidebar";
-        toggleSidebarBtn.style.right = "10px";  // Posição inicial dentro da sidebar
-        
-        // Após ocultar a sidebar, move o botão para o canto direito da tela
-        setTimeout(() => {
-            toggleSidebarBtn.style.right = "0"; // Move o botão para a borda direita da tela
-            toggleSidebarBtn.style.top = "50px"; // Ajusta a posição vertical
-        }, 300); // Espera o tempo da transição da sidebar
-    }
-});
-
     }
   </script>
 </body>
