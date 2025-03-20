@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <!-- Meta tag para controlar o zoom -->
   <title>Intranet EDT</title>
   <style>
     /* === ESTILOS COMPLETOS === */
@@ -53,21 +53,21 @@
       left: px;
       width: 350px;
       height: auto;
-      z-index: 10;
+      z-index: 9;
       cursor: pointer;
     }
 
     .button {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
+      margin: 5px;
       background-color: #009688;
       color: white;
       border: none;
       cursor: pointer;
       text-align: center;
-      font-size: 16px;
-      border-radius: 8px;
+      font-size: 14px;
+      border-radius: 10px;
     }
 
     .button:hover {
@@ -313,7 +313,7 @@
 
     #planejamentoSection {
       display: none;
-      margin: 10px 26px 0 10px;
+      margin: 10px 26px 0 30px;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       padding: 20px;
@@ -343,7 +343,7 @@
 
     #monitoriaManuaisSection {
       display: none;
-      margin: 10px 26px 0 10px;
+      margin: 10px 26px 0 30px;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       padding: 20px;
@@ -394,15 +394,15 @@
 
     #toggleSidebarBtn {
       position: fixed;
-      left: 10px;
-      bottom: 10px;
+      left: 100px;
+      top: 10px;
       background-color: #009688;
       color: white;
-      padding: 10px 20px;
+      padding: 5px 5px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      z-index: 9999;
+      z-index: 1000;
     }
 
     #toggleSidebarBtn:hover {
@@ -502,7 +502,7 @@
     /* Estilos para a seção de Links Operacionais */
     #linksOperacionaisSection {
       display: none;
-      margin: 10px 26px 0 10px;
+      margin: 10px 26px 0 30px;
       background-color: rgba(255, 255, 255, 0.9);
       border: 2px solid #009688;
       padding: 20px;
@@ -526,7 +526,7 @@
   
   <div class="sidebar">
     <img src="static/logo 2.png" alt="Logo" class="logo">
-    <button class="button" id="googleDriveLink" style="margin-top: 230px;">Google Drive</button>
+    <button class="button" id="googleDriveLink" style="margin-top: 190px;">Google Drive</button>
     <button class="button" id="planejamentoBtn">Planejamento</button>
     <div id="planejamentoSubmenu" style="display: none;">
       <button class="button" id="planejamentoBIBtn">Planejamento BI</button>
@@ -543,7 +543,7 @@
     <button class="button" id="feedbackBtn">Feedback & Sugestões</button>
     <div class="energy-of-todos">
       <a href="https://energiadetodos.com.br/" target="_blank">
-        <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 80px;">
+        <img src="static/logo 3 inferior.png" alt="Energia de Todos" style="padding-bottom: 30px;">
       </a>
     </div>
   </div>
@@ -676,7 +676,7 @@
   </div>
 
   <button id="toggleSidebarBtn">Ocultar Sidebar</button>
-  <div class="version">Versão 1.0.9</div>
+  <div class="version">Versão 1.0.6</div>
 
   <div id="fullScreenModal">
     <img id="fullScreenImage" src="" alt="Visão Cheia">
@@ -709,7 +709,7 @@
       const arrowRight = document.getElementById("arrowRight");
       const progressFill = document.getElementById("progressFill");
       const pauseSlideBtn = document.getElementById("pauseSlideBtn");
-      let slideInterval = 6000;
+      let slideInterval = 7000;
       let slideTimer = null;
       let progressTimer = null;
       let progress = 0;
@@ -780,7 +780,7 @@
       const arrowRight2 = document.getElementById("arrowRight2");
       const pauseSlideBtn2 = document.getElementById("pauseSlideBtn2");
       const progressFill2 = document.getElementById("progressFill2");
-      let slideInterval2 = 6000;
+      let slideInterval2 = 8000;
       let slideTimer2 = null;
       let progressTimer2 = null;
       let progress2 = 0;
@@ -913,6 +913,14 @@
 
       showSlide3(currentSlideIndex3);
       startSlider3();
+
+      // Função para embaralhar o array de índices de forma aleatória
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos
+  }
+}
 
       // ============== RESTANTE DO JAVASCRIPT ==============
       let loggedIn = false;
