@@ -394,30 +394,30 @@
 
 #toggleSidebarBtn {
   position: fixed;
-  top: 10px; 
-  left: 10px; /* Ajuste conforme necessário */
+  top: 10px;
+  right: 10px; /* Posição inicial do botão na sidebar */
   background-color: #009688;
   color: white;
   padding: 10px;
-  border: none;
-  border-radius: 50%; /* Deixe o botão redondo */
+  border-radius: 50%; /* Deixa o botão redondo */
   cursor: pointer;
   z-index: 1000;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px; /* Tamanho do botão */
-  height: 50px; /* Tamanho do botão */
-  transition: all 0.3s ease; /* Transição suave */
+  transition: all 0.3s ease; /* Transição suave para a movimentação */
 }
+
+/* Quando a sidebar estiver fechada, move o botão para o lado esquerdo */
+.sidebar-closed #toggleSidebarBtn {
+  right: auto;
+  left: 10px; /* Muda a posição para o lado esquerdo da tela */
+}
+
 
 #toggleSidebarBtn:hover {
   background-color: #00796B; /* Cor do botão ao passar o mouse */
 }
 
 #toggleSidebarBtn .button-icon {
-  background-color: #2196F3; /* Cor do ponto azul */
+  background-color: #ffffff; /* Cor do ponto azul */
   width: 10px; /* Tamanho do ponto azul */
   height: 10px; /* Tamanho do ponto azul */
   border-radius: 50%; /* Torna o ponto redondo */
@@ -1146,14 +1146,11 @@ function shuffleArray(array) {
 toggleSidebarBtn.addEventListener("click", function () {
   if (sidebar.style.transform === "translateX(-100%)") {
     sidebar.style.transform = "translateX(0)";
-    toggleSidebarBtn.innerText = "Ocultar Sidebar";
   } else {
     sidebar.style.transform = "translateX(-100%)";
-    toggleSidebarBtn.innerText = "Mostrar Sidebar";
-    toggleSidebarBtn.style.top = "10px";  // Mantém o botão no topo após o fechamento da sidebar
-    toggleSidebarBtn.style.left = "100px"; // Ajusta para a posição padrão
   }
 });
+
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
@@ -1293,12 +1290,29 @@ toggleSidebarBtn.addEventListener("click", function () {
     function updateHeaderTitle(text) {
       document.getElementById("headerTitle").innerText = text;
     }
+
+// Adiciona o evento de clique para alternar a sidebar e mover o botão
+toggleSidebarBtn.addEventListener("click", function () {
+    const sidebar = document.querySelector(".sidebar");
     
-    function hideSidebar() {
-      const sidebar = document.querySelector(".sidebar");
-      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
-      sidebar.style.transform = "translateX(-100%)";
-      toggleSidebarBtn.innerText = "Mostrar Sidebar";
+    // Verifica se a sidebar está oculta ou visível
+    if (sidebar.style.transform === "translateX(-100%)") {
+        sidebar.style.transform = "translateX(0)";
+        toggleSidebarBtn.innerText = "Ocultar Sidebar";
+        toggleSidebarBtn.style.right = "10px";  // Posição inicial do botão dentro da sidebar
+    } else {
+        sidebar.style.transform = "translateX(-100%)";
+        toggleSidebarBtn.innerText = "Mostrar Sidebar";
+        toggleSidebarBtn.style.right = "10px";  // Posição inicial dentro da sidebar
+        
+        // Após ocultar a sidebar, move o botão para o canto direito da tela
+        setTimeout(() => {
+            toggleSidebarBtn.style.right = "0"; // Move o botão para a borda direita da tela
+            toggleSidebarBtn.style.top = "50px"; // Ajusta a posição vertical
+        }, 300); // Espera o tempo da transição da sidebar
+    }
+});
+
     }
   </script>
 </body>
