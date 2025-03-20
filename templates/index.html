@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <!-- Meta tag para controlar o zoom -->
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Intranet EDT</title>
   <style>
     /* === ESTILOS COMPLETOS === */
@@ -393,22 +392,37 @@
       border: none;
     }
 
-    #toggleSidebarBtn {
-      position: fixed;
-      left: 100px;
-      top: 10px;
-      background-color: #009688;
-      color: white;
-      padding: 5px 5px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 1000;
-    }
+#toggleSidebarBtn {
+  position: fixed;
+  top: 10px; 
+  left: 10px; /* Ajuste conforme necessário */
+  background-color: #009688;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 50%; /* Deixe o botão redondo */
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Tamanho do botão */
+  height: 50px; /* Tamanho do botão */
+  transition: all 0.3s ease; /* Transição suave */
+}
 
-    #toggleSidebarBtn:hover {
-      background-color: #00796B;
-    }
+#toggleSidebarBtn:hover {
+  background-color: #00796B; /* Cor do botão ao passar o mouse */
+}
+
+#toggleSidebarBtn .button-icon {
+  background-color: #2196F3; /* Cor do ponto azul */
+  width: 10px; /* Tamanho do ponto azul */
+  height: 10px; /* Tamanho do ponto azul */
+  border-radius: 50%; /* Torna o ponto redondo */
+  margin-left: 5px; /* Distância entre o ícone do menu e o ponto */
+}
 
     .version {
       position: fixed;
@@ -676,7 +690,10 @@
     </div>
   </div>
 
-  <button id="toggleSidebarBtn">Ocultar Sidebar</button>
+<button id="toggleSidebarBtn">
+  <span>☰</span> <!-- Ícone do menu -->
+  <span class="button-icon"></span> <!-- Ponto azul dentro do botão -->
+</button>
   <div class="version">Versão 1.0.6</div>
 
   <div id="fullScreenModal">
@@ -1126,16 +1143,17 @@ function shuffleArray(array) {
         });
       });
       
-      toggleSidebarBtn.addEventListener("click", function () {
-        if (sidebar.style.transform === "translateX(-100%)") {
-          sidebar.style.transform = "translateX(0)";
-          toggleSidebarBtn.innerText = "Ocultar Sidebar";
-        } else {
-          sidebar.style.transform = "translateX(-100%)";
-          toggleSidebarBtn.innerText = "Mostrar Sidebar";
-        }
-      });
-      
+toggleSidebarBtn.addEventListener("click", function () {
+  if (sidebar.style.transform === "translateX(-100%)") {
+    sidebar.style.transform = "translateX(0)";
+    toggleSidebarBtn.innerText = "Ocultar Sidebar";
+  } else {
+    sidebar.style.transform = "translateX(-100%)";
+    toggleSidebarBtn.innerText = "Mostrar Sidebar";
+    toggleSidebarBtn.style.top = "10px";  // Mantém o botão no topo após o fechamento da sidebar
+    toggleSidebarBtn.style.left = "100px"; // Ajusta para a posição padrão
+  }
+});
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
