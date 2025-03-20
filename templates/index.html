@@ -392,37 +392,23 @@
       border: none;
     }
 
-#toggleSidebarBtn {
-  position: fixed;
-  top: 10px;
-  left: 10px; /* Posição inicial do botão na sidebar */
-  background-color: #009688;
-  color: white;
-  padding: 10px;
-  border-radius: 50%; /* Deixa o botão redondo */
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease; /* Transição suave para a movimentação */
-}
+    #toggleSidebarBtn {
+      position: fixed;
+      left: 10px; /* Posição ajustada */
+      top: 10px;
+      background-color: #009688;
+      color: white;
+      padding: 5px 12px; /* Ajuste para melhor visualização do ícone */
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+      font-size: 24px; /* Tamanho aumentado para o ícone */
+    }
 
-/* Quando a sidebar estiver fechada, move o botão para o lado esquerdo */
-.sidebar-closed #toggleSidebarBtn {
-  right: auto;
-  left: 10px; /* Muda a posição para o lado esquerdo da tela */
-}
-
-
-#toggleSidebarBtn:hover {
-  background-color: #00796B; /* Cor do botão ao passar o mouse */
-}
-
-#toggleSidebarBtn .button-icon {
-  background-color: #ffffff; /* Cor do ponto azul */
-  width: 10px; /* Tamanho do ponto azul */
-  height: 10px; /* Tamanho do ponto azul */
-  border-radius: 50%; /* Torna o ponto redondo */
-  margin-left: 5px; /* Distância entre o ícone do menu e o ponto */
-}
+    #toggleSidebarBtn:hover {
+      background-color: #00796B;
+    }
 
     .version {
       position: fixed;
@@ -690,10 +676,7 @@
     </div>
   </div>
 
-<button id="toggleSidebarBtn">
-  <span>☰</span> <!-- Ícone do menu -->
-  <span class="button-icon"></span> <!-- Ponto azul dentro do botão -->
-</button>
+  <button id="toggleSidebarBtn">☰</button> <!-- Botão modificado -->
   <div class="version">Versão 1.0.6</div>
 
   <div id="fullScreenModal">
@@ -1144,28 +1127,13 @@ function shuffleArray(array) {
       });
       
 toggleSidebarBtn.addEventListener("click", function () {
-    const sidebar = document.querySelector(".sidebar");
-
-    // Verifica se a sidebar está oculta ou visível
-    if (sidebar.style.transform === "translateX(-100%)") {
-        sidebar.style.transform = "translateX(0)";
-        toggleSidebarBtn.innerText = "Ocultar Sidebar";
-        toggleSidebarBtn.style.left = "10px"; // Fica no lado esquerdo da sidebar
-        toggleSidebarBtn.style.right = ""; // Limpa a propriedade right
-    } else {
-        sidebar.style.transform = "translateX(-100%)";
-        toggleSidebarBtn.innerText = "Mostrar Sidebar";
-        toggleSidebarBtn.style.left = ""; // Limpa a propriedade left
-        
-        // Após ocultar a sidebar, move o botão para o canto direito da tela
-        setTimeout(() => {
-            toggleSidebarBtn.style.right = "0"; // Move o botão para a borda direita da tela
-            toggleSidebarBtn.style.top = "50px"; // Ajusta a posição vertical
-        }, 300); // Espera o tempo da transição da sidebar
-    }
-});
-
-
+        if (sidebar.style.transform === "translateX(-100%)") {
+          sidebar.style.transform = "translateX(0)";
+        } else {
+          sidebar.style.transform = "translateX(-100%)";
+        }
+      });
+      
       const biReportsMenu = document.getElementById("biReportsMenu");
       const reportButtons = biReportsMenu.querySelectorAll(".button");
       const planejamentoFrame = document.getElementById("planejamentoFrame");
@@ -1304,6 +1272,13 @@ toggleSidebarBtn.addEventListener("click", function () {
     
     function updateHeaderTitle(text) {
       document.getElementById("headerTitle").innerText = text;
+    }
+    
+    function hideSidebar() {
+      const sidebar = document.querySelector(".sidebar");
+      const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
+      sidebar.style.transform = "translateX(-100%)";
+      toggleSidebarBtn.innerText = "Mostrar Sidebar";
     }
   </script>
 </body>
