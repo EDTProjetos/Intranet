@@ -392,22 +392,38 @@
       border: none;
     }
 
-    #toggleSidebarBtn {
-      position: fixed;
-      left: 100px;
-      top: 10px;
-      background-color: #009688;
-      color: white;
-      padding: 5px 5px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 1000;
-    }
+#toggleSidebarBtn {
+    position: fixed;
+    left: 20px; /* Ajuste a posição conforme necessário */
+    top: 20px; /* Ajuste a posição conforme necessário */
+    background-color: #fff; /* Cor de fundo */
+    color: #00796B; /* Cor do ícone */
+    border: none;
+    border-radius: 50%; /* Forma circular */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px; /* Tamanho do ícone */
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s, transform 0.3s ease; /* Transições suaves */
+}
 
-    #toggleSidebarBtn:hover {
-      background-color: #00796B;
-    }
+#toggleSidebarBtn:hover {
+    background-color: #00796B; /* Cor de fundo ao passar o mouse */
+    color: #fff; /* Cor do ícone ao passar o mouse */
+    transform: scale(1.1); /* Efeito de zoom suave */
+}
+
+#toggleSidebarBtn:focus {
+    outline: none; /* Remove o contorno padrão */
+}
+
+#toggleSidebarBtn .icon {
+    font-size: 28px; /* Tamanho do ícone dentro do botão */
+}
 
     .version {
       position: fixed;
