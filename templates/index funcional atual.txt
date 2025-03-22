@@ -394,15 +394,16 @@
 
     #toggleSidebarBtn {
       position: fixed;
-      left: 100px;
+      left: 10px; /* Posição ajustada */
       top: 10px;
       background-color: #009688;
       color: white;
-      padding: 5px 5px;
+      padding: 5px 12px; /* Ajuste para melhor visualização do ícone */
       border: none;
       border-radius: 8px;
       cursor: pointer;
       z-index: 1000;
+      font-size: 24px; /* Tamanho aumentado para o ícone */
     }
 
     #toggleSidebarBtn:hover {
@@ -563,15 +564,15 @@
           <button class="slider-pause" id="pauseSlideBtn">⏸</button>
         </div>
         <div class="slider-info">
-          <h2>Informativos Fevereiro</h2>
-          <p>Aqui você encontra as principais notícias e atualizações do mês.</p>
+          <h2>Informativos Março</h2>
+          <p>Aqui você encontra as principais notícias e atualizações do mês de Março.</p>
         </div>
       </div>
 
       <div class="slider-container">
         <div class="slider-info">
-          <h2>Informativos Março</h2>
-          <p>Aqui você encontra as principais notícias e atualizações do mês de março.</p>
+          <h2>Informativos Fevereiro</h2>
+          <p>Aqui você encontra as principais notícias e atualizações do mês de Fevereiro!</p>
         </div>
         <div id="slider2">
           <div class="slide active"><img src="static/banner1.png" alt="Banner 1"></div>
@@ -599,8 +600,8 @@
           <button class="slider-pause" id="pauseSlideBtn3">⏸</button>
         </div>
         <div class="slider-info">
-          <h2>Informativos Abril</h2>
-          <p>Aqui você encontra as principais notícias e atualizações do mês de abril.</p>
+          <h2>Informativos Janeiro</h2>
+          <p>Aqui você encontra as principais notícias e atualizações do mês de Janeiro</p>
         </div>
       </div>
     </div>
@@ -675,7 +676,7 @@
     </div>
   </div>
 
-  <button id="toggleSidebarBtn">Ocultar Sidebar</button>
+  <button id="toggleSidebarBtn">☰</button> <!-- Botão modificado -->
   <div class="version">Versão 1.0.6</div>
 
   <div id="fullScreenModal">
@@ -1125,13 +1126,11 @@ function shuffleArray(array) {
         });
       });
       
-      toggleSidebarBtn.addEventListener("click", function () {
+toggleSidebarBtn.addEventListener("click", function () {
         if (sidebar.style.transform === "translateX(-100%)") {
           sidebar.style.transform = "translateX(0)";
-          toggleSidebarBtn.innerText = "Ocultar Sidebar";
         } else {
           sidebar.style.transform = "translateX(-100%)";
-          toggleSidebarBtn.innerText = "Mostrar Sidebar";
         }
       });
       
@@ -1279,7 +1278,7 @@ function shuffleArray(array) {
       const sidebar = document.querySelector(".sidebar");
       const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
       sidebar.style.transform = "translateX(-100%)";
-      toggleSidebarBtn.innerText = "Mostrar Sidebar";
+      toggleSidebarBtn.innerText = "☰";
     }
   </script>
 </body>
